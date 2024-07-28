@@ -1,0 +1,267 @@
+/* Importing fonts from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Roboto:wght@400;500;700&display=swap');
+
+/* General styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    line-height: 1.6;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+.intro-text {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    color: #333;
+    text-align: center;
+}
+
+/* Header styles */
+header {
+    background: #2C5F2D;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+/* header.banner {
+    background-color: darkgreen;
+    padding: 20px 0;
+} */
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-family: 'Merriweather', serif;
+}
+
+/* Navigation styles */
+nav {
+    background: #2C5F2D;
+    padding: 0.5rem 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    position: relative;
+    margin-right: 1rem;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    display: block;
+}
+
+nav ul ul {
+    display: none;
+    position: absolute;
+    background-color: #228B22;
+    padding: 0.5rem;
+    top: 100%;
+    left: 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav ul li:hover > ul {
+    display: block;
+}
+
+nav ul li.active a {
+    background-color: #244a24;
+    color: #fff;
+    font-weight: bold;
+}
+
+nav ul ul li {
+    display: block;
+    margin: 0;
+}
+
+nav ul ul li a {
+    padding: 0.5rem 1rem;
+}
+
+nav ul li a:hover, nav ul ul li a:hover {
+    background-color: #244a24;
+}
+
+/* Main container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    margin-bottom: 3rem; /* Added margin at the bottom */
+}
+
+/* Section headings */
+h2 {
+    color: #2C5F2D;
+    font-size: 2rem;
+    font-family: 'Merriweather', serif;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+/* Paragraph styles */
+p {
+    margin: 1rem 0;
+    font-size: 1.2rem;
+}
+
+/* Focus mode for accessibility */
+nav ul li a:focus,
+.card-link:focus,
+button:focus {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
+}
+
+/* Card styles */
+.card {
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    border-radius: 8px;
+    transition: transform 0.2s ease-in-out;
+    text-align: center;
+    min-width: 250px;
+}
+
+.card-link {
+    text-decoration: none;
+    display: block;
+    color: inherit;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #2C5F2D;
+    font-size: 1.5rem;
+}
+
+/* Grid styles using CSS Grid */
+.grid {
+    display: grid;
+    gap: 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    justify-content: center;
+}
+
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-5 { grid-template-columns: repeat(5, 1fr); }
+
+/* Sub page card formats */
+.learning-card {
+    margin-bottom: 3rem;
+}
+
+.learning-card h2 {
+    text-align: center;
+}
+
+.learning-card .card-content:not(ul):not(ol),
+.learning-card p {
+    text-align: left;
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.learning-card ul,
+.learning-card ol {
+    text-align: left;
+    padding-left: 20px;
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.learning-card li {
+    text-align: left;
+    margin-bottom: 0.5rem;
+}
+
+/* Button styles */
+button {
+    background: #2C5F2D;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+}
+
+button:hover {
+    background: #244a24;
+}
+
+footer {
+    background: #2C5F2D;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0 1rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+    .grid-3, .grid-4, .grid-5 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    nav ul {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    nav ul li {
+        margin-right: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    .grid, .grid-2, .grid-3, .grid-4, .grid-5 {
+        grid-template-columns: 1fr;
+    }
+
+    .learning-card .card-content:not(ul):not(ol),
+    .learning-card p,
+    .learning-card ul,
+    .learning-card ol {
+        max-width: 100%;
+    }
+}
