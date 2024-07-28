@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<main>
+    <div class="container">
+        <section id="Projects">
+            <h2>Projects</h2>
+            <div class="grid grid-5">
+                <div class="card">
+                    <a href="{% url 'learning'%}" rel="noopener noreferrer" class="card-link">
+                        <img src="{% static 'images/Learning.jpeg' %}" alt="Learning" width="150" height="150">
+                        <p>Learning</p>
+                    </a>
+                </div>
+                <div class="card">
+                    <a href="{% url 'growing' %}" rel="noopener noreferrer" class="card-link">
+                        <img src="{% static 'images/Growing.jpeg' %}" alt="Growing" width="150" height="150">
+                        <p>Growing</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <section id="contact">
+            <h2>Contact</h2>
+            <p>Get in touch via email: <a href="mailto:{{ CONTACT_EMAIL }}">{{ CONTACT_EMAIL }}</a></p>
+        </section>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Growing
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>My Succulents</h2>
+    <div class="grid grid-3">
+        <!-- Repeat this card structure for each plant -->
+        <div class="card">
+            <img src="{% static 'images/succulents/plant1.jpg' %}" alt="Plant Name">
+            <h3>Plant Name</h3>
+            <p>Brief description or care instructions.</p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Lithops</h2>
+    <div class="grid grid-3">
+        <div class="card">
+            <img src="{% static 'images/succulents/plant1.jpg' %}" alt="Plant Name">
+            <h3>Plant Name</h3>
+            <p>Brief description or care instructions.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

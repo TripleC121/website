@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Trees
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>My trees</h2>
+    <div class="grid grid-3">
+        <!-- Repeat this card structure for each plant -->
+        <div class="card">
+            {% comment %} <img src="{% static 'images/succulents/plant1.jpg' %}" alt="Plant Name"> {% endcomment %}
+            <h3>Meyer Lemon Tree</h3>
+            <p>Brief description or care instructions.</p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Mango Tree</h2>
+    <div class="grid grid-3">
+        <div class="card">
+            {% comment %} <img src="{% static 'images/succulents/plant1.jpg' %}" alt="Plant Name"> {% endcomment %}
+            <h3>tree Name</h3>
+            <p>Brief description or care instructions.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
