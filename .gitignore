@@ -1,0 +1,43 @@
+# Django
+.env
+*.sqlite3
+*.pyc
+__pycache__/
+staticfiles/
+media/
+*.log
+
+# Nginx
+nginx.conf
+sites-available/*
+sites-enabled/*
+/var/log/nginx/*
+
+# Gunicorn
+gunicorn.conf.py
+gunicorn.log
+gunicorn.error.log
+
+# Ansible
+group_vars/
+host_vars/
+vault.yml
+inventory
+ansible.log
+
+# Virtual Environment
+venv/
+.venv/
+env/
+chesley_web_env/
+
+# Node Modules
+node_modules/
+
+# Package Manager Cache
+.pip-cache/
+
+# IDE and Editor Configuration Files
+.idea/
+.vscode/
+.DS_Store
