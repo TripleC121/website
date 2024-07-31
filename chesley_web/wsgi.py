@@ -14,7 +14,7 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "chesley_web.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "chesley_web.settings.production")
 
 application = get_wsgi_application()
 
