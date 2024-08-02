@@ -1,5 +1,4 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,23 +10,35 @@
 <body>
     <header>
         <h1>Chris Chesley</h1>
+        {% if user.is_authenticated %}
+            <p class="welcome-message">Welcome, {{ user.username }}!</p>
+        {% endif %}
         <nav>
             <ul>
                 <li><a href="{% url 'homepage' %}">Home</a></li>
-                {% comment %} <li><a href="{% url 'projects' %}">Projects</a></li> {% endcomment %}
                 <li><a href="{% url 'learning' %}">Learning</a></li>
                 <li><a href="{% url 'growing' %}">Growing</a></li>
+                <li><a href="{% url 'user_test' %}">User stuff</a></li>
                 <li><a href="{% url 'about' %}">About</a></li>
+                {% if user.is_authenticated %}
+                    <li>
+                        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" style="background: none; border: none; padding: 0; font: inherit; color: inherit; text-decoration: underline; cursor: pointer;">Logout</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'signup' %}">Sign up</a></li>
+                {% endif %}
             </ul>
         </nav>
     </header>
-
     <main>
         {% block content %}
         <!-- Content from other templates will be inserted here -->
         {% endblock %}
     </main>
-
     <footer>
         <p>&copy; {% now "Y" %} Chris Chesley. All rights reserved.</p>
     </footer>
