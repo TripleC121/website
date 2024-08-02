@@ -2,12 +2,16 @@ from pathlib import Path
 import environ
 import os
 
-# Initialise environment variables
-env = environ.Env()
-environ.Env.read_env()
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+
+# debug
+# print(f"Environment file read: {environ.Env.read_env()}")
+# print(f"DEV_SECRET_KEY: {env('DEV_SECRET_KEY', default='Not found')}")
 
 # Application definition
 INSTALLED_APPS = [
