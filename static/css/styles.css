@@ -222,6 +222,15 @@ button:hover {
     background: #244a24;
 }
 
+/* user authrntication styles */
+.welcome-message {
+    font-size: 1rem;
+    color: #fff;
+    text-align: center;
+    margin: 0.5rem 0;
+    font-weight: bold;
+}
+
 footer {
     background: #2C5F2D;
     color: #fff;

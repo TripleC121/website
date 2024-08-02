@@ -1,5 +1,6 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
+from django.contrib.auth.views import LogoutView
+from . import views 
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
@@ -15,6 +16,10 @@ urlpatterns = [
     path('growing/succulents/', views.succulents, name='succulents'),
     path('growing/trees/', views.trees, name='trees'),
     path('about/', views.about, name='about'),
+    path('user_test/', views.user_test, name='user_test'),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('signup/', views.signup, name='signup'),
+    path('logout/', LogoutView.as_view(), name='logout'),
    # path('reading/', views.reading, name='reading'),
    # path('cooking/', views.cooking, name='cooking'),
    # path('exercise/', views.exercise, name='exercise'),
