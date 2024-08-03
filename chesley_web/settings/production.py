@@ -4,7 +4,7 @@ SECRET_KEY = env('DEV_SECRET_KEY')
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['your-domain.com', 'www.your-domain.com']
+ALLOWED_HOSTS = ['cchesley.com', 'www.cchesley.com']
 
 # Database
 DATABASES = {
