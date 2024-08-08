@@ -1,20 +1,6 @@
 from pathlib import Path
 import environ
 import os
-import logging
-
-# Logging
-logger = logging.getLogger('chesley_web')
-
-class DebugMiddleware:
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        logger.debug(f"Incoming request: Host={request.get_host()}, Path={request.path}")
-        response = self.get_response(request)
-        logger.debug(f"Response status: {response.status_code}")
-        return response
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -22,10 +8,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # Initialise environment variables
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-
-# debug
-# print(f"Environment file read: {environ.Env.read_env()}")
-# print(f"DEV_SECRET_KEY: {env('DEV_SECRET_KEY', default='Not found')}")
 
 # Application definition
 INSTALLED_APPS = [
@@ -47,7 +29,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'chesley_web.settings.base.DebugMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = [
@@ -113,48 +94,3 @@ AUTH_USER_MODEL = 'main.CustomUser'
 LOGIN_REDIRECT_URL = 'homepage'
 LOGOUT_REDIRECT_URL = 'homepage'
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
-        },
-    },
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': env('DJANGO_ERROR_LOG', default='/var/log/chesley_web/django/errors.log'),
-            'formatter': 'verbose',
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file', 'console'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-        'django.request': {
-            'handlers': ['file', 'console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-        'django.server': {
-            'handlers': ['file', 'console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-        'chesley_web': {
-            'handlers': ['file', 'console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-    },
-}
