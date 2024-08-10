@@ -10,7 +10,7 @@ print(f"Sys path: {sys.path}")
 
 SECRET_KEY = env('PROD_SECRET_KEY')
 DEBUG = env.bool('PROD_DEBUG', default=False)
-ALLOWED_HOSTS = env.list('PROD_ALLOWED_HOSTS') + ['localhost']
+ALLOWED_HOSTS = env.list('PROD_ALLOWED_HOSTS')
 
 # Database
 DATABASES = {
@@ -45,6 +45,15 @@ SECURE_HSTS_PRELOAD = env.bool('SECURE_HSTS_PRELOAD', default=True)
 
 # Static files
 STATIC_ROOT = env('STATIC_ROOT', default=os.path.join(BASE_DIR, 'staticfiles'))
+
+# password reset
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
 
 LOGGING = {
     'version': 1,

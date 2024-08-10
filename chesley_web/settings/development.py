@@ -6,7 +6,11 @@ SECRET_KEY = env('DEV_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
+# For development, we don't need STATIC_ROOT
+# Django's runserver will serve static files from STATICFILES_DIRS
+STATIC_ROOT = BASE_DIR / 'staticfiles_dev'
 
 # Database
 DATABASES = {
@@ -15,3 +19,6 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+# password reset
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

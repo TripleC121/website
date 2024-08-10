@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth import login
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView
 from .forms import CustomUserCreationForm
 
 def homepage(request):
@@ -53,10 +55,30 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            messages.success(request, 'Account created successfully. Welcome!')
             return redirect('homepage')
+        else:
+            messages.error(request, 'There was an error with your registration. Please check the form and try again.')
     else:
         form = CustomUserCreationForm()
     return render(request, 'signup.html', {'form': form})
+
+# password reset
+class CustomPasswordResetView(PasswordResetView):
+    template_name = 'password_reset/password_reset_form.html'
+    email_template_name = 'password_reset/password_reset_email.html'
+    subject_template_name = 'password_reset/password_reset_subject.txt'
+    success_url = '/password_reset/done/'
+
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    template_name = 'password_reset/password_reset_done.html'
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'password_reset/password_reset_confirm.html'
+    success_url = '/password_reset/complete/'
+
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+    template_name = 'password_reset/password_reset_complete.html'
 
 #def reading(request):
  #   return render(request, 'reading/index.html')
