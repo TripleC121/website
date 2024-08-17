@@ -1,12 +1,10 @@
 from .base import *
 import sys
+import environ
 
-print(f"Python version: {sys.version}")
-print(f"Current working directory: {os.getcwd()}")
-print(f"DJANGO_SETTINGS_MODULE: {os.environ.get('DJANGO_SETTINGS_MODULE')}")
-print(f"PROD_ALLOWED_HOSTS from env: {os.environ.get('PROD_ALLOWED_HOSTS')}")
-print(f"Sys path: {sys.path}")
-
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env.prod'))
 
 SECRET_KEY = env('PROD_SECRET_KEY')
 DEBUG = env.bool('PROD_DEBUG', default=False)
@@ -29,8 +27,8 @@ DATABASES = {
 }
 
 # logging
-print(f"Database settings: {DATABASES}")
-logger.debug(f"ALLOWED_HOSTS: {ALLOWED_HOSTS}")
+# print(f"Database settings: {DATABASES}")
+# logger.debug(f"ALLOWED_HOSTS: {ALLOWED_HOSTS}")
 
 # Security settings
 SECURE_SSL_REDIRECT = env.bool('SECURE_SSL_REDIRECT', default=True)
@@ -54,49 +52,3 @@ EMAIL_USE_TLS = env('EMAIL_USE_TLS')
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
-        },
-    },
-    'handlers': {
-        'file': {
-            'level': 'DEBUG',  # Changed from ERROR to DEBUG
-            'class': 'logging.FileHandler',
-            'filename': env('DJANGO_ERROR_LOG', default='/var/log/chesley_web/django/errors.log'),
-            'formatter': 'verbose',
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file', 'console'],
-            'level': 'DEBUG',  # Changed from ERROR to DEBUG
-            'propagate': True,
-        },
-        'django.request': {
-            'handlers': ['file', 'console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-        'django.server': {
-            'handlers': ['file', 'console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-        'chesley_web': {  # Add this logger for your application
-            'handlers': ['file', 'console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-    },
-}

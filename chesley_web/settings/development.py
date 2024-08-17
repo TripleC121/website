@@ -1,24 +1,18 @@
 from .base import *
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('DEV_SECRET_KEY')
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-
-# For development, we don't need STATIC_ROOT
-# Django's runserver will serve static files from STATICFILES_DIRS
-STATIC_ROOT = BASE_DIR / 'staticfiles_dev'
+DEBUG = env.bool('DEV_DEBUG', default=True)
+ALLOWED_HOSTS = env.list('DEV_ALLOWED_HOSTS', default=['*'])
 
 # Database
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
-# password reset
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Disable security settings for development
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
