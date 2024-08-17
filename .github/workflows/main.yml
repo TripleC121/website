@@ -20,6 +20,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements-dev.txt
     - name: Run tests
+      env:
+        DEV_SECRET_KEY: ${{ secrets.DEV_SECRET_KEY }}
+        DEV_DB_NAME: ${{ secrets.DEV_DB_NAME }}
+        DEV_DB_USER: ${{ secrets.DEV_DB_USER }}
+        DEV_DB_PASSWORD: ${{ secrets.DEV_DB_PASSWORD }}
       run: |
         python manage.py test
 
