@@ -33,6 +33,21 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
     - name: Build Docker image
-      run: docker build -t myapp:${{ github.sha }}
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        push: false
+        tags: myapp:${{ github.sha }}
+        load: true
+      env:
+        DEV_SECRET_KEY: ${{ secrets.DEV_SECRET_KEY }}
+        DEV_DB_NAME: ${{ secrets.DEV_DB_NAME }}
+        DEV_DB_USER: ${{ secrets.DEV_DB_USER }}
+        DEV_DB_PASSWORD: ${{ secrets.DEV_DB_PASSWORD }}
