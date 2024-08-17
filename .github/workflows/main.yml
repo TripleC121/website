@@ -21,6 +21,7 @@ jobs:
         pip install -r requirements-dev.txt
     - name: Run tests
       env:
+        CI: true
         DEV_SECRET_KEY: ${{ secrets.DEV_SECRET_KEY }}
         DEV_DB_NAME: ${{ secrets.DEV_DB_NAME }}
         DEV_DB_USER: ${{ secrets.DEV_DB_USER }}
@@ -34,4 +35,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build Docker image
-      run: docker build -t myapp:${{ github.sha }} .
+      run: docker build -t myapp:${{ github.sha }}

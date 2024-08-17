@@ -91,7 +91,8 @@ AUTH_USER_MODEL = 'main.CustomUser'
 LOGIN_REDIRECT_URL = 'homepage'
 LOGOUT_REDIRECT_URL = 'homepage'
 
-# Logging configuration
+import os
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -102,12 +103,6 @@ LOGGING = {
         },
     },
     'handlers': {
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': env('DJANGO_ERROR_LOG', default='/var/log/chesley_web/django/errors.log'),
-            'formatter': 'verbose',
-        },
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
@@ -116,24 +111,36 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['file', 'console'],
-            'level': 'DEBUG',
+            'handlers': ['console'],
+            'level': 'INFO',
             'propagate': True,
         },
         'django.request': {
-            'handlers': ['file', 'console'],
+            'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': False,
         },
         'django.server': {
-            'handlers': ['file', 'console'],
+            'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': False,
         },
         'chesley_web': {
-            'handlers': ['file', 'console'],
+            'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': False,
         },
     },
 }
+
+# If you want to keep file logging for local development, you can add this condition
+if not os.environ.get('CI'):
+    LOGGING['handlers']['file'] = {
+        'level': 'DEBUG',
+        'class': 'logging.FileHandler',
+        'filename': os.environ.get('DJANGO_ERROR_LOG', '/var/log/chesley_web/django/errors.log'),
+        'formatter': 'verbose',
+    }
+    for logger in LOGGING['loggers'].values():
+        logger['handlers'].append('file')
+     
