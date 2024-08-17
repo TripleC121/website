@@ -132,15 +132,3 @@ LOGGING = {
         },
     },
 }
-
-# If you want to keep file logging for local development, you can add this condition
-if not os.environ.get('CI'):
-    LOGGING['handlers']['file'] = {
-        'level': 'DEBUG',
-        'class': 'logging.FileHandler',
-        'filename': os.environ.get('DJANGO_ERROR_LOG', '/var/log/chesley_web/django/errors.log'),
-        'formatter': 'verbose',
-    }
-    for logger in LOGGING['loggers'].values():
-        logger['handlers'].append('file')
-     
