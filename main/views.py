@@ -6,7 +6,7 @@ from django.contrib.auth.views import (
     PasswordResetView, PasswordResetDoneView,
     PasswordResetConfirmView, PasswordResetCompleteView
 )
-from .forms import CustomUserCreationFor
+from .forms import CustomUserCreationForm
 
 
 def home(request):
