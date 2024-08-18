@@ -14,7 +14,7 @@ jobs:
       DEV_DB_NAME: ${{ secrets.DEV_DB_NAME }}
       DEV_DB_USER: ${{ secrets.DEV_DB_USER }}
       DEV_DB_PASSWORD: ${{ secrets.DEV_DB_PASSWORD }}
-      
+
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python
