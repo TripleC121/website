@@ -12,25 +12,36 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     permissions:
       contents: write
+      actions: read
     steps:
-    - uses: actions/checkout@v4
-    - name: Download Docker image artifact
-      uses: actions/download-artifact@v4
-      with:
-        name: docker-image
-        run-id: ${{ github.event.workflow_run.id }}
-    - name: Load Docker image
-      run: docker load < image.tar
-    - name: Prepare for deployment
-      run: |
-        # Add steps to prepare for deployment
-        echo "Preparing for deployment..."
-    - name: Create Release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: v${{ github.run_number }}
-        release_name: Release v${{ github.run_number }}
-        draft: false
-        prerelease: false
+      - uses: actions/checkout@v4
+
+      - name: Download workflow artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          workflow: Build Docker Image
+          run_id: ${{github.event.workflow_run.id}}
+          name: docker-image
+          path: .
+
+      - name: Display structure of downloaded files
+        run: ls -R
+
+      - name: Load Docker image
+        run: docker load < image.tar
+
+      - name: Prepare for deployment
+        run: |
+          # Add steps to prepare for deployment
+          echo "Preparing for deployment..."
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: Release v${{ github.run_number }}
+          draft: false
+          prerelease: false
