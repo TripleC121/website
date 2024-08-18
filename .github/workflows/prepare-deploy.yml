@@ -13,7 +13,13 @@ jobs:
     permissions:
       contents: write
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+    - name: Download Docker image artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: docker-image
+    - name: Load Docker image
+      run: docker load < image.tar
     - name: Prepare for deployment
       run: |
         # Add steps to prepare for deployment
