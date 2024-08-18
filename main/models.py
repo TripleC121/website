@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
 class CustomUser(AbstractUser):
     # Basic fitness-related fields
     height = models.FloatField(null=True, blank=True, help_text="Height in centimeters")
@@ -14,7 +15,6 @@ class CustomUser(AbstractUser):
         ('endurance', 'Endurance'),
         ('general_fitness', 'General Fitness'),
     ])
-
 
     # Activity level
     activity_level = models.CharField(max_length=50, blank=True, choices=[
@@ -30,16 +30,10 @@ class CustomUser(AbstractUser):
     workout_reminder = models.BooleanField(default=False)
 
     # You can add more fields as needed
-
-
     def __str__(self):
         return self.username
-
 
     def get_bmi(self):
         if self.height and self.weight:
             return self.weight / ((self.height / 100) ** 2)
         return None
-
-
-    # Add more methods as needed
