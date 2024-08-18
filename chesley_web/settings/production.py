@@ -20,8 +20,8 @@ DATABASES = {
         "HOST": env('PROD_DB_HOST'),
         "PORT": env('PROD_DB_PORT', default='5432'),
 	'OPTIONS': {
-            'sslmode': 'verify-full',
-            'sslrootcert': env('DB_SSLROOTCERT'),
+        'sslmode': 'verify-full',
+        'sslrootcert': env('DB_SSLROOTCERT'),
 	}
     }
 }
