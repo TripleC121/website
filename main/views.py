@@ -9,7 +9,7 @@ from django.contrib.auth.views import (
 from .forms import CustomUserCreationForm
 
 
-def home(request):
+def homepage(request):
     return render(request, 'index.html')
 
 
