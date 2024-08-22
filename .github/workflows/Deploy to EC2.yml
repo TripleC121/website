@@ -23,14 +23,25 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/chesley_web:${{ github.sha }}
-    - name: Deploy to EC2
+
+    - name: Test SSH Connection
       env:
         PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         HOST: ${{ secrets.EC2_HOST }}
-        USER: ${{ secrets.EC2_USER }}
+        USER: triplec
       run: |
-        echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-        ssh -vvv -o StrictHostKeyChecking=no -i private_key ${USER}@${HOST} << 'ENDSSH'
+        echo "$PRIVATE_KEY" > github_actions_deploy_key
+        chmod 600 github_actions_deploy_key
+        ssh -v -o StrictHostKeyChecking=no -i github_actions_deploy_key ${USER}@${HOST} 'echo "SSH connection successful"'
+
+    - name: Deploy to EC2
+      if: success()
+      env:
+        PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+        HOST: ${{ secrets.EC2_HOST }}
+        USER: triplec
+      run: |
+        ssh -o StrictHostKeyChecking=no -i github_actions_deploy_key ${USER}@${HOST} << 'ENDSSH'
         set -ex
         echo "Deploying new version..."
         cd /opt/website || exit 1
@@ -46,6 +57,7 @@ jobs:
         sudo systemctl restart nginx
         echo "Deployment completed successfully!"
         ENDSSH
+
     - name: Verify Deployment
       env:
         HOST: ${{ secrets.EC2_HOST }}
