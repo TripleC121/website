@@ -24,24 +24,14 @@ jobs:
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/chesley_web:${{ github.sha }}
 
-    - name: Test SSH Connection
+    - name: Deploy to EC2 (webapps user)
       env:
         PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
         HOST: ${{ secrets.EC2_HOST }}
-        USER: triplec
       run: |
         echo "$PRIVATE_KEY" > github_actions_deploy_key
         chmod 600 github_actions_deploy_key
-        ssh -v -o StrictHostKeyChecking=no -i github_actions_deploy_key ${USER}@${HOST} 'echo "SSH connection successful"'
-
-    - name: Deploy to EC2
-      if: success()
-      env:
-        PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-        HOST: ${{ secrets.EC2_HOST }}
-        USER: triplec
-      run: |
-        ssh -o StrictHostKeyChecking=no -i github_actions_deploy_key ${USER}@${HOST} << 'ENDSSH'
+        ssh -o StrictHostKeyChecking=no -i github_actions_deploy_key webapps@${HOST} << 'ENDSSH'
         set -ex
         echo "Deploying new version..."
         cd /opt/website || exit 1
@@ -50,12 +40,22 @@ jobs:
         # Build and start the new container
         docker-compose -f docker-compose.prod.yml up -d --build
         # Run migrations
-        docker-compose -f docker-compose.prod.yml exec web python manage.py migrate
+        docker-compose -f docker-compose.prod.yml exec -T web python manage.py migrate
         # Collect static files
-        docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --noinput
-        # Restart Nginx
+        docker-compose -f docker-compose.prod.yml exec -T web python manage.py collectstatic --noinput
+        echo "Deployment tasks completed successfully!"
+        ENDSSH
+
+    - name: Restart Nginx (triplec user)
+      env:
+        PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+        HOST: ${{ secrets.EC2_HOST }}
+      run: |
+        ssh -o StrictHostKeyChecking=no -i github_actions_deploy_key triplec@${HOST} << 'ENDSSH'
+        set -ex
+        echo "Restarting Nginx..."
         sudo systemctl restart nginx
-        echo "Deployment completed successfully!"
+        echo "Nginx restarted successfully!"
         ENDSSH
 
     - name: Verify Deployment
