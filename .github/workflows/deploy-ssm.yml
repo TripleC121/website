@@ -52,59 +52,59 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-        - name: Deploy to EC2 using AWS Systems Manager
-        run: |
-          aws ssm send-command \
-            --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
-            --document-name "AWS-RunShellScript" \
-            --parameters '{
-              "commands": [
-                "echo \"Starting deployment process...\"",
-                "cd /opt/website",
-                "echo \"Current directory: $(pwd)\"",
-                "echo \"Fetching latest changes...\"",
-                "sudo -u webapps git fetch --all",
-                "echo \"Resetting to origin/main...\"",
-                "sudo -u webapps git reset --hard origin/main",
-                "echo \"Current git status:\"",
-                "sudo -u webapps git status",
-                "echo \"Current git log:\"",
-                "sudo -u webapps git log -n 1",
-                "echo \"Logging into DockerHub...\"",
-                "echo \"${{ secrets.DOCKERHUB_TOKEN }}\" | sudo -u webapps docker login -u \"${{ secrets.DOCKERHUB_USERNAME }}\" --password-stdin",
-                "echo \"Stopping current containers...\"",
-                "sudo -u webapps docker-compose -f docker-compose.prod.yml down",
-                "echo \"Building and starting new containers...\"",
-                "sudo -u webapps docker-compose -f docker-compose.prod.yml up -d --build",
-                "echo \"Running database migrations...\"",
-                "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py migrate",
-                "echo \"Collecting static files...\"",
-                "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py collectstatic --noinput",
-                "echo \"Restarting Nginx...\"",
-                "sudo systemctl restart nginx",
-                "echo \"Logging out of DockerHub...\"",
-                "sudo -u webapps docker logout",
-                "echo \"Deployment process completed.\""
-              ]
-            }' \
-            --output text
+    - name: Deploy to EC2 using AWS Systems Manager
+      run: |
+        aws ssm send-command \
+          --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
+          --document-name "AWS-RunShellScript" \
+          --parameters '{
+            "commands": [
+              "echo \"Starting deployment process...\"",
+              "cd /opt/website",
+              "echo \"Current directory: $(pwd)\"",
+              "echo \"Fetching latest changes...\"",
+              "sudo -u webapps git fetch --all",
+              "echo \"Resetting to origin/main...\"",
+              "sudo -u webapps git reset --hard origin/main",
+              "echo \"Current git status:\"",
+              "sudo -u webapps git status",
+              "echo \"Current git log:\"",
+              "sudo -u webapps git log -n 1",
+              "echo \"Logging into DockerHub...\"",
+              "echo \"${{ secrets.DOCKERHUB_TOKEN }}\" | sudo -u webapps docker login -u \"${{ secrets.DOCKERHUB_USERNAME }}\" --password-stdin",
+              "echo \"Stopping current containers...\"",
+              "sudo -u webapps docker-compose -f docker-compose.prod.yml down",
+              "echo \"Building and starting new containers...\"",
+              "sudo -u webapps docker-compose -f docker-compose.prod.yml up -d --build",
+              "echo \"Running database migrations...\"",
+              "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py migrate",
+              "echo \"Collecting static files...\"",
+              "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py collectstatic --noinput",
+              "echo \"Restarting Nginx...\"",
+              "sudo systemctl restart nginx",
+              "echo \"Logging out of DockerHub...\"",
+              "sudo -u webapps docker logout",
+              "echo \"Deployment process completed.\""
+            ]
+          }' \
+          --output text
 
-          - name: Verify Deployment
-          run: |
-            aws ssm send-command \
-              --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
-              --document-name "AWS-RunShellScript" \
-              --parameters '{
-                "commands": [
-                  "curl -sS -o /dev/null -w \"%{http_code}\" http://localhost"
-                ]
-              }' \
-              --output text > verification_output.txt
+    - name: Verify Deployment
+      run: |
+        aws ssm send-command \
+          --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
+          --document-name "AWS-RunShellScript" \
+          --parameters '{
+            "commands": [
+              "curl -sS -o /dev/null -w \"%{http_code}\" http://localhost"
+            ]
+          }' \
+          --output text > verification_output.txt
 
-            status_code=$(cat verification_output.txt | grep -oP '(?<=HttpStatus: )\d+')
-            if [ "$status_code" = "200" ]; then
-              echo "Deployment verified successfully!"
-            else
-              echo "Deployment verification failed. HTTP status code: $status_code"
-              exit 1
-            fi
+        status_code=$(cat verification_output.txt | grep -oP '(?<=HttpStatus: )\d+')
+        if [ "$status_code" = "200" ]; then
+          echo "Deployment verified successfully!"
+        else
+          echo "Deployment verification failed. HTTP status code: $status_code"
+          exit 1
+        fi
