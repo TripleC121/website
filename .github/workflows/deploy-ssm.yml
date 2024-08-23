@@ -1,0 +1,47 @@
+name: Deploy to EC2 using AWS Systems Manager
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  test-and-lint:
+    uses: ./.github/workflows/test-lint.yml
+
+  deploy:
+    needs: test-and-lint
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Deploy to EC2 using AWS Systems Manager
+      run: |
+        aws ssm send-command \
+          --instance-ids ${{ secrets.EC2_INSTANCE_ID }} \
+          --document-name "AWS-RunShellScript" \
+          --parameters commands=[
+            "cd /opt/website",
+            "sudo -u webapps git pull origin main",
+            "sudo -u webapps docker-compose -f docker-compose.prod.yml up -d --build",
+            "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py migrate",
+            "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py collectstatic --noinput",
+            "sudo systemctl restart nginx"
+          ] \
+          --output text
+
+    - name: Verify Deployment
+      run: |
+        response=$(curl -sS -o /dev/null -w "%{http_code}" https://${{ secrets.EC2_HOST }})
+        if [ $response = "200" ]; then
+          echo "Deployment verified successfully!"
+        else
+          echo "Deployment verification failed. HTTP status code: $response"
+          exit 1
+        fi
