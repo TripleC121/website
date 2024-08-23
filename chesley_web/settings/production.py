@@ -1,7 +1,8 @@
-from .base import * # version 0.0.1
+from .base import *
 import sys
 import environ
 
+# version 0.0.1
 # Initialise environment variables
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env.prod'))
