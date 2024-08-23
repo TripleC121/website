@@ -1,0 +1,10 @@
+webapps@ip-172-31-46-83:/opt/website$ cat requirements-prod.txt
+asgiref==3.8.1
+Django==5.0.7
+django-environ==0.11.2
+gunicorn==22.0.0
+packaging==24.1
+psycopg==3.2.1
+psycopg-binary==3.2.1
+sqlparse==0.5.1
+typing_extensions==4.12.2
