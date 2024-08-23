@@ -1,0 +1,30 @@
+FROM python:3.12
+
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /opt/website
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+COPY requirements-prod.txt /opt/website/
+RUN pip install --no-cache-dir -r requirements-prod.txt
+
+# Copy the project files
+COPY . /opt/website/
+
+# Create necessary directories and set permissions
+RUN mkdir -p /opt/website/run /opt/website/staticfiles /opt/website/media && \
+    chown -R webapps:www-data /opt/website && \
+    chmod -R 755 /opt/website
+
+# Create a non-root user
+RUN useradd -ms /bin/bash webapps
+
+USER webapps
+
+# Run Gunicorn
+CMD ["gunicorn", "--config", "/opt/website/gunicorn.conf.py", "chesley_web.wsgi:application"]
