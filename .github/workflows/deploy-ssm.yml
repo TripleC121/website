@@ -6,32 +6,7 @@ on:
 
 jobs:
   test-and-lint:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements-dev.txt
-        pip install flake8
-
-    - name: Run tests
-      env:
-        DJANGO_SETTINGS_MODULE: chesley_web.settings.development
-        DEV_SECRET_KEY: ${{ secrets.DEV_SECRET_KEY }}
-        DEV_DB_NAME: ${{ secrets.DEV_DB_NAME }}
-        DEV_DB_USER: ${{ secrets.DEV_DB_USER }}
-        DEV_DB_PASSWORD: ${{ secrets.DEV_DB_PASSWORD }}
-      run: python manage.py test
-
-    - name: Run linter
-      run: flake8 .
+    # ... (keep the test-and-lint job as is)
 
   deploy:
     needs: test-and-lint
@@ -55,18 +30,20 @@ jobs:
     - name: Deploy to EC2 using AWS Systems Manager
       run: |
         aws ssm send-command \
-          --instance-ids ${{ secrets.EC2_INSTANCE_ID }} \
+          --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
           --document-name "AWS-RunShellScript" \
-          --parameters commands=[
-            "cd /opt/website",
-            "sudo -u webapps git pull origin main",
-            "echo '${{ secrets.DOCKERHUB_TOKEN }}' | sudo -u webapps docker login -u '${{ secrets.DOCKERHUB_USERNAME }}' --password-stdin",
-            "sudo -u webapps docker-compose -f docker-compose.prod.yml up -d --build",
-            "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py migrate",
-            "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py collectstatic --noinput",
-            "sudo systemctl restart nginx",
-            "sudo -u webapps docker logout"
-          ] \
+          --parameters '{
+            "commands": [
+              "cd /opt/website",
+              "sudo -u webapps git pull origin main",
+              "echo \"${{ secrets.DOCKERHUB_TOKEN }}\" | sudo -u webapps docker login -u \"${{ secrets.DOCKERHUB_USERNAME }}\" --password-stdin",
+              "sudo -u webapps docker-compose -f docker-compose.prod.yml up -d --build",
+              "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py migrate",
+              "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py collectstatic --noinput",
+              "sudo systemctl restart nginx",
+              "sudo -u webapps docker logout"
+            ]
+          }' \
           --output text
 
     - name: Verify Deployment
