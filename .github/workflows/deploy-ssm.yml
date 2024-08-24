@@ -12,67 +12,67 @@ jobs:
     needs: test-and-lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
 
-      - name: Login to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Login to DockerHub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Deploy to EC2 using AWS Systems Manager
-        run: |
-          aws ssm send-command \
-            --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
-            --document-name "AWS-RunShellScript" \
-            --parameters '{
-              "commands": [
-                "#!/bin/bash",
-                "set -e",
-                "echo \"Starting deployment process...\"",
-                "cd /opt/website",
-                "echo \"Current directory: $(pwd)\"",
-                "echo \"Setting up ssh-agent...\"",
-                "eval $(ssh-agent -s)",
-                "echo \"${{ secrets.SSH_PASSPHRASE }}\" | ssh-add /home/webapps/.ssh/web_ec2_key",
-                "echo \"Fetching latest changes...\"",
-                "sudo -u webapps git fetch --all",
-                "echo \"Resetting to origin/main...\"",
-                "sudo -u webapps git reset --hard origin/main",
-                "echo \"Current git status:\"",
-                "sudo -u webapps git status",
-                "echo \"Current git log:\"",
-                "sudo -u webapps git log -n 1",
-                "echo \"Logging into DockerHub...\"",
-                "echo \"${{ secrets.DOCKERHUB_TOKEN }}\" | sudo -u webapps docker login -u \"${{ secrets.DOCKERHUB_USERNAME }}\" --password-stdin",
-                "echo \"Stopping current containers...\"",
-                "sudo -u webapps docker-compose -f docker-compose.prod.yml down",
-                "echo \"Building and starting new containers...\"",
-                "sudo -u webapps docker-compose -f docker-compose.prod.yml up -d --build",
-                "echo \"Running database migrations...\"",
-                "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py migrate",
-                "echo \"Collecting static files...\"",
-                "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py collectstatic --noinput",
-                "echo \"Restarting Nginx...\"",
-                "sudo systemctl restart nginx",
-                "echo \"Logging out of DockerHub...\"",
-                "sudo -u webapps docker logout",
-                "ssh-agent -k",
-                "echo \"Performing basic health check...\"",
-                "if curl -s -o /dev/null -w \"%{http_code}\" http://localhost | grep -q \"200\"; then",
-                "  echo \"Deployment successful! Website is responding.\"",
-                "else",
-                "  echo \"Deployment may have failed. Website is not responding as expected.\"",
-                "  exit 1",
-                "fi",
-                "echo \"Deployment process completed.\""
-              ]
-            }' \
-            --output text
+    - name: Deploy to EC2 using AWS Systems Manager
+      run: |
+        aws ssm send-command \
+          --instance-ids "${{ secrets.EC2_INSTANCE_ID }}" \
+          --document-name "AWS-RunShellScript" \
+          --parameters '{
+            "commands": [
+              "#!/bin/bash",
+              "set -e",
+              "echo \"Starting deployment process...\"",
+              "cd /opt/website",
+              "echo \"Current directory: $(pwd)\"",
+              "echo \"Setting up ssh-agent...\"",
+              "eval $(ssh-agent -s)",
+              "echo \"${{ secrets.SSH_PASSPHRASE }}\" | ssh-add /home/webapps/.ssh/web_ec2_key",
+              "echo \"Fetching latest changes...\"",
+              "sudo -u webapps git fetch --all",
+              "echo \"Resetting to origin/main...\"",
+              "sudo -u webapps git reset --hard origin/main",
+              "echo \"Current git status:\"",
+              "sudo -u webapps git status",
+              "echo \"Current git log:\"",
+              "sudo -u webapps git log -n 1",
+              "echo \"Logging into DockerHub...\"",
+              "echo \"${{ secrets.DOCKERHUB_TOKEN }}\" | sudo -u webapps docker login -u \"${{ secrets.DOCKERHUB_USERNAME }}\" --password-stdin",
+              "echo \"Stopping current containers...\"",
+              "sudo -u webapps docker-compose -f docker-compose.prod.yml down",
+              "echo \"Building and starting new containers...\"",
+              "sudo -u webapps docker-compose -f docker-compose.prod.yml up -d --build",
+              "echo \"Running database migrations...\"",
+              "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py migrate",
+              "echo \"Collecting static files...\"",
+              "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py collectstatic --noinput",
+              "echo \"Restarting Nginx...\"",
+              "sudo systemctl restart nginx",
+              "echo \"Logging out of DockerHub...\"",
+              "sudo -u webapps docker logout",
+              "ssh-agent -k",
+              "echo \"Performing basic health check...\"",
+              "if curl -s -o /dev/null -w \"%{http_code}\" http://localhost | grep -q \"200\"; then",
+              "  echo \"Deployment successful! Website is responding.\"",
+              "else",
+              "  echo \"Deployment may have failed. Website is not responding as expected.\"",
+              "  exit 1",
+              "fi",
+              "echo \"Deployment process completed.\""
+            ]
+          }' \
+          --output text
