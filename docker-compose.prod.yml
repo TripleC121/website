@@ -1,4 +1,3 @@
-webapps@ip-172-31-46-83:/opt/website$ cat docker-compose.prod.yml
 services:
   web:
     build:
@@ -23,5 +22,5 @@ services:
         python manage.py collectstatic --noinput &&
         mkdir -p /opt/website/run &&
         chmod 775 /opt/website/run &&
-        gunicorn chesley_web.wsgi:application -c /opt/website/gunicorn.conf.py
+        gunicorn --bind unix:/opt/website/run/chesley_web.sock chesley_web.wsgi:application --log-level debug
       "
