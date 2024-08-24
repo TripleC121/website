@@ -8,9 +8,8 @@ RUN apt-get update && apt-get install -y \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
-# Create www-data group and webapps user
-RUN groupadd -g 33 www-data && \
-    useradd -u 1002 -g www-data -ms /bin/bash webapps
+# Create webapps user and add to www-data group
+RUN useradd -u 1002 -g www-data -ms /bin/bash webapps || true
 
 # Install Python dependencies
 COPY requirements-prod.txt /opt/website/
