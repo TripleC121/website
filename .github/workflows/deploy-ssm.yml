@@ -54,8 +54,6 @@ jobs:
             --document-name "AWS-RunShellScript" \
             --parameters '{
               "commands": [
-                "#!/bin/bash",
-                "set -e",
                 "echo \"Starting deployment process...\"",
                 "cd /opt/website",
                 "echo \"Current directory: $(pwd)\"",
@@ -98,7 +96,7 @@ jobs:
             --document-name "AWS-RunShellScript" \
             --parameters '{
               "commands": [
-                "curl -sS -L -o /dev/null -w \"%{http_code}\" http://localhost"
+                "curl -sS -o /dev/null -w \"%{http_code}\" http://localhost"
               ]
             }' \
             --output text --query "Command.CommandId")
@@ -118,7 +116,7 @@ jobs:
           echo "Command output: $OUTPUT"
 
           # Check the status code
-          if [ "$OUTPUT" = "200" ] || [ "$OUTPUT" = "301" ] || [ "$OUTPUT" = "302" ]; then
+          if [ "$OUTPUT" = "200" ]; then
             echo "Deployment verified successfully!"
           else
             echo "Deployment verification failed. HTTP status code: $OUTPUT"
