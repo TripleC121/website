@@ -54,6 +54,8 @@ jobs:
             --document-name "AWS-RunShellScript" \
             --parameters '{
               "commands": [
+                "#!/bin/bash",
+                "set -e",
                 "echo \"Starting deployment process...\"",
                 "cd /opt/website",
                 "echo \"Current directory: $(pwd)\"",
@@ -87,6 +89,7 @@ jobs:
               ]
             }' \
             --output text
+
             - name: Verify Deployment
             run: |
               echo "Starting verification process..."
