@@ -14,6 +14,7 @@ services:
       - .env.prod
     environment:
       - DJANGO_SETTINGS_MODULE=chesley_web.settings.production
+      - DJANGO_ENVIRONMENT=production
     user: "1002:33"  # UID of webapps and GID of www-data
     restart: always
     command: >
