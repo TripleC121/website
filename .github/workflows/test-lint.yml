@@ -52,5 +52,7 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
+        context: .
+        file: ./Dockerfile.prod  # Specify the Dockerfile.prod
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/chesley-web:${{ github.sha }}
