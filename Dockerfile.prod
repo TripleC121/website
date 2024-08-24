@@ -1,13 +1,16 @@
 FROM python:3.12
 
 ENV PYTHONUNBUFFERED=1
-
 WORKDIR /opt/website
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
+
+# Create www-data group and webapps user
+RUN groupadd -g 33 www-data && \
+    useradd -u 1002 -g www-data -ms /bin/bash webapps
 
 # Install Python dependencies
 COPY requirements-prod.txt /opt/website/
@@ -21,9 +24,7 @@ RUN mkdir -p /opt/website/run /opt/website/staticfiles /opt/website/media && \
     chown -R webapps:www-data /opt/website && \
     chmod -R 755 /opt/website
 
-# Create a non-root user
-RUN useradd -ms /bin/bash webapps
-
+# Switch to the webapps user
 USER webapps
 
 # Run Gunicorn
