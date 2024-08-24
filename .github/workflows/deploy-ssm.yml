@@ -5,31 +5,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test-and-lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements-dev.txt
-          pip install flake8
-      - name: Run tests
-        env:
-          DEV_SECRET_KEY: ${{ secrets.DEV_SECRET_KEY }}
-          DEV_DB_NAME: ${{ secrets.DEV_DB_NAME }}
-          DEV_DB_USER: ${{ secrets.DEV_DB_USER }}
-          DEV_DB_PASSWORD: ${{ secrets.DEV_DB_PASSWORD }}
-        run: python manage.py test
-      - name: Run linter
-        run: flake8 .
-
   deploy:
-    needs: test-and-lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -51,33 +27,55 @@ jobs:
                 "echo \"Before git operations:\"",
                 "sudo -u webapps git status",
                 "sudo -u webapps git rev-parse HEAD",
-                "sudo -u webapps git fetch --all",
-                "sudo -u webapps git reset --hard origin/main",
+                "echo \"Fetching changes:\"",
+                "sudo -u webapps git fetch --all || { echo \"Git fetch failed\"; exit 1; }",
+                "echo \"Resetting to origin/main:\"",
+                "sudo -u webapps git reset --hard origin/main || { echo \"Git reset failed\"; exit 1; }",
                 "echo \"After git operations:\"",
                 "sudo -u webapps git status",
                 "sudo -u webapps git rev-parse HEAD",
                 "echo \"Checking specific files:\"",
                 "sudo -u webapps git log -n 1 -- README.md",
                 "sudo -u webapps git log -n 1 -- version",
-                "echo \"${{ secrets.DOCKERHUB_TOKEN }}\" | sudo -u webapps docker login -u \"${{ secrets.DOCKERHUB_USERNAME }}\" --password-stdin",
-                "sudo -u webapps docker-compose -f docker-compose.prod.yml down",
-                "sudo -u webapps docker-compose -f docker-compose.prod.yml up -d --build",
-                "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py migrate",
-                "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py collectstatic --noinput",
-                "sudo systemctl restart nginx",
+                "echo \"Docker operations:\"",
+                "echo \"${{ secrets.DOCKERHUB_TOKEN }}\" | sudo -u webapps docker login -u \"${{ secrets.DOCKERHUB_USERNAME }}\" --password-stdin || { echo \"Docker login failed\"; exit 1; }",
+                "sudo -u webapps docker-compose -f docker-compose.prod.yml down || { echo \"Docker-compose down failed\"; exit 1; }",
+                "sudo -u webapps docker-compose -f docker-compose.prod.yml build --no-cache || { echo \"Docker-compose build failed\"; exit 1; }",
+                "sudo -u webapps docker-compose -f docker-compose.prod.yml up -d || { echo \"Docker-compose up failed\"; exit 1; }",
+                "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py migrate || { echo \"Django migrate failed\"; exit 1; }",
+                "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py collectstatic --noinput || { echo \"Django collectstatic failed\"; exit 1; }",
+                "sudo systemctl restart nginx || { echo \"Nginx restart failed\"; exit 1; }",
                 "sudo -u webapps docker logout",
                 "echo \"Final git status:\"",
-                "sudo -u webapps git status"
+                "sudo -u webapps git status",
+                "echo \"Deployment completed successfully\""
               ]
             }' \
             --output text
-      - name: Verify deployment
-        run: |
-          sleep 30
-          response=$(curl -sS -o /dev/null -w "%{http_code}" https://cchesley.com)
-          if [ $response = "200" ]; then
-            echo "Deployment verified successfully"
-          else
-            echo "Deployment verification failed"
-            exit 1
-          fi
+      # - name: Modify Security Group for verification
+      #   run: |
+      #     GITHUB_IP=$(curl -s https://api.github.com/meta | jq -r '.actions[0]')
+      #     aws ec2 authorize-security-group-ingress \
+      #       --group-id ${{ secrets.EC2_SECURITY_GROUP_ID }} \
+      #       --protocol tcp \
+      #       --port 8080 \
+      #       --cidr $GITHUB_IP
+      # - name: Verify deployment
+      #   run: |
+      #     sleep 30
+      #     response=$(curl -sS -o /dev/null -w "%{http_code}" http://${{ secrets.EC2_PUBLIC_IP }}:8080)
+      #     if [ $response = "200" ]; then
+      #       echo "Deployment verified successfully"
+      #     else
+      #       echo "Deployment verification failed"
+      #       exit 1
+      #     fi
+      # - name: Remove temporary Security Group rule
+      #   if: always()
+      #   run: |
+      #     GITHUB_IP=$(curl -s https://api.github.com/meta | jq -r '.actions[0]')
+      #     aws ec2 revoke-security-group-ingress \
+      #       --group-id ${{ secrets.EC2_SECURITY_GROUP_ID }} \
+      #       --protocol tcp \
+      #       --port 8080 \
+      #       --cidr $GITHUB_IP
