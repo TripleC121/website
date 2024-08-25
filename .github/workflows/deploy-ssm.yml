@@ -52,7 +52,19 @@ jobs:
                 "echo \"After git operations:\" >> $LOG_FILE",
                 "sudo -u webapps git status >> $LOG_FILE",
                 "sudo -u webapps git rev-parse HEAD >> $LOG_FILE",
-                # ... rest of your deployment commands ...
+                "echo \"Docker operations:\" >> $LOG_FILE",
+                "echo \"${{ secrets.DOCKERHUB_TOKEN }}\" | sudo -u webapps docker login -u \"${{ secrets.DOCKERHUB_USERNAME }}\" --password-stdin >> $LOG_FILE 2>&1 || { echo \"Docker login failed\" >> $LOG_FILE; exit 1; }",
+                "sudo -u webapps docker-compose -f docker-compose.prod.yml down >> $LOG_FILE 2>&1 || { echo \"Docker-compose down failed\" >> $LOG_FILE; exit 1; }",
+                "sudo -u webapps docker system prune -af >> $LOG_FILE 2>&1 || { echo \"Docker system prune failed\" >> $LOG_FILE; exit 1; }",
+                "sudo -u webapps docker-compose -f docker-compose.prod.yml build --no-cache >> $LOG_FILE 2>&1 || { echo \"Docker-compose build failed\" >> $LOG_FILE; exit 1; }",
+                "sudo -u webapps docker-compose -f docker-compose.prod.yml up -d >> $LOG_FILE 2>&1 || { echo \"Docker-compose up failed\" >> $LOG_FILE; exit 1; }",
+                "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py migrate >> $LOG_FILE 2>&1 || { echo \"Django migrate failed\" >> $LOG_FILE; exit 1; }",
+                "sudo -u webapps docker-compose -f docker-compose.prod.yml exec -T web python manage.py collectstatic --noinput >> $LOG_FILE 2>&1 || { echo \"Django collectstatic failed\" >> $LOG_FILE; exit 1; }",
+                "sudo systemctl restart nginx >> $LOG_FILE 2>&1 || { echo \"Nginx restart failed\" >> $LOG_FILE; exit 1; }",
+                "sudo -u webapps docker logout >> $LOG_FILE 2>&1",
+                "echo \"Final git status:\" >> $LOG_FILE",
+                "sudo -u webapps git status >> $LOG_FILE",
+                "echo \"Deployment completed at $(date)\" >> $LOG_FILE"
               ]
             }' \
             --output text
