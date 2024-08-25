@@ -43,3 +43,8 @@ node_modules/
 .DS_Store
 .env.dev
 .env.prod
+# SSH Keys
+github-actions-deploy*
+*_rsa*
+*.pem
+actions-deploy-github*
