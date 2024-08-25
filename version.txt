@@ -1,4 +1,4 @@
 version 0.1.9
 
 added github deployment key to resolve SSH issues
-fixed issues with deployment script. (formatting)
+changed to local ssh key
