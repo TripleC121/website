@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.views.generic import TemplateView
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -7,7 +8,8 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView, PasswordResetCompleteView
 )
 from .forms import CustomUserCreationForm
-
+import logging
+logger = logging.getLogger(__name__)
 
 def homepage(request):
     return render(request, 'index.html')
@@ -59,6 +61,14 @@ def project4(request):
 
 def project5(request):
     return render(request, 'learning/pgp_aiml/project5.html')
+
+
+class TechnologyView(TemplateView):
+    template_name = 'technology/index.html'
+
+
+class CICDDetailsView(TemplateView):
+    template_name = 'technology/cicd_details.html'
 
 
 def signup(request):

@@ -8,3 +8,9 @@ services:
       - "8000:8000"
     env_file:
       - .env.dev
+    volumes:
+      - .:/app
+      - sqlite_data:/app/db
+
+volumes:
+  sqlite_data:

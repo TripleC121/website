@@ -1,6 +1,5 @@
 from .base import *
 import sys
-import environ
 
 # version 0.0.1
 # Initialise environment variables

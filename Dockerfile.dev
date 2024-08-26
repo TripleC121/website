@@ -4,17 +4,11 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    postgresql-client \
-    && rm -rf /var/lib/apt/lists/*
-
 # Install Python dependencies
 COPY requirements-dev.txt /app/
 RUN pip install --no-cache-dir -r requirements-dev.txt
 
-# Copy the project files
-COPY . /app/
+# Don't copy the project files here, we'll use a volume in docker-compose.yml
 
 # Run the development server
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

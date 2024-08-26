@@ -1,6 +1,7 @@
 from django.urls import path, include
 from django.contrib.auth.views import LogoutView
 from . import views
+from .views import TechnologyView, CICDDetailsView
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
@@ -24,4 +25,6 @@ urlpatterns = [
     path('password_reset/done/', views.CustomPasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/', views.CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done/', views.CustomPasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('technology/', TechnologyView.as_view(), name='technology'),
+    path('technology/cicd/', CICDDetailsView.as_view(), name='cicd_details'),
 ]

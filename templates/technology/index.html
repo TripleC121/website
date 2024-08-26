@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">Technology Stack</h1>
+
+    <div class="grid grid-2">
+        <div class="card">
+            <h2>Backend Architecture</h2>
+            <ul>
+                <li>Django web framework</li>
+                <li>Nginx web server</li>
+                <li>Gunicorn WSGI server</li>
+                <li>PostgreSQL database (AWS RDS)</li>
+                <li>Hosted on AWS EC2</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Development Process</h2>
+            <ul>
+                <li>Version control with Git and GitHub</li>
+                <li>Automated testing and linting</li>
+                <li>Docker containerization</li>
+                <li>CI/CD with GitHub Actions</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>User Authentication</h2>
+            <ul>
+                <li>Django's built-in authentication system</li>
+                <li>Secure password hashing</li>
+                <li>HTTPS encryption</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>CI/CD Pipeline</h2>
+            <p>Our robust CI/CD pipeline ensures code quality and streamlines deployments.</p>
+            <a href="{% url 'cicd_details' %}" class="button">Learn More</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
