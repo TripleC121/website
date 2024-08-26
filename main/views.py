@@ -11,6 +11,7 @@ from .forms import CustomUserCreationForm
 import logging
 logger = logging.getLogger(__name__)
 
+
 def homepage(request):
     return render(request, 'index.html')
 
