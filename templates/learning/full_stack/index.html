@@ -1,73 +1,44 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}
-    Full Stack Development
-{% endblock %}
+{% block title %}Full Stack Development{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <section class="grid">
-            <div class="card learning-card grid-3">
-                <h2>The Odin Project</h2>
-                <p>An exceptional, free platform for mastering full stack development</p>
-                <p>After extensive research into various learning options including Udemy courses, YouTube tutorials, and other coding bootcamps, I found The Odin Project to be the ideal solution. Here's why:</p>
-                <div class="card-content">
-                    <ul>
-                        <li>Comprehensive curriculum covering HTML, CSS, JavaScript, and more</li>
-                        <li>Project-based learning approach that emphasizes practical skills</li>
-                        <li>Community-driven and constantly updated with industry best practices</li>
-                        <li>Teaches you to think like a developer, not just follow tutorials</li>
-                        <li>Completely free, making quality education accessible to everyone</li>
-                        <li>Curated resources from top educators and developers in the field</li>
-                    </ul>
-                </div>
-                <p>The Odin Project's "learn by doing" philosophy, guided by industry experts, provides an unparalleled foundation for aspiring web developers. It's not just about learning to code; it's about developing problem-solving skills and a deep understanding of web technologies.</p>
-            </div>
+<div class="container">
+    <h2>Full Stack Development</h2>
+    <p class="intro-text">My journey through full stack development, covering both front-end and back-end technologies.</p>
+    <div class="grid grid-3">
+        <div class="card">
+            <a href="{% url 'frontend_overview' %}" class="card-link">
+                <img src="{% static 'images/frontend.jpg' %}" alt="Frontend Development" width="250" height="150">
+                <h3>Frontend Development</h3>
+                <p>HTML, CSS, JavaScript, and responsive design</p>
+            </a>
+        </div>
 
-            <div class="card learning-card grid-3">
-                <h2>Django</h2>
-                <p>Django verbiage here</p>
-                <div class="card-content">
-                    <ul>
-                        <li>
-                            <strong>Django:</strong> A high-level Python web framework that encourages rapid development and clean, pragmatic design. It follows the "battery-included" philosophy, providing a robust set of features out of the box, including an ORM, authentication, admin interface, and more. Django is known for its "Don't Repeat Yourself" (DRY) principle and its strong community support.
-                        </li>
-                        <li>
-                            <strong>Gunicorn:</strong> Short for "Green Unicorn," it is a Python WSGI HTTP Server for UNIX. It's a pre-fork worker model, meaning it spawns multiple worker processes to handle requests. Gunicorn is designed to be lightweight and easy to use, making it a popular choice for deploying Python web applications, including those built with Django. It acts as an interface between the web server (like Nginx) and the Python application, handling client requests and communicating with the application.
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+        <div class="card">
+            <a href="{% url 'backend_overview' %}" class="card-link">
+                <img src="{% static 'images/backend.jpg' %}" alt="Backend Development" width="250" height="150">
+                <h3>Backend Development</h3>
+                <p>Server-side programming, APIs, and databases</p>
+            </a>
+        </div>
 
-        <section class="grid grid-2">
-            <div class="card learning-card">
-                <h2>My Mission</h2>
-                <p>Driving forces behind this project:</p>
-                <div class="card-content">
-                    <ul>
-                        <li>Showcase my evolving skills and diverse interests</li>
-                        <li>Master the essentials of full-stack development</li>
-                        <li>Craft a website from the ground up using my own expertise, including hosting.</li>
-                        <li>Create a launchpad for my Python web applications</li>
-                    </ul>
-                </div>
-            </div>
+        <div class="card">
+            <a href="{% url 'django_details' %}" class="card-link">
+                <img src="{% static 'images/django.jpg' %}" alt="Django Framework" width="250" height="150">
+                <h3>Django Framework</h3>
+                <p>Python-based web framework for rapid development</p>
+            </a>
+        </div>
 
-            <div class="card learning-card">
-                <h2>My Web Development Journey</h2>
-                <p>Milestones so far:</p>
-                <div class="card-content">
-                    <ul>
-                        <li>Mastered HTML basics</li>
-                        <li>Conquered CSS fundamentals</li>
-                        <li>Transitioned from Flask to a Django backend</li>
-                        <li>Shifted focus to content creation (JavaScript on hold for now)</li>
-                        <li>Leveraged AI for targeted code solutions and color scheme design</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+        <div class="card">
+            <a href="{% url 'devops_overview' %}" class="card-link">
+                <img src="{% static 'images/devops.jpg' %}" alt="DevOps Practices" width="250" height="150">
+                <h3>DevOps Practices</h3>
+                <p>Continuous integration, deployment, and cloud services</p>
+            </a>
+        </div>
     </div>
+</div>
 {% endblock %}

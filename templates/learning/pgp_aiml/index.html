@@ -1,71 +1,44 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}
-    Artificial Intelligence and Machine Learning
-{% endblock %}
+{% block title %}Post Graduate Program in AI and Machine Learning{% endblock %}
 
 {% block content %}
-    <div class="container">
-        <section class="grid">
-            <div class="card learning-card">
-                <h2>My AI & ML Journey: UT Austin Postgrad Program</h2>
-                <p>Program Highlights:</p>
-                <ul>
-                    <li>7-month intensive course in Machine Learning and Artificial Intelligence</li>
-                    <li>Collaboration between University of Texas at Austin and Great Learning</li>
-                    <li>Comprehensive curriculum blending theory and practical application</li>
-                </ul>
-                <p>Weekly Learning Structure:</p>
-                <ol>
-                    <li>Interactive Live sessions</li>
-                    <li>Rigorous tests and exercises</li>
-                    <li>Dive into hands-on problem-solving with real-time expert guidance. Explore my project outcomes below.</li>
-                </ol>
-                <p>Each subject we complete (roughly monthly) we have a project to complete to demonstrate our understanding of the subject. It is the major part of our grade.</p>
-            </div>
-        </section>
+<div class="container">
+    <h2>Post Graduate Program in AI and Machine Learning</h2>
+    <p class="intro-text">My journey through the UT Austin post-graduate course on AI and machine learning for business applications.</p>
+    <div class="grid grid-3">
+        <div class="card">
+            <a href="{% url 'ai_foundations' %}" class="card-link">
+                <img src="{% static 'images/ai_foundations.jpg' %}" alt="AI Foundations" width="250" height="150">
+                <h3>AI Foundations</h3>
+                <p>Core concepts and principles of artificial intelligence</p>
+            </a>
+        </div>
 
-        <section class="grid grid-5">
-            <div class="card">
-                <a href="{% url 'project1' %}" rel="noopener noreferrer">
-                    <h3>Project 1</h3>
-                    <p>Python and EDA "Exploratory Data Analysis</p>
-                    <button>View Project</button>
-                </a>
-            </div>
+        <div class="card">
+            <a href="{% url 'machine_learning' %}" class="card-link">
+                <img src="{% static 'images/machine_learning.jpg' %}" alt="Machine Learning" width="250" height="150">
+                <h3>Machine Learning</h3>
+                <p>Algorithms, techniques, and applications of ML</p>
+            </a>
+        </div>
 
-            <div class="card">
-                <a href="{% url 'project2' %}" rel="noopener noreferrer">
-                    <h3>Project 2</h3>
-                    <p>Machine Learning - Decision Tree</p>
-                    <button>View Project</button>
-                </a>
-            </div>
+        <div class="card">
+            <a href="{% url 'deep_learning' %}" class="card-link">
+                <img src="{% static 'images/deep_learning.jpg' %}" alt="Deep Learning" width="250" height="150">
+                <h3>Deep Learning</h3>
+                <p>Neural networks and advanced AI architectures</p>
+            </a>
+        </div>
 
-            <div class="card">
-                <a href="{% url 'project3' %}" rel="noopener noreferrer">
-                    <h3>Project 3</h3>
-                    <p>Advanced Machine Learning</p>
-                    <button>View Project</button>
-                </a>
-            </div>
-
-            <div class="card">
-                <a href="{% url 'project4' %}" rel="noopener noreferrer">
-                    <h3>Project 4</h3>
-                    <p>Upcoming</p>
-                    <button>View Project</button>
-                </a>
-            </div>
-
-            <div class="card">
-                <a href="{% url 'project5' %}" rel="noopener noreferrer">
-                    <h3>Project 5</h3>
-                    <p>Upcoming</p>
-                    <button>View Project</button>
-                </a>
-            </div>
-            <!-- Add more project cards as needed -->
-        </section>
+        <div class="card">
+            <a href="{% url 'course_projects' %}" class="card-link">
+                <img src="{% static 'images/projects.jpg' %}" alt="Course Projects" width="250" height="150">
+                <h3>Course Projects</h3>
+                <p>Showcase of key projects completed during the program</p>
+            </a>
+        </div>
     </div>
+</div>
 {% endblock %}

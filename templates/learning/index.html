@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% load static %}
 
 {% block title %}Learning{% endblock %}
@@ -6,16 +7,17 @@
 {% block content %}
 <div class="container">
     <h2>My Technical Projects</h2>
-    <div class="grid">
-        <div class="card grid-2">
-            <a href="{% url 'full_stack' %}" rel="noopener noreferrer">
+    <p class="intro-text">Welcome to my learning journey. Here you'll find information about my ongoing education in various technical fields.</p>
+    <div class="grid grid-2">
+        <div class="card">
+            <a href="{% url 'full_stack' %}" class="card-link" rel="noopener noreferrer">
                 <img src="{% static 'images/AI.jpeg' %}" alt="Full Stack Development" width="350" height="200">
-                <h3>Full stack development</h3>
-                <p>Full-stack web development including HTML, CSS, Javascript, Django</p>
+                <h3>Full Stack Development</h3>
+                <p>Exploring web development including HTML, CSS, JavaScript, and Django.</p>
             </a>
         </div>
-        <div class="card grid-2">
-            <a href="{% url 'pgp_aiml' %}" rel="noopener noreferrer">
+        <div class="card">
+            <a href="{% url 'pgp_aiml' %}" class="card-link" rel="noopener noreferrer">
                 <img src="{% static 'images/pgp-aiml-small.png' %}" alt="Post Graduate AI/ML" width="250" height="250">
                 <h3>Post Graduate AI/ML</h3>
                 <p>A post-graduate course at UT Austin on AI and machine learning for business applications.</p>

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Frontend Development Overview{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Frontend Development Overview</h2>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'learning' %}">Learning</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'full_stack' %}">Full Stack</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Frontend</li>
+        </ol>
+    </nav>
+
+    <div class="content-section">
+        <h3>HTML, CSS, and JavaScript</h3>
+        <p>Frontend development forms the core of user interaction on the web. It involves three main technologies:</p>
+        <ul>
+            <li><strong>HTML (Hypertext Markup Language):</strong> Provides the structure and content of web pages.</li>
+            <li><strong>CSS (Cascading Style Sheets):</strong> Handles the presentation and styling of web pages.</li>
+            <li><strong>JavaScript:</strong> Adds interactivity and dynamic behavior to web pages.</li>
+        </ul>
+    </div>
+
+    <div class="content-section">
+        <h3>Responsive Design</h3>
+        <p>In today's multi-device world, responsive design is crucial. It ensures that web applications look and function well on devices of all sizes, from mobile phones to desktop computers.</p>
+    </div>
+
+    <div class="content-section">
+        <h3>Frontend Frameworks</h3>
+        <p>Modern frontend development often leverages frameworks to speed up development and improve maintainability. Some popular frameworks include:</p>
+        <ul>
+            <li>React</li>
+            <li>Vue.js</li>
+            <li>Angular</li>
+        </ul>
+    </div>
+
+    <div class="content-section">
+        <h3>My Frontend Journey</h3>
+        <p>In my learning path, I've focused on mastering these core technologies and applying them in various projects. I have not started with the frontend frameworks yet.</p>
+        <p>This site is my current example of what I have learned and applied</p>
+    </div>
+</div>
+{% endblock %}

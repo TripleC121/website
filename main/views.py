@@ -36,6 +36,39 @@ def learning(request):
     return render(request, 'learning/index.html')
 
 
+def frontend_overview(request):
+    return render(request, 'learning/full_stack/frontend_overview.html')
+
+
+def backend_overview(request):
+    return render(request, 'learning/full_stack/backend_overview.html')
+
+
+def django_details(request):
+    return render(request, 'learning/full_stack/django_details.html')
+
+
+def devops_overview(request):
+    return render(request, 'learning/full_stack/devops_overview.html')
+
+
+# New view functions for PGP-AIML subpages
+def ai_foundations(request):
+    return render(request, 'learning/pgp_aiml/ai_foundations.html')
+
+
+def machine_learning(request):
+    return render(request, 'learning/pgp_aiml/machine_learning.html')
+
+
+def deep_learning(request):
+    return render(request, 'learning/pgp_aiml/deep_learning.html')
+
+
+def course_projects(request):
+    return render(request, 'learning/pgp_aiml/course_projects.html')
+
+
 def full_stack(request):
     return render(request, 'learning/full_stack/index.html')
 
