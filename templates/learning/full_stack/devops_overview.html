@@ -1,45 +1,69 @@
 {% extends "base.html" %}
 {% load static %}
-
-{% block title %}Backend overview{% endblock %}
-
+{% block title %}DevOps Overview{% endblock %}
 {% block content %}
+
 <div class="container">
-    <h2>Template</h2>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'learning' %}">Learning</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'full_stack' %}">Full Stack</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Frontend</li>
+    <h2>DevOps Overview</h2>
+
+    <div class="content-section">
+        <h3>GitHub Actions Workflow with AWS Systems Manager</h3>
+        <p>Our project uses a robust CI/CD pipeline leveraging GitHub Actions and AWS Systems Manager for seamless testing, linting, and deployment.</p>
+    </div>
+
+    <div class="content-section">
+        <h3>Continuous Integration (CI)</h3>
+        <ul>
+            <li>Triggered on push or pull request to the main branch</li>
+            <li>Runs on Ubuntu latest</li>
+            <li>Sets up Python 3.11</li>
+            <li>Installs project dependencies</li>
+            <li>Executes Django tests</li>
+            <li>Performs code linting with flake8</li>
+        </ul>
+    </div>
+
+    <div class="content-section">
+        <h3>Continuous Deployment (CD)</h3>
+        <ul>
+            <li>Triggered on push to the main branch</li>
+            <li>Configures AWS credentials</li>
+            <li>Uses AWS Systems Manager to execute deployment script on EC2 instance</li>
+        </ul>
+    </div>
+
+    <div class="content-section">
+        <h3>Deployment Process</h3>
+        <ol>
+            <li>Logs deployment start</li>
+            <li>Updates code from GitHub repository</li>
+            <li>Rebuilds and restarts Docker containers</li>
+            <li>Runs Django migrations</li>
+            <li>Collects static files</li>
+            <li>Restarts Nginx</li>
         </ol>
-    </nav>
+    </div>
 
     <div class="content-section">
-        <h3>HTML, CSS, and JavaScript</h3>
-        <p>Server-side programming languages (Python, Java, etc.)
-            Databases (SQL vs NoSQL, specific database systems)
-            RESTful API design and implementation
-            Server architecture and scaling:</p>
+        <h3>Security Measures</h3>
         <ul>
-            <li><strong>HTML (Hypertext Markup Language):</strong> Provides the structure and content of web pages.</li>
-            <li><strong>CSS (Cascading Style Sheets):</strong> Handles the presentation and styling of web pages.</li>
-            <li><strong>JavaScript:</strong> Adds interactivity and dynamic behavior to web pages.</li>
+            <li>Secrets stored securely in GitHub repository settings</li>
+            <li>Uses IAM roles and permissions for AWS access</li>
+            <li>Implements SSH key-based authentication for Git operations</li>
         </ul>
     </div>
 
     <div class="content-section">
-        <h3>Responsive Design</h3>
-        <p>In today's multi-device world, responsive design is crucial. It ensures that web applications look and function well on devices of all sizes, from mobile phones to desktop computers.</p>
+        <h3>Logging</h3>
+        <ul>
+            <li>Comprehensive logging of deployment steps</li>
+            <li>Stored in <code>/var/log/chesley_web/deployment.log</code></li>
+        </ul>
     </div>
 
     <div class="content-section">
-        <h3>Frontend Frameworks</h3>
-        <p>Modern frontend development often leverages frameworks to speed up development and improve maintainability. Some popular frameworks include:</p>
-        <ul>
-            <li>React</li>
-            <li>Vue.js</li>
-            <li>Angular</li>
-        </ul>
+        <p>This setup ensures code quality through automated testing and linting, while providing a streamlined, secure deployment process to our AWS EC2 instance.</p>
     </div>
 </div>
+
 {% endblock %}

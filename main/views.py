@@ -40,8 +40,8 @@ def frontend_overview(request):
     return render(request, 'learning/full_stack/frontend_overview.html')
 
 
-def backend_overview(request):
-    return render(request, 'learning/full_stack/backend_overview.html')
+def cloud_tech(request):
+    return render(request, 'learning/full_stack/cloud_tech.html')
 
 
 def django_details(request):
