@@ -1,4 +1,3 @@
 version 0.1.10
 
-I deleted the IAM user that I was using for my Github actions. I have created a new user and am testing deployment.
 Updating placeholder pages
