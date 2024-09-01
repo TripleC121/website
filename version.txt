@@ -1,4 +1,4 @@
-version 0.1.9
+version 0.1.10
 
-deploy is working now, is Docker and the rest working?
-Does the website come up after a code update?
+I deleted the IAM user that I was using for my Github actions. I have created a new user and am testing deployment.
+Updating placeholder pages
