@@ -1,45 +1,65 @@
 {% extends "base.html" %}
 {% load static %}
-
-{% block title %}Backend overview{% endblock %}
-
+{% block title %}Deep Learning Journey{% endblock %}
 {% block content %}
+
 <div class="container">
-    <h2>Template</h2>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'learning' %}">Learning</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'full_stack' %}">Full Stack</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Frontend</li>
-        </ol>
-    </nav>
-
-    <div class="content-section">
-        <h3>HTML, CSS, and JavaScript</h3>
-        <p>Server-side programming languages (Python, Java, etc.)
-            Databases (SQL vs NoSQL, specific database systems)
-            RESTful API design and implementation
-            Server architecture and scaling:</p>
-        <ul>
-            <li><strong>HTML (Hypertext Markup Language):</strong> Provides the structure and content of web pages.</li>
-            <li><strong>CSS (Cascading Style Sheets):</strong> Handles the presentation and styling of web pages.</li>
-            <li><strong>JavaScript:</strong> Adds interactivity and dynamic behavior to web pages.</li>
-        </ul>
+    <div class="wide-card">
+        <h2>Deep Learning: My Learning Journey</h2>
+        <p>The Deep Learning modules have opened up a fascinating world of neural networks and their applications in AI. Here's an overview of my deep learning journey.</p>
     </div>
 
-    <div class="content-section">
-        <h3>Responsive Design</h3>
-        <p>In today's multi-device world, responsive design is crucial. It ensures that web applications look and function well on devices of all sizes, from mobile phones to desktop computers.</p>
+    <div class="grid">
+        <div class="card">
+            <h3>Key Topics Covered</h3>
+            <ul>
+                <li>Introduction to Neural Networks</li>
+                <li>Convolutional Neural Networks (CNNs)</li>
+                <li>Natural Language Processing (NLP)</li>
+                <li>Recurrent Neural Networks (RNNs)</li>
+                <li>Attention Mechanisms and Transformers</li>
+                <li>Large Language Models and Prompt Engineering</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Learning Challenges</h3>
+            <ul>
+                <li>Understanding the complexities of deep neural architectures</li>
+                <li>Implementing and training deep learning models</li>
+                <li>Dealing with large datasets and computational requirements</li>
+                <li>Interpreting and visualizing deep learning model outputs</li>
+                <li>Keeping up with rapid advancements in the field</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Application in Projects</h3>
+            <ul>
+                <li>Built and trained CNNs for image classification tasks</li>
+                <li>Implemented NLP models for text analysis and generation</li>
+                <li>Explored transfer learning techniques with pre-trained models</li>
+                <li>Experimented with attention mechanisms in sequence-to-sequence tasks</li>
+                <li>Fine-tuned large language models for specific applications</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Key Learnings</h3>
+            <ul>
+                <li>The power of deep learning in solving complex AI problems</li>
+                <li>Importance of data preprocessing and augmentation in deep learning</li>
+                <li>Techniques for optimizing deep neural networks</li>
+                <li>The impact of hardware (GPUs) on deep learning performance</li>
+                <li>Ethical considerations in deploying deep learning models</li>
+            </ul>
+        </div>
     </div>
 
-    <div class="content-section">
-        <h3>Frontend Frameworks</h3>
-        <p>Modern frontend development often leverages frameworks to speed up development and improve maintainability. Some popular frameworks include:</p>
-        <ul>
-            <li>React</li>
-            <li>Vue.js</li>
-            <li>Angular</li>
-        </ul>
+    <div class="wide-card">
+        <h3>Reflections and Future Learning</h3>
+        <p>The Deep Learning modules have dramatically expanded my understanding of AI capabilities. As I continue to explore this field, I'm particularly excited about advancements in generative AI, multimodal learning, and the integration of deep learning in real-world applications. This journey has not only enhanced my technical skills but also deepened my appreciation for the potential and challenges of AI in shaping our future.</p>
     </div>
 </div>
+
 {% endblock %}

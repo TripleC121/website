@@ -1,45 +1,64 @@
 {% extends "base.html" %}
 {% load static %}
-
-{% block title %}Backend overview{% endblock %}
-
+{% block title %}Machine Learning Journey{% endblock %}
 {% block content %}
+
 <div class="container">
-    <h2>Template</h2>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'learning' %}">Learning</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'full_stack' %}">Full Stack</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Frontend</li>
-        </ol>
-    </nav>
-
-    <div class="content-section">
-        <h3>HTML, CSS, and JavaScript</h3>
-        <p>Server-side programming languages (Python, Java, etc.)
-            Databases (SQL vs NoSQL, specific database systems)
-            RESTful API design and implementation
-            Server architecture and scaling:</p>
-        <ul>
-            <li><strong>HTML (Hypertext Markup Language):</strong> Provides the structure and content of web pages.</li>
-            <li><strong>CSS (Cascading Style Sheets):</strong> Handles the presentation and styling of web pages.</li>
-            <li><strong>JavaScript:</strong> Adds interactivity and dynamic behavior to web pages.</li>
-        </ul>
+    <div class="wide-card">
+        <h2>Machine Learning: My Learning Journey</h2>
+        <p>The Machine Learning modules have been pivotal in my understanding of AI algorithms and their applications. Here's an overview of my learning experience in both basic and advanced machine learning.</p>
     </div>
 
-    <div class="content-section">
-        <h3>Responsive Design</h3>
-        <p>In today's multi-device world, responsive design is crucial. It ensures that web applications look and function well on devices of all sizes, from mobile phones to desktop computers.</p>
+    <div class="grid">
+        <div class="card">
+            <h3>Key Topics Covered</h3>
+            <ul>
+                <li>Supervised Learning (Linear Regression, Decision Trees)</li>
+                <li>Unsupervised Learning (K-means Clustering)</li>
+                <li>Ensemble Methods (Bagging, Random Forest, Boosting)</li>
+                <li>Model Tuning and Optimization</li>
+                <li>Advanced techniques (e.g., SVM, PCA)</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Learning Challenges</h3>
+            <ul>
+                <li>Understanding the mathematical foundations of ML algorithms</li>
+                <li>Selecting appropriate models for different problem types</li>
+                <li>Dealing with overfitting and underfitting</li>
+                <li>Interpreting complex model outputs</li>
+                <li>Balancing model performance and interpretability</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Application in Projects</h3>
+            <ul>
+                <li>Implemented various ML models using scikit-learn</li>
+                <li>Conducted feature engineering and selection</li>
+                <li>Applied ensemble methods to improve model performance</li>
+                <li>Optimized hyperparameters using techniques like grid search and cross-validation</li>
+                <li>Developed a robust ML pipeline for data preprocessing and model evaluation</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Key Learnings</h3>
+            <ul>
+                <li>Importance of proper data preprocessing and feature engineering</li>
+                <li>The trade-offs between different ML algorithms</li>
+                <li>Techniques for model evaluation and validation</li>
+                <li>The significance of model interpretability in real-world applications</li>
+                <li>Best practices for deploying ML models in production environments</li>
+            </ul>
+        </div>
     </div>
 
-    <div class="content-section">
-        <h3>Frontend Frameworks</h3>
-        <p>Modern frontend development often leverages frameworks to speed up development and improve maintainability. Some popular frameworks include:</p>
-        <ul>
-            <li>React</li>
-            <li>Vue.js</li>
-            <li>Angular</li>
-        </ul>
+    <div class="wide-card">
+        <h3>Reflections and Future Learning</h3>
+        <p>The Machine Learning modules have significantly enhanced my ability to solve complex problems using data-driven approaches. As I continue my journey, I look forward to exploring more advanced ML techniques, diving deeper into areas like reinforcement learning, and staying updated with the latest developments in the field. This knowledge forms a crucial foundation for my work in AI and data science.</p>
     </div>
 </div>
+
 {% endblock %}

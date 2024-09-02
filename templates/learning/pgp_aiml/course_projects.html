@@ -1,45 +1,79 @@
 {% extends "base.html" %}
 {% load static %}
-
-{% block title %}Backend overview{% endblock %}
-
+{% block title %}PGP-AIML Projects Overview{% endblock %}
 {% block content %}
+
 <div class="container">
-    <h2>Template</h2>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'learning' %}">Learning</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'full_stack' %}">Full Stack</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Frontend</li>
-        </ol>
-    </nav>
-
-    <div class="content-section">
-        <h3>HTML, CSS, and JavaScript</h3>
-        <p>Server-side programming languages (Python, Java, etc.)
-            Databases (SQL vs NoSQL, specific database systems)
-            RESTful API design and implementation
-            Server architecture and scaling:</p>
-        <ul>
-            <li><strong>HTML (Hypertext Markup Language):</strong> Provides the structure and content of web pages.</li>
-            <li><strong>CSS (Cascading Style Sheets):</strong> Handles the presentation and styling of web pages.</li>
-            <li><strong>JavaScript:</strong> Adds interactivity and dynamic behavior to web pages.</li>
-        </ul>
+    <div class="wide-card">
+        <h2>PGP-AIML: My Project Journey</h2>
+        <p>Throughout the PGP-AIML program, I've completed several projects that have allowed me to apply my learning to real-world scenarios. Here's an overview of my project experiences and key takeaways.</p>
     </div>
 
-    <div class="content-section">
-        <h3>Responsive Design</h3>
-        <p>In today's multi-device world, responsive design is crucial. It ensures that web applications look and function well on devices of all sizes, from mobile phones to desktop computers.</p>
+    <div class="grid">
+        <div class="card">
+            <h3>Key Challenges</h3>
+            <ul>
+                <li>Data preprocessing and cleaning</li>
+                <li>Feature engineering and selection</li>
+                <li>Model selection and hyperparameter tuning</li>
+                <li>Handling imbalanced datasets</li>
+                <li>Interpreting and visualizing results</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Technologies Used</h3>
+            <ul>
+                <li>Python (NumPy, Pandas, Scikit-learn)</li>
+                <li>TensorFlow and Keras for deep learning</li>
+                <li>Matplotlib and Seaborn for visualization</li>
+                <li>Jupyter Notebooks for development</li>
+                <li>Git for version control</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Key Learnings</h3>
+            <ul>
+                <li>Importance of thorough exploratory data analysis</li>
+                <li>Balancing model complexity with interpretability</li>
+                <li>Effective communication of technical results</li>
+                <li>Iterative approach to model development</li>
+                <li>Ethical considerations in AI/ML projects</li>
+            </ul>
+        </div>
     </div>
 
-    <div class="content-section">
-        <h3>Frontend Frameworks</h3>
-        <p>Modern frontend development often leverages frameworks to speed up development and improve maintainability. Some popular frameworks include:</p>
-        <ul>
-            <li>React</li>
-            <li>Vue.js</li>
-            <li>Angular</li>
-        </ul>
+    <div class="wide-card">
+        <h3>Project Overview</h3>
+        <div class="grid">
+            <a href="{% url 'project1' %}" class="card">
+                <h4>Project 1: [Title]</h4>
+                <p>Brief description of the project and its main focus.</p>
+            </a>
+            <a href="{% url 'project2' %}" class="card">
+                <h4>Project 2: [Title]</h4>
+                <p>Brief description of the project and its main focus.</p>
+            </a>
+            <a href="{% url 'project3' %}" class="card">
+                <h4>Project 3: [Title]</h4>
+                <p>Brief description of the project and its main focus.</p>
+            </a>
+            <a href="{% url 'project4' %}" class="card">
+                <h4>Project 4: [Title]</h4>
+                <p>Brief description of the project and its main focus.</p>
+            </a>
+            <a href="{% url 'project5' %}" class="card">
+                <h4>Project 5: [Title]</h4>
+                <p>Brief description of the project and its main focus.</p>
+            </a>
+        </div>
+    </div>
+
+    <div class="wide-card">
+        <h3>Reflections and Future Directions</h3>
+        <p>These projects have been instrumental in solidifying my understanding of AI and ML concepts. They've provided hands-on experience in tackling real-world problems, from data preprocessing to model deployment. Moving forward, I'm excited to delve deeper into advanced topics like reinforcement learning and generative AI, and to apply these skills to more complex, real-world challenges.</p>
     </div>
 </div>
+
 {% endblock %}

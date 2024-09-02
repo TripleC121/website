@@ -1,45 +1,61 @@
 {% extends "base.html" %}
 {% load static %}
-
-{% block title %}Backend overview{% endblock %}
-
+{% block title %}AI Foundations Learning Journey{% endblock %}
 {% block content %}
+
 <div class="container">
-    <h2>Template</h2>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'learning' %}">Learning</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'full_stack' %}">Full Stack</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Frontend</li>
-        </ol>
-    </nav>
-
-    <div class="content-section">
-        <h3>HTML, CSS, and JavaScript</h3>
-        <p>Server-side programming languages (Python, Java, etc.)
-            Databases (SQL vs NoSQL, specific database systems)
-            RESTful API design and implementation
-            Server architecture and scaling:</p>
-        <ul>
-            <li><strong>HTML (Hypertext Markup Language):</strong> Provides the structure and content of web pages.</li>
-            <li><strong>CSS (Cascading Style Sheets):</strong> Handles the presentation and styling of web pages.</li>
-            <li><strong>JavaScript:</strong> Adds interactivity and dynamic behavior to web pages.</li>
-        </ul>
+    <div class="wide-card">
+        <h2>AI Foundations: My Learning Journey</h2>
+        <p>The AI Foundations module has been instrumental in building my understanding of artificial intelligence and its applications. Here's an overview of my learning experience.</p>
     </div>
 
-    <div class="content-section">
-        <h3>Responsive Design</h3>
-        <p>In today's multi-device world, responsive design is crucial. It ensures that web applications look and function well on devices of all sizes, from mobile phones to desktop computers.</p>
+    <div class="grid">
+        <div class="card">
+            <h3>Key Topics Covered</h3>
+            <ul>
+                <li>Introduction to Data Science and AI</li>
+                <li>Python Foundations</li>
+                <li>Data Visualization</li>
+                <li>Exploratory Data Analysis</li>
+                <li>Introduction to the World of AI</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Learning Challenges</h3>
+            <ul>
+                <li>Grasping fundamental AI concepts and terminologies</li>
+                <li>Developing proficiency in Python for data science</li>
+                <li>Understanding the intricacies of data visualization</li>
+                <li>Applying EDA techniques to real-world datasets</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Application in Projects</h3>
+            <ul>
+                <li>Implemented Python scripts for data preprocessing</li>
+                <li>Created informative visualizations using libraries like Matplotlib and Seaborn</li>
+                <li>Conducted exploratory data analysis on diverse datasets</li>
+                <li>Applied AI concepts to solve real-world problems</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Key Learnings</h3>
+            <ul>
+                <li>Importance of clean, well-structured data in AI projects</li>
+                <li>The power of visual representation in understanding complex datasets</li>
+                <li>Critical thinking skills for interpreting data patterns</li>
+                <li>Ethical considerations in AI applications</li>
+            </ul>
+        </div>
     </div>
 
-    <div class="content-section">
-        <h3>Frontend Frameworks</h3>
-        <p>Modern frontend development often leverages frameworks to speed up development and improve maintainability. Some popular frameworks include:</p>
-        <ul>
-            <li>React</li>
-            <li>Vue.js</li>
-            <li>Angular</li>
-        </ul>
+    <div class="wide-card">
+        <h3>Reflections and Future Learning</h3>
+        <p>The AI Foundations module has provided me with a solid groundwork in artificial intelligence and data science. Moving forward, I'm excited to delve deeper into advanced AI techniques and their practical applications. This foundational knowledge will be crucial as I progress through more complex topics in machine learning and deep learning.</p>
     </div>
 </div>
+
 {% endblock %}
