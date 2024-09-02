@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="wide-card">
+        <h2>Backend Technologies</h2>
+        <p>Our project leverages robust backend technologies to create a scalable and efficient web application. Here's an overview of the key components powering our backend infrastructure.</p>
+    </div>
+
+    <div class="grid grid-2">
+        <div class="card">
+            <h3>Django (Python Web Framework)</h3>
+            <p>Django forms the core of our backend, providing a high-level Python Web framework that encourages rapid development and clean, pragmatic design.</p>
+            <ul>
+                <li>Follows the model-template-view architectural pattern</li>
+                <li>Includes an ORM for database interactions</li>
+                <li>Provides built-in admin interface</li>
+                <li>Offers robust security features</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>PostgreSQL (Relational Database)</h3>
+            <p>PostgreSQL serves as our primary database, offering advanced features and robust performance for data storage and retrieval.</p>
+            <ul>
+                <li>ACID-compliant relational database</li>
+                <li>Supports complex queries and indexing</li>
+                <li>Offers excellent data integrity and reliability</li>
+                <li>Scales well for large datasets</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Gunicorn (WSGI HTTP Server)</h3>
+            <p>Gunicorn acts as our WSGI HTTP Server, handling the interface between our Django application and the web server.</p>
+            <ul>
+                <li>Supports multiple worker processes</li>
+                <li>Offers automatic worker process management</li>
+                <li>Provides easy integration with Django</li>
+                <li>Ensures efficient handling of concurrent requests</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Python Libraries</h3>
+            <p>We utilize various Python libraries to enhance our backend functionality and development process.</p>
+            <ul>
+                <li>Django REST framework for API development</li>
+                <li>Celery for asynchronous task processing</li>
+                <li>Pytest for comprehensive testing</li>
+                <li>Black and flake8 for code formatting and linting</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="wide-card">
+        <h3>How These Backend Technologies Work Together</h3>
+        <p>Our backend architecture is built on Django, which handles URL routing, view logic, and interacts with the PostgreSQL database through its ORM. Django's models define our data structure, which is then reflected in PostgreSQL tables. Gunicorn serves as the interface between Django and Nginx, managing multiple worker processes to handle incoming requests efficiently.</p>
+        <p>This combination provides a robust, scalable, and maintainable backend. Django's high-level abstractions allow for rapid development, while PostgreSQL ensures data integrity and supports complex queries. Gunicorn optimizes the deployment, ensuring our application can handle multiple concurrent requests smoothly.</p>
+        <p>The additional Python libraries extend our capabilities, allowing for RESTful API development, background task processing, and maintaining code quality through comprehensive testing and consistent formatting.</p>
+    </div>
+</div>
+
+{% endblock %}

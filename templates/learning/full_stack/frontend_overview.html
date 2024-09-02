@@ -1,41 +1,64 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Frontend Development Overview{% endblock %}
+{% block title %}Frontend Development Learning Journey{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h2>Frontend Development Overview</h2>
-
-    <div class="content-section">
-        <h3>HTML, CSS, and JavaScript</h3>
-        <p>Frontend development forms the core of user interaction on the web. It involves three main technologies:</p>
-        <ul>
-            <li><strong>HTML (Hypertext Markup Language):</strong> Provides the structure and content of web pages.</li>
-            <li><strong>CSS (Cascading Style Sheets):</strong> Handles the presentation and styling of web pages.</li>
-            <li><strong>JavaScript:</strong> Adds interactivity and dynamic behavior to web pages.</li>
-        </ul>
+    <div class="wide-card">
+        <h2>Frontend Development: My Learning Journey</h2>
+        <p>
+            My exploration of frontend development has been crucial in understanding how users interact with web applications. Here's my journey through HTML, CSS, and JavaScript, and how I've applied these skills in this project.
+        </p>
     </div>
 
-    <div class="content-section">
-        <h3>Responsive Design</h3>
-        <p>In today's multi-device world, responsive design is crucial. It ensures that web applications look and function well on devices of all sizes, from mobile phones to desktop computers.</p>
+    <div class="grid">
+        <div class="card">
+            <h3>Why I Focused on Core Technologies</h3>
+            <ul>
+                <li>HTML: Essential for structuring web content</li>
+                <li>CSS: Crucial for design and responsive layouts</li>
+                <li>JavaScript: Necessary for interactive user experiences</li>
+                <li>Wanted to build a strong foundation before moving to frameworks</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Learning Challenges</h3>
+            <ul>
+                <li>Mastering responsive design principles</li>
+                <li>Understanding CSS layout systems (Flexbox, Grid)</li>
+                <li>Implementing cross-browser compatibility</li>
+                <li>Balancing aesthetics with functionality</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Application in This Project</h3>
+            <ul>
+                <li>Created a responsive layout using CSS Grid</li>
+                <li>Implemented a custom color scheme and typography</li>
+                <li>Used semantic HTML for better accessibility</li>
+                <li>Minimized JavaScript use for a leaner, faster site</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Key Learnings</h3>
+            <ul>
+                <li>Importance of mobile-first design</li>
+                <li>Value of CSS preprocessors for larger projects</li>
+                <li>Techniques for optimizing website performance</li>
+                <li>Best practices for web accessibility</li>
+            </ul>
+        </div>
     </div>
 
-    <div class="content-section">
-        <h3>Frontend Frameworks</h3>
-        <p>Modern frontend development often leverages frameworks to speed up development and improve maintainability. Some popular frameworks include:</p>
-        <ul>
-            <li>React</li>
-            <li>Vue.js</li>
-            <li>Angular</li>
-        </ul>
-    </div>
-
-    <div class="content-section">
-        <h3>My Frontend Journey</h3>
-        <p>In my learning path, I've focused on mastering these core technologies and applying them in various projects. I have not started with the frontend frameworks yet.</p>
-        <p>This site is my current example of what I have learned and applied</p>
+    <div class="wide-card">
+        <h3>Reflections and Future Learning</h3>
+        <p>
+            This project has solidified my understanding of core frontend technologies. Moving forward, I plan to explore frontend frameworks like React or Vue.js to enhance my skills in building more complex, interactive user interfaces. I'm also interested in diving deeper into web accessibility standards and performance optimization techniques.
+        </p>
     </div>
 </div>
 {% endblock %}

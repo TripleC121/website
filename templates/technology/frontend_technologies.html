@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="wide-card">
+        <h2>Frontend Technologies</h2>
+        <p>Our project employs modern frontend technologies to create a responsive, user-friendly interface. While we keep JavaScript usage minimal, we leverage the power of HTML5 and CSS3 to deliver an engaging user experience.</p>
+    </div>
+
+    <div class="grid grid-2">
+        <div class="card">
+            <h3>HTML5</h3>
+            <p>HTML5 serves as the foundation of our frontend, providing structure and semantics to our web pages.</p>
+            <ul>
+                <li>Semantic elements for improved structure</li>
+                <li>Enhanced form controls and input types</li>
+                <li>Support for multimedia without plugins</li>
+                <li>Improved accessibility features</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>CSS3</h3>
+            <p>We use CSS3 for styling and layout, creating a responsive design that adapts to various screen sizes.</p>
+            <ul>
+                <li>Flexbox and Grid for advanced layouts</li>
+                <li>Media queries for responsive design</li>
+                <li>Animations and transitions for enhanced UX</li>
+                <li>Custom properties (CSS variables) for maintainable styles</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>JavaScript (Minimal Usage)</h3>
+            <p>While keeping usage minimal, we employ JavaScript to add interactivity and enhance user experience where necessary.</p>
+            <ul>
+                <li>DOM manipulation for dynamic content</li>
+                <li>Event handling for user interactions</li>
+                <li>Fetch API for asynchronous requests</li>
+                <li>ES6+ features for modern, efficient code</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Frontend Tools</h3>
+            <p>We utilize various tools to optimize our frontend development workflow.</p>
+            <ul>
+                <li>Webpack for asset bundling</li>
+                <li>Babel for JavaScript compatibility</li>
+                <li>PostCSS for CSS processing</li>
+                <li>ESLint and Stylelint for code quality</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="wide-card">
+        <h3>How These Frontend Technologies Work Together</h3>
+        <p>Our frontend architecture is built on the solid foundation of HTML5, providing semantic structure to our content. CSS3 is used extensively for styling and creating responsive layouts that adapt seamlessly to different devices and screen sizes. We leverage modern CSS features like Flexbox and Grid for advanced layouts, and use media queries to ensure a consistent experience across devices.</p>
+        <p>While we keep JavaScript usage minimal, we employ it strategically to enhance interactivity and user experience. This includes handling user interactions, making asynchronous requests to our backend API, and dynamically updating content where necessary.</p>
+        <p>Our frontend tooling, including Webpack and Babel, allows us to use modern JavaScript features while ensuring compatibility across browsers. PostCSS helps us optimize our CSS, while linting tools maintain code quality and consistency.</p>
+        <p>This approach results in a frontend that is fast, responsive, and accessible, while remaining relatively simple and maintainable. By focusing on HTML5 and CSS3, with judicious use of JavaScript, we create a user interface that is both modern and widely compatible.</p>
+    </div>
+</div>
+
+{% endblock %}

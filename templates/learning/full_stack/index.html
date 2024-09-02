@@ -1,45 +1,44 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}Full Stack Development{% endblock %}
-{% block content %}
 
-<main class="container">
-    <h2>Full Stack Development</h2>
-    <p>My journey through full stack development, covering both front-end and back-end technologies.</p>
+{% block title %}Full Stack Development Learning Journey{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="wide-card">
+        <h2>My Full Stack Development Journey</h2>
+        <p>
+            Embarking on the path of full stack development has been an exciting and challenging adventure. This journey has taken me through various technologies and practices, each contributing to a comprehensive understanding of web application development.
+        </p>
+    </div>
 
     <div class="grid">
-        <div class="card">
-            <a href="{% url 'frontend_overview' %}" class="card-link">
-                <img src="{% static 'images/frontend.jpg' %}" alt="Frontend Development" width="250" height="150">
-                <h3>Frontend Development</h3>
-                <p>HTML, CSS, JavaScript, and responsive design</p>
-            </a>
-        </div>
+        <a href="{% url 'frontend_overview' %}" class="card card-link">
+            <h3>Frontend Development</h3>
+            <p>Mastering HTML, CSS, and JavaScript to create responsive and interactive user interfaces.</p>
+        </a>
 
-        <div class="card">
-            <a href="{% url 'cloud_tech' %}" class="card-link">
-                <img src="{% static 'images/backend.jpg' %}" alt="Cloud Technologies" width="250" height="150">
-                <h3>Cloud Technologies</h3>
-                <p>Full-Stack Development in the Cloud</p>
-            </a>
-        </div>
+        <a href="{% url 'django_details' %}" class="card card-link">
+            <h3>Backend Development</h3>
+            <p>Exploring server-side programming with Django, database management, and API development.</p>
+        </a>
 
-        <div class="card">
-            <a href="{% url 'django_details' %}" class="card-link">
-                <img src="{% static 'images/django.jpg' %}" alt="Django Framework" width="250" height="150">
-                <h3>Django Framework</h3>
-                <p>Python-based web framework for rapid development</p>
-            </a>
-        </div>
+        <a href="{% url 'cloud_tech' %}" class="card card-link">
+            <h3>Cloud Technologies</h3>
+            <p>Leveraging AWS services to deploy scalable and reliable web applications.</p>
+        </a>
 
-        <div class="card">
-            <a href="{% url 'devops_overview' %}" class="card-link">
-                <img src="{% static 'images/devops.jpg' %}" alt="DevOps Practices" width="250" height="150">
-                <h3>DevOps Practices</h3>
-                <p>Continuous integration, deployment, and cloud services</p>
-            </a>
-        </div>
+        <a href="{% url 'devops_overview' %}" class="card card-link">
+            <h3>DevOps Practices</h3>
+            <p>Implementing CI/CD pipelines, containerization, and automated testing for efficient development workflows.</p>
+        </a>
     </div>
-</main>
 
+    <div class="wide-card">
+        <h3>My Learning Approach</h3>
+        <p>
+            Throughout this journey, I've embraced a hands-on learning approach, building real-world projects to apply and reinforce my knowledge. This website serves as both a showcase of my skills and a testament to my ongoing learning process. Each section delves into the challenges I've faced, the solutions I've implemented, and the insights I've gained along the way.
+        </p>
+    </div>
+</div>
 {% endblock %}

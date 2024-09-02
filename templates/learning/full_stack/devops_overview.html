@@ -1,69 +1,64 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}DevOps Overview{% endblock %}
+
+{% block title %}DevOps Learning Journey{% endblock %}
+
 {% block content %}
-
 <div class="container">
-    <h2>DevOps Overview</h2>
-
-    <div class="content-section">
-        <h3>GitHub Actions Workflow with AWS Systems Manager</h3>
-        <p>Our project uses a robust CI/CD pipeline leveraging GitHub Actions and AWS Systems Manager for seamless testing, linting, and deployment.</p>
+    <div class="wide-card">
+        <h2>DevOps: My Learning Journey</h2>
+        <p>
+            Embracing DevOps practices has been a transformative part of my full-stack development journey. Here's how I've integrated DevOps principles into my workflow and this project.
+        </p>
     </div>
 
-    <div class="content-section">
-        <h3>Continuous Integration (CI)</h3>
-        <ul>
-            <li>Triggered on push or pull request to the main branch</li>
-            <li>Runs on Ubuntu latest</li>
-            <li>Sets up Python 3.11</li>
-            <li>Installs project dependencies</li>
-            <li>Executes Django tests</li>
-            <li>Performs code linting with flake8</li>
-        </ul>
+    <div class="grid">
+        <div class="card">
+            <h3>Why I Adopted DevOps Practices</h3>
+            <ul>
+                <li>Streamline development and deployment processes</li>
+                <li>Improve code quality through automated testing</li>
+                <li>Increase reliability and repeatability of deployments</li>
+                <li>Gain practical experience with industry-standard tools</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Learning Challenges</h3>
+            <ul>
+                <li>Setting up a CI/CD pipeline with GitHub Actions</li>
+                <li>Configuring Docker for consistent environments</li>
+                <li>Implementing automated testing and linting</li>
+                <li>Managing secrets and environment variables securely</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Application in This Project</h3>
+            <ul>
+                <li>Implemented CI/CD using GitHub Actions</li>
+                <li>Containerized the application with Docker</li>
+                <li>Set up automated testing and linting</li>
+                <li>Used AWS Systems Manager for deployment</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Key Learnings</h3>
+            <ul>
+                <li>Importance of infrastructure as code</li>
+                <li>Benefits of containerization for consistency</li>
+                <li>Techniques for efficient and secure deployments</li>
+                <li>Value of continuous monitoring and logging</li>
+            </ul>
+        </div>
     </div>
 
-    <div class="content-section">
-        <h3>Continuous Deployment (CD)</h3>
-        <ul>
-            <li>Triggered on push to the main branch</li>
-            <li>Configures AWS credentials</li>
-            <li>Uses AWS Systems Manager to execute deployment script on EC2 instance</li>
-        </ul>
-    </div>
-
-    <div class="content-section">
-        <h3>Deployment Process</h3>
-        <ol>
-            <li>Logs deployment start</li>
-            <li>Updates code from GitHub repository</li>
-            <li>Rebuilds and restarts Docker containers</li>
-            <li>Runs Django migrations</li>
-            <li>Collects static files</li>
-            <li>Restarts Nginx</li>
-        </ol>
-    </div>
-
-    <div class="content-section">
-        <h3>Security Measures</h3>
-        <ul>
-            <li>Secrets stored securely in GitHub repository settings</li>
-            <li>Uses IAM roles and permissions for AWS access</li>
-            <li>Implements SSH key-based authentication for Git operations</li>
-        </ul>
-    </div>
-
-    <div class="content-section">
-        <h3>Logging</h3>
-        <ul>
-            <li>Comprehensive logging of deployment steps</li>
-            <li>Stored in <code>/var/log/chesley_web/deployment.log</code></li>
-        </ul>
-    </div>
-
-    <div class="content-section">
-        <p>This setup ensures code quality through automated testing and linting, while providing a streamlined, secure deployment process to our AWS EC2 instance.</p>
+    <div class="wide-card">
+        <h3>Reflections and Future Goals</h3>
+        <p>
+            Implementing DevOps practices has significantly improved my development workflow and the reliability of this project. Looking ahead, I plan to explore more advanced DevOps topics such as infrastructure as code with tools like Terraform, and dive deeper into monitoring and observability practices. I'm also interested in learning about GitOps and how it can further streamline the deployment process.
+        </p>
     </div>
 </div>
-
 {% endblock %}

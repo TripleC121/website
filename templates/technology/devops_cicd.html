@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="wide-card">
+        <h2>DevOps & Deployment</h2>
+        <p>Our project employs modern DevOps practices and tools to ensure smooth development, testing, and deployment processes. Here's an overview of our DevOps stack and deployment pipeline.</p>
+    </div>
+
+    <div class="grid grid-2">
+        <div class="card">
+            <h3>Docker</h3>
+            <p>We use Docker for containerization, ensuring consistency across development, testing, and production environments.</p>
+            <ul>
+                <li>Containers for Django app and Nginx</li>
+                <li>Consistent environments across stages</li>
+                <li>Easy scaling and deployment</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>GitHub Actions</h3>
+            <p>Our CI/CD pipeline is implemented using GitHub Actions, automating our build, test, and deployment processes.</p>
+            <ul>
+                <li>Automated testing on pull requests</li>
+                <li>Automated deployments to production</li>
+                <li>Continuous integration ensuring code quality</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Nginx</h3>
+            <p>Nginx serves as our web server and reverse proxy, handling incoming requests and serving static files efficiently.</p>
+            <ul>
+                <li>Reverse proxy for Django application</li>
+                <li>Efficient serving of static files</li>
+                <li>SSL/TLS termination</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>AWS Systems Manager</h3>
+            <p>We use AWS Systems Manager for secure, automated deployments to our EC2 instances.</p>
+            <ul>
+                <li>Secure, remote execution of deployment scripts</li>
+                <li>Integration with GitHub Actions for CI/CD</li>
+                <li>Automated application updates</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="wide-card">
+        <h3>How These Technologies Work Together</h3>
+        <p>Our application and its dependencies are containerized using Docker, ensuring consistency across environments. GitHub Actions automates our CI/CD pipeline, running tests on pull requests and triggering deployments when changes are merged to the main branch. The deployment process uses AWS Systems Manager to securely execute deployment scripts on our EC2 instances, updating the Docker containers with the latest code. Nginx, also running in a Docker container, acts as a reverse proxy, directing traffic to the Django application container and serving static files. This integrated approach allows for rapid, reliable, and secure deployments of our web application.</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,46 +1,60 @@
 {% extends "base.html" %}
 {% load static %}
-
+{% block title %}Technology Stack Overview{% endblock %}
 {% block content %}
+
 <div class="container">
-    <h1 class="page-title">Technology Stack</h1>
+    <div class="wide-card">
+        <h2>Technology Stack Overview</h2>
+        <p>This project utilizes a modern, robust technology stack designed for scalability, maintainability, and efficient development. Each component has been carefully selected to create a cohesive and powerful web application infrastructure.</p>
+    </div>
 
-    <div class="grid grid-2">
-        <div class="card">
-            <h2>Backend Architecture</h2>
+    <div class="grid">
+        <a href="{% url 'backend_technologies' %}" class="card card-link">
+            <h3>Backend Technologies</h3>
             <ul>
-                <li>Django web framework</li>
-                <li>Nginx web server</li>
-                <li>Gunicorn WSGI server</li>
-                <li>PostgreSQL database (AWS RDS)</li>
-                <li>Hosted on AWS EC2</li>
+                <li>Django (Python web framework)</li>
+                <li>PostgreSQL (Relational database)</li>
+                <li>Gunicorn (WSGI HTTP Server)</li>
             </ul>
-        </div>
+        </a>
 
-        <div class="card">
-            <h2>Development Process</h2>
+        <a href="{% url 'frontend_technologies' %}" class="card card-link">
+            <h3>Frontend Technologies</h3>
             <ul>
-                <li>Version control with Git and GitHub</li>
-                <li>Automated testing and linting</li>
-                <li>Docker containerization</li>
-                <li>CI/CD with GitHub Actions</li>
+                <li>HTML5</li>
+                <li>CSS3 (with responsive design)</li>
+                <li>JavaScript (minimal usage)</li>
             </ul>
-        </div>
+        </a>
 
-        <div class="card">
-            <h2>User Authentication</h2>
+        <a href="{% url 'cloud_technologies' %}" class="card card-link">
+            <h3>Cloud Technologies (AWS)</h3>
             <ul>
-                <li>Django's built-in authentication system</li>
-                <li>Secure password hashing</li>
-                <li>HTTPS encryption</li>
+                <li>EC2 (Application hosting)</li>
+                <li>RDS (Database hosting)</li>
+                <li>S3 (Static file storage)</li>
+                <li>IAM (Access management)</li>
             </ul>
-        </div>
+        </a>
 
-        <div class="card">
-            <h2>CI/CD Pipeline</h2>
-            <p>Our robust CI/CD pipeline ensures code quality and streamlines deployments.</p>
-            <a href="{% url 'cicd_details' %}" class="button">Learn More</a>
-        </div>
+        <a href="{% url 'devops_cicd' %}" class="card card-link">
+            <h3>DevOps & Deployment</h3>
+            <ul>
+                <li>Docker (Containerization)</li>
+                <li>GitHub Actions (CI/CD)</li>
+                <li>Nginx (Web server and reverse proxy)</li>
+                <li>AWS Systems Manager (Deployment)</li>
+            </ul>
+        </a>
+    </div>
+
+    <div class="wide-card">
+        <h3>How It All Works Together</h3>
+        <p>This technology stack creates a robust and scalable web application ecosystem. Django handles server-side logic, interacting with PostgreSQL for data persistence. Gunicorn serves the Django application, while Nginx acts as a reverse proxy and handles static files. The frontend is built with responsive HTML, CSS, and minimal JavaScript for enhanced user interactions.</p>
+        <p>The entire application is containerized using Docker and hosted on AWS EC2, with AWS RDS managing the database and S3 for static file storage. GitHub Actions automate the testing and deployment process, using AWS Systems Manager for secure and efficient deployments. This setup ensures code quality, easy updates, and robust infrastructure management.</p>
+        <p>This combination of technologies represents current industry best practices, offering benefits such as scalability, maintainability, and efficient development workflows. Each component has been chosen for its strengths and how well it integrates with the others, creating a powerful and flexible foundation for web application development.</p>
     </div>
 </div>
+
 {% endblock %}

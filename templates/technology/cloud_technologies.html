@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="wide-card">
+        <h2>Cloud Technologies (AWS)</h2>
+        <p>Our project leverages several key AWS services to ensure scalability, reliability, and security. Here's an overview of how we use AWS in our infrastructure.</p>
+    </div>
+
+    <div class="grid grid-2">
+        <div class="card">
+            <h3>EC2 (Elastic Compute Cloud)</h3>
+            <p>We use EC2 to host our Django application, providing flexible compute capacity in the cloud. This allows us to easily scale our application as needed.</p>
+            <ul>
+                <li>Hosts our Django application</li>
+                <li>Provides scalable computing capacity</li>
+                <li>Integrates with other AWS services</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>RDS (Relational Database Service)</h3>
+            <p>Our PostgreSQL database is hosted on AWS RDS, which simplifies database administration tasks and provides high availability.</p>
+            <ul>
+                <li>Hosts our PostgreSQL database</li>
+                <li>Automated backups and patch management</li>
+                <li>Scalable and highly available</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>S3 (Simple Storage Service)</h3>
+            <p>We use S3 for storing and serving static files and user-uploaded content, ensuring fast and reliable access to these resources.</p>
+            <ul>
+                <li>Stores static files and user uploads</li>
+                <li>Highly durable and available storage</li>
+                <li>Integrates well with CloudFront for content delivery</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>IAM (Identity and Access Management)</h3>
+            <p>IAM helps us manage access to AWS services and resources securely. We use it to create and manage AWS users and groups, and control their access.</p>
+            <ul>
+                <li>Manages access to AWS services</li>
+                <li>Implements principle of least privilege</li>
+                <li>Enhances security of our AWS infrastructure</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="wide-card">
+        <h3>How These AWS Services Work Together</h3>
+        <p>Our EC2 instance hosts the Django application, which connects to the RDS PostgreSQL database for data storage. Static files and user uploads are stored in S3 buckets, which our Django app accesses as needed. IAM ensures that our EC2 instance and application have the necessary permissions to interact with RDS and S3, while restricting access to maintain security. This combination of services provides a robust, scalable, and secure infrastructure for our web application.</p>
+    </div>
+</div>
+{% endblock %}
