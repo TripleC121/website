@@ -15,14 +15,22 @@ body {
     box-sizing: border-box;
 }
 
-.intro-text {
-    font-size: 1.2rem;
-    margin: 1rem 0;
-    color: #333;
-    text-align: center;
+/* Layout styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    margin-bottom: 3rem;
 }
 
-/* Header styles */
+.grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    justify-content: center;
+}
+
+/* Header and Navigation styles */
 header {
     background: #2C5F2D;
     color: #fff;
@@ -30,18 +38,12 @@ header {
     text-align: center;
 }
 
-/* header.banner {
-    background-color: darkgreen;
-    padding: 20px 0;
-} */
-
 header h1 {
     margin: 0;
     font-size: 2.5rem;
     font-family: 'Merriweather', serif;
 }
 
-/* Navigation styles */
 nav {
     background: #2C5F2D;
     padding: 0.5rem 0;
@@ -100,15 +102,7 @@ nav ul li a:hover, nav ul ul li a:hover {
     background-color: #244a24;
 }
 
-/* Main container */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem;
-    margin-bottom: 3rem; /* Added margin at the bottom */
-}
-
-/* Section headings */
+/* Main content styles */
 h2 {
     color: #2C5F2D;
     font-size: 2rem;
@@ -117,18 +111,16 @@ h2 {
     text-align: center;
 }
 
-/* Paragraph styles */
 p {
     margin: 1rem 0;
     font-size: 1.2rem;
 }
 
-/* Focus mode for accessibility */
-nav ul li a:focus,
-.card-link:focus,
-button:focus {
-    outline: 2px solid #4a90e2;
-    outline-offset: 2px;
+.intro-text {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    color: #333;
+    text-align: center;
 }
 
 /* Card styles */
@@ -139,7 +131,8 @@ button:focus {
     border-radius: 8px;
     transition: transform 0.2s ease-in-out;
     text-align: center;
-    min-width: 250px;
+    min-width: 200px;
+    width: 100%;
 }
 
 .card-link {
@@ -163,8 +156,8 @@ button:focus {
     font-size: 1.5rem;
 }
 
-/* Wide card styles */
 .wide-card {
+    grid-column: 1 / -1;
     background: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 2rem;
@@ -186,49 +179,7 @@ button:focus {
     line-height: 1.6;
 }
 
-/* Grid styles using CSS Grid */
-.grid {
-    display: grid;
-    gap: 3rem;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    justify-content: center;
-}
-
-.grid-2 { grid-template-columns: repeat(2, 1fr); }
-.grid-3 { grid-template-columns: repeat(3, 1fr); }
-.grid-4 { grid-template-columns: repeat(4, 1fr); }
-.grid-5 { grid-template-columns: repeat(5, 1fr); }
-
-/* Sub page card formats */
-.learning-card {
-    margin-bottom: 3rem;
-}
-
-.learning-card h2 {
-    text-align: center;
-}
-
-.learning-card .card-content:not(ul):not(ol),
-.learning-card p {
-    text-align: left;
-    max-width: 80%;
-    margin: 0 auto;
-}
-
-.learning-card ul,
-.learning-card ol {
-    text-align: left;
-    padding-left: 20px;
-    max-width: 80%;
-    margin: 0 auto;
-}
-
-.learning-card li {
-    text-align: left;
-    margin-bottom: 0.5rem;
-}
-
-/* Button styles */
+/* Form and Button styles */
 button {
     background: #2C5F2D;
     color: #fff;
@@ -245,15 +196,7 @@ button:hover {
     background: #244a24;
 }
 
-/* user authrntication styles */
-.welcome-message {
-    font-size: 1rem;
-    color: #fff;
-    text-align: center;
-    margin: 0.5rem 0;
-    font-weight: bold;
-}
-
+/* Footer styles */
 footer {
     background: #2C5F2D;
     color: #fff;
@@ -268,13 +211,24 @@ footer p {
     margin: 0;
 }
 
-/* Responsive styles */
-@media (max-width: 1024px) {
-    .grid-3, .grid-4, .grid-5 {
-        grid-template-columns: repeat(2, 1fr);
-    }
+/* Utility classes */
+.welcome-message {
+    font-size: 1rem;
+    color: #fff;
+    text-align: center;
+    margin: 0.5rem 0;
+    font-weight: bold;
 }
 
+/* Focus styles for accessibility */
+nav ul li a:focus,
+.card-link:focus,
+button:focus {
+    outline: 2px solid #4a90e2;
+    outline-offset: 2px;
+}
+
+/* Media queries for responsiveness */
 @media (max-width: 768px) {
     nav ul {
         display: flex;
@@ -286,14 +240,11 @@ footer p {
         margin-bottom: 0.5rem;
     }
 
-    .grid, .grid-2, .grid-3, .grid-4, .grid-5 {
+    .grid {
         grid-template-columns: 1fr;
     }
 
-    .learning-card .card-content:not(ul):not(ol),
-    .learning-card p,
-    .learning-card ul,
-    .learning-card ol {
-        max-width: 100%;
+    .card, .wide-card {
+        min-width: 100%;
     }
 }

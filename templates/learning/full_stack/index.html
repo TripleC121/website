@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block title %}Full Stack Development{% endblock %}
-
 {% block content %}
-<div class="container">
+
+<main class="container">
     <h2>Full Stack Development</h2>
-    <p class="intro-text">My journey through full stack development, covering both front-end and back-end technologies.</p>
-    <div class="grid grid-3">
+    <p>My journey through full stack development, covering both front-end and back-end technologies.</p>
+
+    <div class="grid">
         <div class="card">
             <a href="{% url 'frontend_overview' %}" class="card-link">
                 <img src="{% static 'images/frontend.jpg' %}" alt="Frontend Development" width="250" height="150">
@@ -18,7 +18,7 @@
 
         <div class="card">
             <a href="{% url 'cloud_tech' %}" class="card-link">
-                <img src="{% static 'images/backend.jpg' %}" alt="Cloud tech" width="250" height="150">
+                <img src="{% static 'images/backend.jpg' %}" alt="Cloud Technologies" width="250" height="150">
                 <h3>Cloud Technologies</h3>
                 <p>Full-Stack Development in the Cloud</p>
             </a>
@@ -40,5 +40,6 @@
             </a>
         </div>
     </div>
-</div>
+</main>
+
 {% endblock %}

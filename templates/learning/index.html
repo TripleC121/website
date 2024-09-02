@@ -1,14 +1,13 @@
 {% extends "base.html" %}
-
 {% load static %}
-
 {% block title %}Learning{% endblock %}
-
 {% block content %}
-<div class="container">
+
+<main class="container">
     <h2>My Technical Projects</h2>
-    <p class="intro-text">Welcome to my learning journey. Here you'll find information about my ongoing education in various technical fields.</p>
-    <div class="grid grid-2">
+    <p>Welcome to my learning journey. Here you'll find information about my ongoing education in various technical fields.</p>
+
+    <div class="grid">
         <div class="card">
             <a href="{% url 'full_stack' %}" class="card-link" rel="noopener noreferrer">
                 <img src="{% static 'images/AI.jpeg' %}" alt="Full Stack Development" width="350" height="200">
@@ -16,6 +15,7 @@
                 <p>Exploring web development including HTML, CSS, JavaScript, and Django.</p>
             </a>
         </div>
+
         <div class="card">
             <a href="{% url 'pgp_aiml' %}" class="card-link" rel="noopener noreferrer">
                 <img src="{% static 'images/pgp-aiml-small.png' %}" alt="Post Graduate AI/ML" width="250" height="250">
@@ -24,5 +24,6 @@
             </a>
         </div>
     </div>
-</div>
+</main>
+
 {% endblock %}

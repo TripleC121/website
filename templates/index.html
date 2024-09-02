@@ -1,44 +1,47 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block content %}
-<main>
+
+<main role="main">
     <div class="container">
-        <section class="wide-card">
+        <div class="wide-card">
             <h2>Current Projects - September 1, 2024</h2>
             <ul>
                 <li>I am fixing the page structure and links on the PGP AI/ML pages.</li>
                 <li>I am having some good friends review the structure of this website and offer suggestions for improvement.</li>
-                <li>I am loving the PG -AI/ML Class! We are just finishing up Neural Networks and I am starting on that project.</li>
+                <li>I am loving the PG-AI/ML Class! We are just finishing up Neural Networks and I am starting on that project.</li>
             </ul>
-        </section>
+        </div>
 
-        <section id="Projects" class="section">
+        <section id="Projects">
             <h2>Projects</h2>
-            <div class="grid grid-5">
+            <div class="grid">
                 <div class="card">
-                    <a href="{% url 'learning'%}" rel="noopener noreferrer" class="card-link">
+                    <a href="{% url 'learning' %}" class="card-link" rel="noopener noreferrer">
                         <img src="{% static 'images/Learning.jpeg' %}" alt="Learning" width="150" height="150">
-                        <p>Learning</p>
+                        <h3>Learning</h3>
                     </a>
                 </div>
                 <div class="card">
-                    <a href="{% url 'technology' %}" rel="noopener noreferrer" class="card-link">
-                    <img src="{% static 'images/Technology.jpg' %}" alt="Learning" width="150" height="150">
-                    <p>Technology</p>
+                    <a href="{% url 'technology' %}" class="card-link" rel="noopener noreferrer">
+                        <img src="{% static 'images/Technology.jpg' %}" alt="Technology" width="150" height="150">
+                        <h3>Technology</h3>
+                    </a>
                 </div>
                 <div class="card">
-                    <a href="{% url 'growing' %}" rel="noopener noreferrer" class="card-link">
+                    <a href="{% url 'growing' %}" class="card-link" rel="noopener noreferrer">
                         <img src="{% static 'images/Growing.jpeg' %}" alt="Growing" width="150" height="150">
-                        <p>Growing</p>
+                        <h3>Growing</h3>
                     </a>
                 </div>
             </div>
         </section>
+
         <section id="contact">
             <h2>Contact</h2>
             <p>Get in touch via email: <a href="mailto:{{ CONTACT_EMAIL }}">{{ CONTACT_EMAIL }}</a></p>
         </section>
     </div>
 </main>
+
 {% endblock %}
