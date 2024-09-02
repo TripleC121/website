@@ -9,6 +9,7 @@ from django.contrib.auth.views import (
 )
 from .forms import CustomUserCreationForm
 import logging
+
 logger = logging.getLogger(__name__)
 
 
@@ -18,18 +19,6 @@ def homepage(request):
 
 def about(request):
     return render(request, 'about/index.html')
-
-
-def growing(request):
-    return render(request, 'growing/index.html')
-
-
-def succulents(request):
-    return render(request, 'growing/succulents/index.html')
-
-
-def trees(request):
-    return render(request, 'growing/trees/index.html')
 
 
 def learning(request):
@@ -58,6 +47,22 @@ def frontend_overview(request):
 
 def pgp_aiml(request):
     return render(request, 'learning/pgp_aiml/index.html')
+
+
+def ai_foundations(request):
+    return render(request, 'learning/pgp_aiml/ai_foundations.html')
+
+
+def machine_learning(request):
+    return render(request, 'learning/pgp_aiml/machine_learning.html')
+
+
+def deep_learning(request):
+    return render(request, 'learning/pgp_aiml/deep_learning.html')
+
+
+def course_projects(request):
+    return render(request, 'learning/pgp_aiml/course_projects.html')
 
 
 def project1(request):
@@ -98,6 +103,18 @@ def backend_technologies_view(request):
 
 def frontend_technologies_view(request):
     return render(request, 'technology/frontend_technologies.html')
+
+
+def growing(request):
+    return render(request, 'growing/index.html')
+
+
+def succulents(request):
+    return render(request, 'growing/succulents/index.html')
+
+
+def trees(request):
+    return render(request, 'growing/trees/index.html')
 
 
 def signup(request):
