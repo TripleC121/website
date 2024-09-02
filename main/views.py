@@ -11,6 +11,7 @@ from .forms import CustomUserCreationForm
 import logging
 logger = logging.getLogger(__name__)
 
+
 def homepage(request):
     return render(request, 'index.html')
 
@@ -39,15 +40,15 @@ def full_stack(request):
     return render(request, 'learning/full_stack/index.html')
 
 
-def cloud_tech (request):
+def cloud_tech(request):
     return render(request, 'learning/full_stack/cloud_tech.html')
 
 
-def devops_overview (request):
+def devops_overview(request):
     return render(request, 'learning/full_stack/devops_overview.html')
 
 
-def django_details (request):
+def django_details(request):
     return render(request, 'learning/full_stack/django_details.html')
 
 
