@@ -1,9 +1,80 @@
-{% extends 'base.html' %}
-
-{% block title %}
-    About
-{% endblock %}
-
+{% extends "base.html" %}
+{% load static %}
+{% block title %}About Chris Chesley{% endblock %}
 {% block content %}
-    <p>I currently live in Fate Texas</p>
+
+<div class="container">
+    <div class="wide-card">
+        <h2>About Me</h2>
+        <p class="intro-text">Welcome! I'm Chris Chesley, a passionate technologist and lifelong learner with over 20 years of experience in the tech industry.</p>
+        <p>I'm dedicated to exploring the intersections of cloud technologies, artificial intelligence, and innovative IT solutions. This website serves as a portfolio of my journey and a platform to share my experiences and insights.</p>
+    </div>
+
+    <div class="wide-card">
+        <h3>Current Role & Career Philosophy</h3>
+        <p><strong>Solution Sales Engineer</strong> at <a href="https://www.crayon.com/us/" target="_blank" rel="noopener noreferrer">Crayon</a>, where I leverage technical expertise to optimize IT and cloud solutions for clients.</p>
+        <p>Throughout my career, I've been driven by the belief that technology should serve as a catalyst for business growth and innovation. My greatest satisfaction comes from helping clients navigate complex technological landscapes to achieve their business goals. I'm passionate about fostering relationships, continuous learning, and leveraging cutting-edge technologies to drive meaningful transformations.</p>
+    </div>
+
+    <div class="wide-card">
+        <h3>Professional Journey</h3>
+        <p>With over two decades in the tech industry, I've specialized in cloud solutions, Microsoft 365, Azure, AWS, and Data/AI solutions. My career has included roles such as:</p>
+        <ul>
+            <li>Various positions at SoftwareONE: Solution Sales Engineer, Solution Sales Leader, Growth Lead, Digital Workplace</li>
+            <li>Solutions Architect at Greenpages (now Blue Mantis)</li>
+        </ul>
+        <p>Notable achievements include making Presidents Club at both GreenPages and SoftwareONE. However, my most valued accomplishments are the relationships I've built and the opportunities I've had to help clients achieve digital transformation and meet their business goals.</p>
+    </div>
+
+    <div class="wide-card">
+        <h3>Skills & Expertise</h3>
+        <div class="grid">
+            <div>
+                <ul>
+                    <li>Cloud Solutions: AWS, Azure, Microsoft 365</li>
+                    <li>AI/ML (current focus)</li>
+                    <li>IT Optimization and Digital Transformation</li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li>Solution Architecture and Design</li>
+                    <li>Full-stack Development</li>
+                    <li>DevOps Practices</li>
+                    <li>Project Management and Team Leadership</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="wide-card">
+        <h3>Education & Certifications</h3>
+        <p><strong>Education:</strong> BS in Business Administration, Plymouth State University</p>
+        <p><strong>Current:</strong> Post Graduate Program in Artificial Intelligence and Machine Learning, University of Texas at Austin</p>
+        <p><strong>Key Certifications:</strong> Microsoft Certified: Azure Solutions Architect Expert, AWS Certified Solutions Architect – Associate, ITIL v3 Foundation</p>
+    </div>
+
+    <div class="wide-card">
+        <h3>Learning Journey & Projects</h3>
+        <p>My path in technology has been driven by curiosity and a desire to solve complex problems. Starting with full-stack development, I've expanded my skills to cloud technologies, particularly AWS. Currently, I'm diving deep into the world of AI and machine learning through a comprehensive PGP program.</p>
+        <p>Key projects include:</p>
+        <ul>
+            <li>This website: Showcasing Django, AWS, and DevOps skills</li>
+            <li>Ongoing AI/ML projects as part of my PGP program</li>
+            <li>Numerous digital transformation projects for clients</li>
+        </ul>
+    </div>
+
+    <div class="wide-card">
+        <h3>Beyond Tech</h3>
+        <p>When I'm not immersed in the world of technology, I enjoy tending to my growing collection of succulents and exploring the great outdoors through hiking and photography. These activities not only provide a refreshing balance to my tech-focused career but also often inspire creative problem-solving approaches in my professional work.</p>
+    </div>
+
+    <div class="wide-card" id="contact">
+        <h3>Let's Connect</h3>
+        <p>I'm always eager to connect with fellow tech enthusiasts, potential collaborators, or anyone interested in the projects I'm working on. Feel free to reach out!</p>
+        <p>Email: <a href="mailto:{{ CONTACT_EMAIL }}">{{ CONTACT_EMAIL }}</a></p>
+    </div>
+</div>
+
 {% endblock %}
