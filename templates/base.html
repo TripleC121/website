@@ -23,6 +23,7 @@
                 <li><a href="{% url 'growing' %}">Growing</a></li>
                 <li><a href="{% url 'user_test' %}">User stuff</a></li>
                 <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'about_why' %}">My Why</a></li>
                 {% if user.is_authenticated %}
                     <li>
                         <form method="post" action="{% url 'logout' %}" style="display: inline;">

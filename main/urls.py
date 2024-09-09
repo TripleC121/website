@@ -32,6 +32,7 @@ urlpatterns = [
     path('growing/succulents/', views.succulents, name='succulents'),
     path('growing/trees/', views.trees, name='trees'),
     path('about/', views.about, name='about'),
+    path('about/why/', views.about_why, name='about_why'),
     path('user_test/', views.user_test, name='user_test'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('signup/', views.signup, name='signup'),

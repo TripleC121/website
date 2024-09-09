@@ -21,6 +21,10 @@ def about(request):
     return render(request, 'about/index.html')
 
 
+def about_why(request):
+    return render(request, 'about/why.html')
+
+
 def learning(request):
     return render(request, 'learning/index.html')
 
