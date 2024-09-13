@@ -11,6 +11,7 @@ services:
     volumes:
       - .:/app
       - sqlite_data:/app/db
+      - ./logs:/app/logs  # Add this line
 
 volumes:
   sqlite_data:

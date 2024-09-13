@@ -2,3 +2,4 @@ asgiref==3.8.1
 Django==5.0.7
 django-environ==0.11.2
 sqlparse==0.5.1
+django-debug-toolbar==4.3.0
