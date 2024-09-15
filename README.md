@@ -1,50 +1,71 @@
-Django AWS Deployment Project Summary
-Project Overview
+# Chris Chesley's Personal Website
 
-Personal Django website hosted on AWS EC2
-Utilizes Docker, Nginx, and Gunicorn
-Main goal: Implement secure CI/CD using GitHub Actions and AWS Systems Manager
-Learning exercise for the developer
+This repository contains the source code for Chris Chesley's personal website, which includes a Django-based web application deployed on AWS EC2 with static files served from S3.
 
-Current Setup
+## Project Structure
 
-EC2 instance running Ubuntu
-RDS Postgres database for production
-CloudFlare for DNS management and HTTPS
-Docker for containerization
-GitHub for version control
-Two existing GitHub workflow files
+```
+.
+├── .github/
+│   └── workflows/
+│       ├── deploy-ssm.yml
+│       ├── test-lint.yml
+│       └── s3-sync.yml
+├── chesley_web/
+│   ├── settings/
+│   │   ├── base.py
+│   │   ├── development.py
+│   │   └── production.py
+│   ├── asgi.py
+│   ├── urls.py
+│   └── wsgi.py
+├── main/
+│   ├── migrations/
+│   ├── admin.py
+│   ├── apps.py
+│   ├── context_processors.py
+│   ├── forms.py
+│   ├── models.py
+│   ├── tests.py
+│   ├── urls.py
+│   └── views.py
+├── scripts/
+│   ├── sync_images_to_s3.py
+│   └── validate_images.py
+├── static/
+│   ├── css/
+│   └── images/
+├── templates/
+├── .gitignore
+├── docker-compose.prod.yml
+├── docker-compose.yml
+├── Dockerfile.dev
+├── Dockerfile.prod
+├── manage.py
+├── requirements-dev.txt
+└── requirements-prod.txt
+```
 
-Recent Updates
+## Setup
 
-Created IAM role for EC2 instance with AmazonSSMManagedInstanceCore policy
-Updated IAM user permissions to include necessary Systems Manager actions
+1. Clone the repository
+2. Install dependencies:
+   - For development: `pip install -r requirements-dev.txt`
+   - For production: `pip install -r requirements-prod.txt`
+3. Set up environment variables (see `.env.example`)
+4. Run migrations: `python manage.py migrate`
+5. Start the development server: `python manage.py runserver`
 
-Development vs Production Differences
+## Deployment
 
-Development uses venv, SQLite, and localhost
-Production uses Docker, RDS Postgres, and is publicly accessible
-Separate configuration files for dev and prod environments
+This project is deployed on AWS EC2 using Docker and served behind Nginx. Static files are stored in an S3 bucket.
 
-Next Steps
+See `DEPLOYMENT.md` for detailed deployment instructions.
 
-Review and update existing GitHub workflow files
-Fix or simplify verification phase of deploy-ssm.yml
-Test and verify deployment process using AWS Systems Manager Session Manager
+## Contributing
 
-Future Goals
+Please read `CONTRIBUTING.md` for details on our code of conduct and the process for submitting pull requests.
 
-Learn and implement Ansible and Terraform for infrastructure management
+## License
 
-Key Files
-
-docker-compose.prod.yml
-Dockerfile.prod
-requirements.prod.txt
-
-Challenges
-
-Previous deployment script using SSH was failing due to restricted access
-Some GitHub Actions workflows are currently failing and need attention
-
-This project serves as a comprehensive learning exercise in modern web application deployment, incorporating various AWS services, containerization, and CI/CD practices.
+This project is licensed under the MIT License - see the `LICENSE` file for details.
