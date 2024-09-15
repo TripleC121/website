@@ -9,12 +9,10 @@ https://docs.djangoproject.com/en/5.0/howto/deployment/wsgi/
 
 import os
 
-from django.core.wsgi import get_wsgi_application
 from django.contrib import admin
-from django.urls import path
-from django.urls import include
+from django.core.wsgi import get_wsgi_application
+from django.urls import include, path
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "chesley_web.settings.production")
 
 application = get_wsgi_application()
-

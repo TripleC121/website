@@ -1,6 +1,7 @@
-from pathlib import Path
-import environ
 import os
+from pathlib import Path
+
+import environ
 
 # Initialize environ
 env = environ.Env()
@@ -9,7 +10,7 @@ env = environ.Env()
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # Read .env file
-environ.Env.read_env(os.path.join(BASE_DIR, '.env.dev'))
+environ.Env.read_env(os.path.join(BASE_DIR, ".env.dev"))
 
 # Application definition
 INSTALLED_APPS = [
@@ -19,9 +20,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'main.apps.MainConfig',
-    'workout_tracker',
-    'rest_framework',
+    "main.apps.MainConfig",
+    "workout_tracker",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [
@@ -39,7 +40,7 @@ ROOT_URLCONF = "chesley_web.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": ['templates'],
+        "DIRS": ["templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -47,7 +48,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                'main.context_processors.contact_email',
+                "main.context_processors.contact_email",
             ],
         },
     },
@@ -79,58 +80,56 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = "static/"
-STATICFILES_DIRS = [
-    BASE_DIR / 'static'
-]
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
-CONTACT_EMAIL = env('CONTACT_EMAIL', default='chrischesley@gmail.com')
+CONTACT_EMAIL = env("CONTACT_EMAIL", default="chrischesley@gmail.com")
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # User authentication
-AUTH_USER_MODEL = 'main.CustomUser'
-LOGIN_REDIRECT_URL = 'homepage'
-LOGOUT_REDIRECT_URL = 'homepage'
+AUTH_USER_MODEL = "main.CustomUser"
+LOGIN_REDIRECT_URL = "homepage"
+LOGOUT_REDIRECT_URL = "homepage"
 
 import os
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
         },
     },
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose',
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
         },
     },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'INFO',
-            'propagate': True,
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": True,
         },
-        'django.request': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False,
+        "django.request": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": False,
         },
-        'django.server': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False,
+        "django.server": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": False,
         },
-        'chesley_web': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False,
+        "chesley_web": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": False,
         },
     },
 }

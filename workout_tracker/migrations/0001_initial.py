@@ -15,33 +15,76 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Exercise',
+            name="Exercise",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100)),
-                ('description', models.TextField(blank=True)),
-                ('is_gym_exercise', models.BooleanField(default=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=100)),
+                ("description", models.TextField(blank=True)),
+                ("is_gym_exercise", models.BooleanField(default=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Workout',
+            name="Workout",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField()),
-                ('is_gym_workout', models.BooleanField(default=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateField()),
+                ("is_gym_workout", models.BooleanField(default=True)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='WorkoutExercise',
+            name="WorkoutExercise",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('sets', models.IntegerField()),
-                ('reps', models.IntegerField()),
-                ('weight', models.FloatField(blank=True, null=True)),
-                ('duration', models.DurationField(blank=True, null=True)),
-                ('exercise', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='workout_tracker.exercise')),
-                ('workout', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='exercises', to='workout_tracker.workout')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("sets", models.IntegerField()),
+                ("reps", models.IntegerField()),
+                ("weight", models.FloatField(blank=True, null=True)),
+                ("duration", models.DurationField(blank=True, null=True)),
+                (
+                    "exercise",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="workout_tracker.exercise",
+                    ),
+                ),
+                (
+                    "workout",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="exercises",
+                        to="workout_tracker.workout",
+                    ),
+                ),
             ],
         ),
     ]

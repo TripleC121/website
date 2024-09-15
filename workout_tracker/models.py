@@ -1,7 +1,8 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
 
 User = get_user_model()
+
 
 class Exercise(models.Model):
     name = models.CharField(max_length=100)
@@ -11,6 +12,7 @@ class Exercise(models.Model):
     def __str__(self):
         return self.name
 
+
 class Workout(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateField()
@@ -19,13 +21,18 @@ class Workout(models.Model):
     def __str__(self):
         return f"{self.user.username}'s workout on {self.date}"
 
+
 class WorkoutExercise(models.Model):
-    workout = models.ForeignKey(Workout, on_delete=models.CASCADE, related_name='exercises')
+    workout = models.ForeignKey(
+        Workout, on_delete=models.CASCADE, related_name="exercises"
+    )
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     sets = models.IntegerField()
     reps = models.IntegerField()
     weight = models.FloatField(null=True, blank=True)  # For gym exercises
-    duration = models.DurationField(null=True, blank=True)  # For home bodyweight exercises
+    duration = models.DurationField(
+        null=True, blank=True
+    )  # For home bodyweight exercises
 
     def __str__(self):
         return f"{self.exercise.name} - {self.sets}x{self.reps}"

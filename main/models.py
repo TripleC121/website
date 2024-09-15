@@ -1,5 +1,5 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
 
 
 class CustomUser(AbstractUser):
@@ -9,21 +9,29 @@ class CustomUser(AbstractUser):
     date_of_birth = models.DateField(null=True, blank=True)
 
     # Fitness goals
-    fitness_goal = models.CharField(max_length=100, blank=True, choices=[
-        ('weight_loss', 'Weight Loss'),
-        ('muscle_gain', 'Muscle Gain'),
-        ('endurance', 'Endurance'),
-        ('general_fitness', 'General Fitness'),
-    ])
+    fitness_goal = models.CharField(
+        max_length=100,
+        blank=True,
+        choices=[
+            ("weight_loss", "Weight Loss"),
+            ("muscle_gain", "Muscle Gain"),
+            ("endurance", "Endurance"),
+            ("general_fitness", "General Fitness"),
+        ],
+    )
 
     # Activity level
-    activity_level = models.CharField(max_length=50, blank=True, choices=[
-        ('sedentary', 'Sedentary'),
-        ('lightly_active', 'Lightly Active'),
-        ('moderately_active', 'Moderately Active'),
-        ('very_active', 'Very Active'),
-        ('extra_active', 'Extra Active'),
-    ])
+    activity_level = models.CharField(
+        max_length=50,
+        blank=True,
+        choices=[
+            ("sedentary", "Sedentary"),
+            ("lightly_active", "Lightly Active"),
+            ("moderately_active", "Moderately Active"),
+            ("very_active", "Very Active"),
+            ("extra_active", "Extra Active"),
+        ],
+    )
 
     # Additional fields that might be useful
     preferred_workout_time = models.TimeField(null=True, blank=True)

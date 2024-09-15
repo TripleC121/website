@@ -18,7 +18,7 @@ def main():
     execute_from_command_line(sys.argv)
 
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'chesley_web.settings.development')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "chesley_web.settings.development")
 
 if __name__ == "__main__":
     main()
