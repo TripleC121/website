@@ -8,3 +8,4 @@ psycopg-binary==3.2.1
 sqlparse==0.5.1
 django-storages
 boto3
+djangorestframework==3.15.2
