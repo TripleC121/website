@@ -2,7 +2,7 @@ name: Deploy to EC2 using AWS Systems Manager
 
 on:
   push:
-    branches: [ main ]
+    branches: [ '*' ]
 
 jobs:
   deploy:
