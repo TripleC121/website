@@ -11,14 +11,22 @@
     <div class="grid grid-2">
         <a href="{% url 'succulents' %}" class="card-link">
             <div class="card">
-                <h3>Succulents</h3>
-                <p>View my succulent collection</p>
+                <picture>
+                    <source srcset="{% static 'images/general/succulent.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/general/succulent.jpeg' %}" type="image/jpeg">
+                    <img src="{% static 'images/general/succulent.webp' %}" alt="Succulents" width="250" height="250">
+                </picture>
+                <h3>View my succulent collection</h3>
             </div>
         </a>
         <a href="{% url 'trees' %}" class="card-link">
             <div class="card">
-                <h3>Trees</h3>
-                <p>View my tree collection</p>
+                <picture>
+                    <source srcset="{% static 'images/general/tree.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/general/tree.jpeg' %}" type="image/jpeg">
+                    <img src="{% static 'images/general/tree.webp' %}" alt="Succulents" width="250" height="250">
+                </picture>
+                <h3>View my tree collection</h3>
             </div>
         </a>
     </div>

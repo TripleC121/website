@@ -28,6 +28,13 @@ SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 
+# images processing directories
+INPUT_DIR = os.environ.get("INPUT_DIR", os.path.join(BASE_DIR, "input_images"))
+OUTPUT_DIR = os.environ.get("OUTPUT_DIR", os.path.join(BASE_DIR, "static", "images"))
+PROCESSED_DIR = os.environ.get(
+    "PROCESSED_DIR", os.path.join(BASE_DIR, "processed_originals")
+)
+
 # Debug print statements
 print(f"Secret Key: {SECRET_KEY}")
 print(f"Debug: {DEBUG}")

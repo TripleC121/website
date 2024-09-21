@@ -1,55 +1,27 @@
-# Deployment Guide
+## Image Processing
 
-This document outlines the deployment process for Chris Chesley's personal website.
+Before deployment, ensure all images are optimized:
 
-## Prerequisites
-
-- AWS account with EC2 and S3 access
-- Docker and Docker Compose installed on the EC2 instance
-- GitHub account with access to the repository
-
-## Deployment Steps
-
-1. Set up an EC2 instance with Ubuntu
-2. Install Docker and Docker Compose on the EC2 instance
-3. Set up an S3 bucket for static files
-4. Configure the EC2 security group to allow inbound traffic on ports 80 and 443
-5. Set up Nginx on the EC2 instance as a reverse proxy
-6. Clone the repository on the EC2 instance
-7. Create a `.env.prod` file with production environment variables
-8. Build and start the Docker containers:
+1. Place new images in the input directory specified in your `.env.prod` file
+2. Run the optimization script:
    ```
-   docker-compose -f docker-compose.prod.yml up -d
+   docker compose -f docker-compose.prod.yml run --rm web python scripts/optimize_images.py
    ```
-9. Run migrations:
+3. Verify that optimized images are in the output directory
+4. Sync optimized images to S3 (this is handled by the CI/CD pipeline)
+
+## Updating Dependencies
+
+To update project dependencies in the production environment:
+
+1. SSH into the EC2 instance
+2. Navigate to the project directory
+3. Run the update script:
    ```
-   docker-compose -f docker-compose.prod.yml exec web python manage.py migrate
+   docker compose -f docker-compose.prod.yml run --rm web python scripts/update_requirements.py
    ```
-10. Collect static files:
-    ```
-    docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic
-    ```
-
-## Continuous Deployment
-
-The project uses GitHub Actions for continuous deployment. The workflow is defined in `.github/workflows/deploy-ssm.yml`.
-
-To set up continuous deployment:
-
-1. Add the following secrets to your GitHub repository:
-   - `AWS_ACCESS_KEY_ID`
-   - `AWS_SECRET_ACCESS_KEY`
-   - `EC2_INSTANCE_ID`
-   - `AWS_S3_BUCKET_NAME`
-2. Ensure the EC2 instance has the AWS Systems Manager agent installed
-3. Configure the EC2 instance's IAM role to allow Systems Manager access
-
-Now, every push to the `main` branch will trigger a deployment to the EC2 instance and sync static files to S3.
-
-## Troubleshooting
-
-- Check the EC2 instance's system log for deployment errors
-- Verify that the S3 bucket permissions are correctly set
-- Ensure that the EC2 instance has the necessary permissions to pull from the Docker registry and access S3
-
-For any persistent issues, please open an issue on the GitHub repository.
+4. Review the changes in the logs directory
+5. Rebuild and restart the Docker containers:
+   ```
+   docker compose -f docker-compose.prod.yml up -d --build
+   ```

@@ -11,7 +11,10 @@ services:
     volumes:
       - .:/app
       - sqlite_data:/app/db
-      - ./logs:/app/logs  # Add this line
+      - ./logs:/app/logs
+      - /home/critter/projects/Website-files/images-website/input_dir:/app/external_input_dir
+      - /home/critter/projects/Website-files/images-website/processed_dir:/app/external_processed_dir
+      - /home/critter/projects/Website-files/images-website/original_dir:/app/external_original_dir
 
 volumes:
   sqlite_data:
