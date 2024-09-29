@@ -137,11 +137,6 @@ def signup(request):
     return render(request, "signup.html", {"form": form})
 
 
-@login_required
-def user_test(request):
-    return render(request, "user_test/index.html")
-
-
 # Password reset views
 class CustomPasswordResetView(PasswordResetView):
     template_name = "password_reset/password_reset_form.html"

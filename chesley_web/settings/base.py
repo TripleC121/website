@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta  # for JWT token expiration
 from pathlib import Path
 
 import environ
@@ -12,6 +13,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # Read .env file
 environ.Env.read_env(os.path.join(BASE_DIR, ".env.dev"))
 
+# static root settings
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
 # Application definition
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -21,8 +25,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "main.apps.MainConfig",
-    "workout_tracker",
-    "rest_framework",
 ]
 
 MIDDLEWARE = [
