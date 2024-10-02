@@ -48,3 +48,6 @@ github-actions-deploy*
 *_rsa*
 *.pem
 actions-deploy-github*
+
+# backend
+backend/logs/

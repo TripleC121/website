@@ -5,5 +5,8 @@ exclude =
     __pycache__,
     */migrations/*,
     venv,
-    env
+    env,
+    .env*
 ignore = E266, E402, E401, F401, F403, F405, W391
+max-complexity = 10
+select = B,C,E,F,W,T4,B9

@@ -18,29 +18,42 @@
                 <li>Success with my Home Automation project with my Z-Wave thermostat now working well and automated. Next steps are setting up Z-Wave switches for some lights.</li>
             </ul>
         </div>
-        <section id="Projects">
+
+        <div id="Projects" class="section">
             <h2>Projects</h2>
             <div class="grid">
                 <div class="card">
                     <a href="{% url 'learning' %}" class="card-link" rel="noopener noreferrer">
-                        <img src="{% static 'images/general/Learning.jpeg' %}" alt="Learning" width="150" height="150">
+                        <picture>
+                            <source srcset="{% static 'images/general/Learning.webp' %}" type="image/webp">
+                            <source srcset="{% static 'images/general/Learning.jpg' %}" type="image/jpeg">
+                            <img src="{% static 'images/general/Learning.jpg' %}" alt="Learning" width="150" height="150">
+                        </picture>
                         <h3>Learning</h3>
                     </a>
                 </div>
                 <div class="card">
                     <a href="{% url 'technology' %}" class="card-link" rel="noopener noreferrer">
-                        <img src="{% static 'images/general/Technology.jpg' %}" alt="Technology" width="150" height="150">
+                        <picture>
+                            <source srcset="{% static 'images/general/Technology.webp' %}" type="image/webp">
+                            <source srcset="{% static 'images/general/Technology.jpg' %}" type="image/jpeg">
+                            <img src="{% static 'images/general/Technology.jpg' %}" alt="Technology" width="150" height="150">
+                        </picture>
                         <h3>Technology</h3>
                     </a>
                 </div>
                 <div class="card">
                     <a href="{% url 'growing' %}" class="card-link" rel="noopener noreferrer">
-                        <img src="{% static 'images/general/Growing.jpeg' %}" alt="Growing" width="150" height="150">
+                        <picture>
+                            <source srcset="{% static 'images/general/Growing.webp' %}" type="image/webp">
+                            <source srcset="{% static 'images/general/Growing.jpg' %}" type="image/jpeg">
+                            <img src="{% static 'images/general/Growing.jpg' %}" alt="Growing" width="150" height="150">
+                        </picture>
                         <h3>Growing</h3>
                     </a>
                 </div>
             </div>
-        </section>
+        </div>
 
         <section id="contact">
             <h2>Contact</h2>
