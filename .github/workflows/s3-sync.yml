@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - 'static/images/**'
-      - 'media/**'
 
 jobs:
   sync-to-s3:
@@ -20,4 +19,3 @@ jobs:
       - name: Sync images to S3
         run: |
           aws s3 sync ./static/images s3://${{ secrets.AWS_S3_BUCKET_NAME }}/static/images --delete
-          aws s3 sync ./media s3://${{ secrets.AWS_S3_BUCKET_NAME }}/media --delete
