@@ -42,18 +42,6 @@ python backend/scripts/optimize_images.py
 - Production uses Docker, RDS Postgres, and is publicly accessible
 - Separate configuration files for dev and prod environments
 
-## Next Steps
-
-- Review and update existing GitHub workflow files
-- Fix or simplify verification phase of deploy-ssm.yml
-- Test and verify deployment process using AWS Systems Manager Session Manager
-- Integrate image optimization into the CI/CD pipeline
-
-## Future Goals
-
-- Learn and implement Ansible and Terraform for infrastructure management
-- Automate image optimization as part of the deployment process
-
 ## Key Files
 
 - docker-compose.prod.yml
@@ -61,9 +49,28 @@ python backend/scripts/optimize_images.py
 - requirements.prod.txt
 - backend/scripts/optimize_images.py
 
-## Challenges
+## Backup Strategy
 
-- Previous deployment script using SSH was failing due to restricted access
-- Some GitHub Actions workflows are currently failing and need attention
+This project uses automated backup scripts for both development and production environments.
+
+### Development Backups
+- Location: `/home/critter/backups/website`
+- Frequency: Weekly (every Sunday at 1 AM)
+- Retention: 14 days
+- What's backed up: All website files and database
+- Script location: `/home/critter/projects/website/backend/scripts/dev_backup.sh`
+
+### Production Backups
+- Location: Private S3 bucket
+- Frequency: Weekly (every Sunday at 1 AM)
+- Retention: 30 days
+- What's backed up: All website files and database
+- Script location: `/opt/website/backend/scripts/prod_backup.sh`
+
+To restore from a backup:
+1. For files: Extract the `.tar.gz` file to the appropriate directory.
+2. For database: Use `psql` or `pg_restore` to restore the `.sql.gz` file.
+
+Note: Always test restores in a safe, non-production environment first.
 
 This project serves as a comprehensive learning exercise in modern web application deployment, incorporating various AWS services, containerization, CI/CD practices, and image optimization techniques.
