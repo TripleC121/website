@@ -51,3 +51,6 @@ actions-deploy-github*
 
 # backend
 backend/logs/
+
+# school files
+pgpaiml/
