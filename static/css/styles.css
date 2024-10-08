@@ -1,7 +1,11 @@
 /* Importing fonts from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Roboto:wght@400;500;700&display=swap');
 
-/* General styles */
+/* Reset and Base Styles */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
     color: #333;
@@ -11,11 +15,28 @@ body {
     line-height: 1.6;
 }
 
-*, *::before, *::after {
-    box-sizing: border-box;
+/* Typography */
+h2 {
+    color: #2C5F2D;
+    font-size: 2rem;
+    font-family: 'Merriweather', serif;
+    margin-top: 1rem;
+    text-align: center;
 }
 
-/* Layout styles */
+p {
+    margin: 1rem 0;
+    font-size: 1.2rem;
+}
+
+.intro-text {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+    color: #333;
+    text-align: center;
+}
+
+/* Layout */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -30,7 +51,30 @@ body {
     justify-content: center;
 }
 
-/* Header and Navigation styles */
+/* New course-specific grid styles */
+.course-grid {
+    display: grid;
+    gap: 2rem;
+    justify-content: center;
+}
+
+.course-grid.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.course-grid.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* Header and Navigation */
 header {
     background: #2C5F2D;
     color: #fff;
@@ -102,28 +146,7 @@ nav ul li a:hover, nav ul ul li a:hover {
     background-color: #244a24;
 }
 
-/* Main content styles */
-h2 {
-    color: #2C5F2D;
-    font-size: 2rem;
-    font-family: 'Merriweather', serif;
-    margin-top: 1rem;
-    text-align: center;
-}
-
-p {
-    margin: 1rem 0;
-    font-size: 1.2rem;
-}
-
-.intro-text {
-    font-size: 1.2rem;
-    margin: 1rem 0;
-    color: #333;
-    text-align: center;
-}
-
-/* Card styles */
+/* Cards */
 .card {
     background: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -156,6 +179,11 @@ p {
     font-size: 1.5rem;
 }
 
+.card-double {
+    grid-column: span 2;
+    margin-top: 3rem; /* Add space above the card-double */
+}
+
 .wide-card {
     grid-column: 1 / -1;
     background: #fff;
@@ -179,7 +207,7 @@ p {
     line-height: 1.6;
 }
 
-/* Form and Button styles */
+/* Buttons */
 button {
     background: #2C5F2D;
     color: #fff;
@@ -196,7 +224,7 @@ button:hover {
     background: #244a24;
 }
 
-/* Footer styles */
+/* Footer */
 footer {
     background: #2C5F2D;
     color: #fff;
@@ -211,7 +239,7 @@ footer p {
     margin: 0;
 }
 
-/* Utility classes */
+/* Utility Classes */
 .welcome-message {
     font-size: 1rem;
     color: #fff;
@@ -220,7 +248,7 @@ footer p {
     font-weight: bold;
 }
 
-/* Focus styles for accessibility */
+/* Accessibility */
 nav ul li a:focus,
 .card-link:focus,
 button:focus {
@@ -228,7 +256,13 @@ button:focus {
     outline-offset: 2px;
 }
 
-/* Media queries for responsiveness */
+/* Media Queries */
+@media (max-width: 1200px) {
+    .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
     nav ul {
         display: flex;
@@ -246,5 +280,9 @@ button:focus {
 
     .card, .wide-card {
         min-width: 100%;
+    }
+
+    .card-double {
+        grid-column: auto;
     }
 }

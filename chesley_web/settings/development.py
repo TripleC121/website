@@ -30,7 +30,7 @@ SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 
-# Logging configuration
+# Update the LOGGING configuration
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -48,7 +48,7 @@ LOGGING = {
         "file": {
             "level": "DEBUG",
             "class": "logging.FileHandler",
-            "filename": "/home/critter/projects/website/backend/logs/debug.log",
+            "filename": os.path.join(BASE_DIR, "logs", "debug.log"),
             "formatter": "verbose",
         },
         "console": {
@@ -73,8 +73,7 @@ LOGGING = {
 
 # Debug print statements
 if DEBUG:
-    print(f"Secret Key: {SECRET_KEY}")
     print(f"Debug: {DEBUG}")
     print(f"Allowed Hosts: {ALLOWED_HOSTS}")
     print(f"Database: {DATABASES}")
-    print("Log file: /home/critter/projects/website/backend/logs/debug.log")
+    print(f"Log file: {os.path.join(BASE_DIR, 'logs', 'debug.log')}")
