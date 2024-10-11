@@ -1,11 +1,4 @@
-import os
-
-import environ
-
 from .base import *
-
-# Initialize environ
-env = environ.Env()
 
 # Read .env.dev file
 environ.Env.read_env(os.path.join(BASE_DIR, ".env.dev"))
@@ -48,7 +41,7 @@ LOGGING = {
         "file": {
             "level": "DEBUG",
             "class": "logging.FileHandler",
-            "filename": os.path.join(BASE_DIR, "logs", "debug.log"),
+            "filename": LOG_DIR / "debug.log",
             "formatter": "verbose",
         },
         "console": {
@@ -71,9 +64,16 @@ LOGGING = {
     },
 }
 
-# Debug print statements
-if DEBUG:
+
+def print_debug_info():
     print(f"Debug: {DEBUG}")
     print(f"Allowed Hosts: {ALLOWED_HOSTS}")
     print(f"Database: {DATABASES}")
-    print(f"Log file: {os.path.join(BASE_DIR, 'logs', 'debug.log')}")
+    print(f"Log file: {LOG_DIR / 'debug.log'}")
+    print(f"Input Directory: {INPUT_DIR}")
+    print(f"Output Directory: {OUTPUT_DIR}")
+    print(f"Original Directory: {ORIGINAL_DIR}")
+
+
+if DEBUG:
+    print_debug_info()

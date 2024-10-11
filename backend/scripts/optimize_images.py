@@ -10,6 +10,7 @@ from datetime import datetime
 from pathlib import Path
 
 import environ
+from django.conf import settings
 from PIL import Image, ImageFile
 
 warnings.filterwarnings("ignore", category=UserWarning, module="PIL")
@@ -27,6 +28,10 @@ environ.Env.read_env(env_file)
 # Set up Django environment
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "chesley_web.settings.development")
 
+# set log directory
+LOG_DIR = settings.LOG_DIR
+print(f"LOG_DIR: {LOG_DIR}")
+
 import django
 
 django.setup()
@@ -38,7 +43,7 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 INPUT_DIR = Path(env("INPUT_DIR"))
 OUTPUT_DIR = Path(env("OUTPUT_DIR"))
 ORIGINAL_DIR = Path(env("ORIGINAL_DIR"))
-LOG_DIR = Path(env("LOG_DIR"))
+
 
 print(f"INPUT_DIR: {INPUT_DIR}")
 print(f"OUTPUT_DIR: {OUTPUT_DIR}")
@@ -110,11 +115,11 @@ def optimize_image(
             if img.size[0] > max_size[0] or img.size[1] > max_size[1]:
                 img.thumbnail(max_size)
 
-            for format, quality in [
-                ("JPEG", initial_jpeg_quality),
-                ("WEBP", initial_webp_quality),
+            for format, quality, extension in [
+                ("JPEG", initial_jpeg_quality, "jpg"),
+                ("WEBP", initial_webp_quality, "webp"),
             ]:
-                output_path = output_dir / f"{input_path.stem}.{format.lower()}"
+                output_path = output_dir / f"{input_path.stem}.{extension}"
                 while True:
                     img.save(output_path, format, quality=quality, optimize=True)
                     if output_path.stat().st_size <= MAX_FILE_SIZE or quality <= 20:

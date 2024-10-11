@@ -10,8 +10,16 @@ env = environ.Env()
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 LOG_DIR = BASE_DIR / "backend" / "logs"
 
-# Read .env file
-environ.Env.read_env(os.path.join(BASE_DIR, ".env.dev"))
+# Placeholder settings (to be overridden in environment-specific files)
+SECRET_KEY = env("SECRET_KEY", default="placeholder-secret-key")
+DEBUG = env.bool("DEBUG", default=False)
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
+
+# Image optimization script settings
+INPUT_DIR = env("INPUT_DIR", default=str(BASE_DIR / "input"))
+OUTPUT_DIR = env("OUTPUT_DIR", default=str(BASE_DIR / "output"))
+ORIGINAL_DIR = env("ORIGINAL_DIR", default=str(BASE_DIR / "original"))
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -91,8 +99,7 @@ AUTH_USER_MODEL = "main.CustomUser"
 LOGIN_REDIRECT_URL = "homepage"
 LOGOUT_REDIRECT_URL = "homepage"
 
-import os
-
+# Base logging configuration (can be overridden in environment-specific settings)
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -101,12 +108,16 @@ LOGGING = {
             "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
             "style": "{",
         },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
     },
     "handlers": {
         "console": {
-            "level": "DEBUG",
+            "level": "INFO",
             "class": "logging.StreamHandler",
-            "formatter": "verbose",
+            "formatter": "simple",
         },
     },
     "loggers": {
@@ -114,16 +125,6 @@ LOGGING = {
             "handlers": ["console"],
             "level": "INFO",
             "propagate": True,
-        },
-        "django.request": {
-            "handlers": ["console"],
-            "level": "DEBUG",
-            "propagate": False,
-        },
-        "django.server": {
-            "handlers": ["console"],
-            "level": "DEBUG",
-            "propagate": False,
         },
         "chesley_web": {
             "handlers": ["console"],

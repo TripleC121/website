@@ -6,35 +6,31 @@
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <h2>My Growing Projects</h2>
-    <div class="grid grid-2">
-        <a href="{% url 'succulents' %}" class="card-link">
-            <div class="card">
-                <picture>
-                    <a href="{% url 'succulents' %}" class="card-link" rel="noopener noreferrer">
-                        <source srcset="{% static 'images/general/succulent.webp' %}" type="image/webp">
-                        <source srcset="{% static 'images/general/succulent.jpg' %}" type="image/jpg">
-                        <img src="{% static 'images/general/succulent.jpg' %}" alt="Succulents" width="350" height="250">
-                    </a>
-                </picture>
-                <h3>Succulents</h3>
-                <p>View my succulent collection</p>
-            </div>
-        </a>
-        <a href="{% url 'trees' %}" class="card-link">
-            <div class="card">
-                <picture>
-                    <a href="{% url 'succulents' %}" class="card-link" rel="noopener noreferrer">
-                        <source srcset="{% static 'images/general/tree.webp' %}" type="image/webp">
-                        <source srcset="{% static 'images/general/tree.jpg' %}" type="image/jpg">
-                        <img src="{% static 'images/general/tree.jpg' %}" alt="Succulents" width="350" height="250">
-                    </a>
-                </picture>
-                <h3>Trees</h3>
-                <p>View my tree collection</p>
-            </div>
-        </a>
+
+<div class="grid">
+        <div class="card">
+            <picture>
+                <a href="{% url 'trees' %}" class="card-link" rel="noopener noreferrer">
+                    <source srcset="{% static 'images/general/tree.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/general/tree.jpg' %}" type="image/jpg">
+                    <img src="{% static 'images/general/tree.jpg' %}" alt="Trees" width="350" height="250">
+                </a>
+            </picture>
+            <h3>Trees</h3>
+            <p>View my trees</p>
+        </div>
+
+        <div class="card">
+            <picture>
+                <a href="{% url 'succulents' %}" class="card-link" rel="noopener noreferrer">
+                    <source srcset="{% static 'images/general/succulent.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/general/succulent.jpg' %}" type="image/jpg">
+                    <img src="{% static 'images/general/succulent.jpg' %}" alt="Succulents" width="350" height="250">
+                </a>
+            </picture>
+            <h3>Succulents</h3>
+            <p>View my succulent collection</p>
+        </div>
     </div>
 </div>
 {% endblock %}

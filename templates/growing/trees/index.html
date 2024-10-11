@@ -7,24 +7,37 @@
 
 {% block content %}
 <div class="container">
-    <h2>My trees</h2>
+    <h2>Meyer Lemon Trees</h2>
     <div class="grid grid-3">
         <!-- Repeat this card structure for each plant -->
         <div class="card">
-            {% comment %} <img src="{% static 'images/succulents/plant1.jpg' %}" alt="Plant Name"> {% endcomment %}
+            <picture>
+                <source srcset="{% static 'images/trees/meyer-lemon.webp' %}" type="image/webp">
+                <source srcset="{% static 'images/general/meyer-lemon.jpg' %}" type="image/jpg">
+                <img src="{% static 'images/general/meyer-lemon.webp' %}" alt="Meyer Lemon Tree" width="350" height="250">
+            </picture>
+            <picture>
+                <source srcset="{% static 'images/trees/meyer-lemon-7-28-24.webp' %}" type="image/webp">
+                <source srcset="{% static 'images/general/meyer-lemon-7-28-24.jpg' %}" type="image/jpg">
+                <img src="{% static 'images/general/meyer-lemon-7-28-24.webp' %}" alt="Meyer Lemon Tree" width="350" height="250">
+            </picture>
             <h3>Meyer Lemon Tree</h3>
-            <p>Brief description or care instructions.</p>
+            <p>Started from seeds June 2024</p>
         </div>
     </div>
 </div>
 
 <div class="container">
-    <h2>Mango Tree</h2>
+    <h2>Avacado Tree</h2>
     <div class="grid grid-3">
         <div class="card">
-            {% comment %} <img src="{% static 'images/succulents/plant1.jpg' %}" alt="Plant Name"> {% endcomment %}
-            <h3>tree Name</h3>
-            <p>Brief description or care instructions.</p>
+            <picture>
+                <source srcset="{% static 'images/trees/avocado.webp' %}" type="image/webp">
+                <source srcset="{% static 'images/general/avocado.jpg' %}" type="image/jpg">
+                <img src="{% static 'images/general/avocado.webp' %}" alt="Meyer Lemon Tree" width="350" height="250">
+            </picture>
+            <h3>started from seed</h3>
+            <p>These took forever to sprout and start growing</p>
         </div>
     </div>
 </div>
