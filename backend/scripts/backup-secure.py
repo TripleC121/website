@@ -47,8 +47,13 @@ def setup_logging(args):
     log_level = logging.DEBUG if args.dry_run else logging.INFO
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    if args.test_mode:
-        log_dir = Path.home() / "logs/website_backup"
+    # Determine environment
+    django_settings = os.getenv("DJANGO_SETTINGS_MODULE", "")
+    is_development = "development" in django_settings or args.test_mode
+
+    # Set paths based on environment
+    if is_development:
+        log_dir = Path.home() / "logs" / "website_backup"
     else:
         log_dir = Path("/var/log/chesley_web/backup")
 
@@ -65,20 +70,25 @@ def setup_logging(args):
 
 def get_backup_config(args):
     """Get backup configuration based on environment."""
-    if args.test_mode or args.local_only:
+    django_settings = os.getenv("DJANGO_SETTINGS_MODULE", "")
+    is_development = "development" in django_settings or args.test_mode
+
+    if is_development:
         return {
             "backup_dir": Path("/tmp/backup_test"),
             "local_backup_dir": Path.home() / "backups/website",
             "s3_prefix": "test",
-            "db_name": "db.sqlite3" if args.test_mode else env("PROD_DB_NAME"),
+            "db_name": "db.sqlite3",
             "use_s3": False,
         }
-    return {
-        "backup_dir": Path("/tmp/website_backup"),
-        "s3_prefix": "prod",
-        "db_name": env("PROD_DB_NAME"),
-        "use_s3": True,
-    }
+    else:
+        return {
+            "backup_dir": Path("/tmp/website_backup"),
+            "local_backup_dir": Path("/opt/website/backups"),
+            "s3_prefix": "prod",
+            "db_name": env("PROD_DB_NAME"),
+            "use_s3": not args.local_only,
+        }
 
 
 def send_notification(subject, message, logger):
