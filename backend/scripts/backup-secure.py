@@ -5,6 +5,7 @@ Handles both development and production environments with S3 and local storage o
 """
 import argparse
 import base64
+import gzip
 import hashlib
 import logging
 import os
@@ -19,6 +20,11 @@ import environ
 from botocore.exceptions import ClientError
 from cryptography.fernet import Fernet
 from django.core.mail import send_mail
+
+
+def get_project_root():
+    """Get the project root directory."""
+    return Path(os.getenv("WEBSITE_ROOT", os.getcwd()))
 
 
 def parse_arguments():
@@ -194,18 +200,16 @@ def backup_files(backup_dir, timestamp, args, logger):
 
         logger.info("Starting website files backup")
         website_backup = backup_dir / f"website_files_{timestamp}.tar.gz"
-
         exclude_file = create_exclude_file()
+
         if args.dry_run:
             logger.info(f"Would create website backup: {website_backup}")
         else:
-            backup_path = "/opt/website" if not args.test_mode else os.getcwd()
-            subprocess.run(
-                f"tar --exclude-from={exclude_file} -czf {website_backup} "
-                f"{backup_path}",
-                shell=True,
-                check=True,
-            )
+            # Use project root for backup source
+            backup_path = get_project_root()
+            cmd = f"tar --exclude-from={exclude_file} -czf {website_backup} -C {backup_path.parent} {backup_path.name}"
+            subprocess.run(cmd, shell=True, check=True)
+
         os.unlink(exclude_file)
         return True
     except Exception as e:
@@ -226,16 +230,21 @@ def backup_database(backup_dir, timestamp, config, args, logger):
             logger.info(f"Would create database backup: {db_backup}")
             return True
 
-        if args.test_mode:
-            # For SQLite, just copy the database file
-            src_db = Path(config["db_name"])
+        django_settings = os.getenv("DJANGO_SETTINGS_MODULE", "")
+        is_development = "development" in django_settings or args.test_mode
+
+        if is_development:
+            # For SQLite, copy and compress the database file
+            src_db = get_project_root() / config["db_name"]
             if src_db.exists():
-                shutil.copy2(src_db, db_backup)
+                with open(src_db, "rb") as f_in:
+                    with gzip.open(db_backup, "wb") as f_out:
+                        shutil.copyfileobj(f_in, f_out)
             else:
-                logger.warning(f"Test database not found: {src_db}")
+                logger.warning(f"Development database not found: {src_db}")
                 return False
         else:
-            # For PostgreSQL
+            # PostgreSQL backup code remains the same
             db_command = (
                 f"PGPASSWORD='{env('PROD_DB_PASSWORD')}' "
                 f"pg_dump -h {env('PROD_DB_HOST')} "
@@ -401,19 +410,30 @@ def backup_website(args, config, logger):
 if __name__ == "__main__":
     # Parse arguments
     args = parse_arguments()
-
-    # Setup logging
     logger = setup_logging(args)
 
     try:
         # Initialize environment
         env = environ.Env()
-        if args.test_mode:
-            env.read_env(".env.dev")
-        else:
-            env.read_env("/opt/website/.env.prod")
+        project_root = get_project_root()
 
-        # Get configuration
+        # Determine environment and load correct .env file
+        django_settings = os.getenv("DJANGO_SETTINGS_MODULE", "")
+        is_development = "development" in django_settings or args.test_mode
+
+        if is_development:
+            env_file = project_root / ".env.dev"
+        else:
+            env_file = Path("/opt/website/.env.prod")
+
+        if env_file.exists():
+            env.read_env(str(env_file))
+        else:
+            logger.warning(
+                f"{env_file} not found - if you're not configuring your environment separately, check this."
+            )
+
+        # Get configuration before using it
         config = get_backup_config(args)
 
         logger.info(
@@ -421,7 +441,7 @@ if __name__ == "__main__":
             f"{'test' if args.test_mode else 'production'} mode"
         )
 
-        # Verify configuration if requested
+        # Now we can use config in these functions
         if args.verify_only:
             success = verify_backup_config(args, config, logger)
             sys.exit(0 if success else 1)
