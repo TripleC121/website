@@ -1,5 +1,11 @@
 services:
   web:
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/run
     build:
       context: .
       dockerfile: Dockerfile.prod
