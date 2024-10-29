@@ -129,7 +129,7 @@ LOGGING = {
     "loggers": {
         "django": {
             "handlers": ["console", "file"],
-            "level": "INFO",
+            "level": "WARNING",
             "propagate": True,
         },
         "boto3": {
@@ -154,7 +154,7 @@ LOGGING = {
         },
         "chesley_web": {
             "handlers": ["console", "file"],
-            "level": "DEBUG",
+            "level": "WARNING",
             "propagate": False,
         },
     },
