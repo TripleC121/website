@@ -132,6 +132,26 @@ LOGGING = {
             "level": "INFO",
             "propagate": True,
         },
+        "boto3": {
+            "handlers": ["console"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+        "botocore": {
+            "handlers": ["console"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+        "s3transfer": {
+            "handlers": ["console"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+        "urllib3": {
+            "handlers": ["console"],
+            "level": "WARNING",
+            "propagate": False,
+        },
         "chesley_web": {
             "handlers": ["console", "file"],
             "level": "DEBUG",

@@ -29,5 +29,5 @@ services:
         python manage.py collectstatic --noinput &&
         mkdir -p /opt/website/run &&
         chmod 775 /opt/website/run &&
-        gunicorn --bind unix:/opt/website/run/chesley_web.sock chesley_web.wsgi:application --log-level debug
+        gunicorn --bind unix:/opt/website/run/chesley_web.sock chesley_web.wsgi:application --log-level warning
       "
