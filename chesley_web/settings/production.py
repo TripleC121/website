@@ -2,7 +2,7 @@ import sys
 
 from .base import *
 
-# version 0.2
+# version 0.2.1
 # Initialise environment variables
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, ".env.prod"))
