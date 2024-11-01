@@ -1,11 +1,18 @@
+import logging
+import logging.config
 import sys
 
 from .base import *
 
 # version 0.2.1
+
 # Initialise environment variables
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, ".env.prod"))
+
+# Set Django's default logging level to WARNING
+logging.getLogger("django").setLevel(logging.WARNING)
+
 
 SECRET_KEY = env("PROD_SECRET_KEY")
 DEBUG = env.bool("PROD_DEBUG", default=False)
