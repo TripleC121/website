@@ -50,6 +50,9 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
 )
 SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", default=True)
 
+# cloudflare settings
+CSRF_TRUSTED_ORIGINS = ["https://cchesley.com", "https://www.cchesley.com"]
+
 # Static files
 STATIC_ROOT = env("STATIC_ROOT", default=os.path.join(BASE_DIR, "staticfiles"))
 
