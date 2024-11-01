@@ -4,15 +4,15 @@ import sys
 
 from .base import *
 
-# version 0.2.1
+# version 0.2.2
+
+# Set Django's default logging level to WARNING
+logging.getLogger("environ.environ").setLevel(logging.WARNING)
+logging.getLogger("django.environ").setLevel(logging.WARNING)
 
 # Initialise environment variables
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, ".env.prod"))
-
-# Set Django's default logging level to WARNING
-logging.getLogger("django").setLevel(logging.WARNING)
-
 
 SECRET_KEY = env("PROD_SECRET_KEY")
 DEBUG = env.bool("PROD_DEBUG", default=False)
@@ -75,34 +75,43 @@ DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
 # Override base logging configuration for production
 LOGGING = {
     "version": 1,
-    "disable_existing_loggers": False,
+    "disable_existing_loggers": True,  # Changed from False to True
     "formatters": {
         "verbose": {
-            "format": "{levelname} {asctime} {module} {message}",
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
             "style": "{",
         },
     },
     "handlers": {
         "console": {
-            "level": "WARNING",  # Changed from INFO to WARNING
+            "level": "WARNING",
             "class": "logging.StreamHandler",
             "formatter": "verbose",
         },
         "file": {
-            "level": "WARNING",  # Changed from DEBUG to WARNING
+            "level": "WARNING",
             "class": "logging.FileHandler",
             "filename": "/var/log/chesley_web/django/django.log",
             "formatter": "verbose",
         },
     },
     "loggers": {
+        "": {  # Root logger
+            "handlers": ["console"],
+            "level": "WARNING",
+        },
         "django": {
             "handlers": ["console", "file"],
             "level": "WARNING",
-            "propagate": True,
+            "propagate": False,
         },
-        "environ": {  # Add specific handler for environ
-            "handlers": ["console", "file"],
+        "environ": {
+            "handlers": ["console"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+        "django.environ": {
+            "handlers": ["console"],
             "level": "WARNING",
             "propagate": False,
         },
@@ -111,9 +120,5 @@ LOGGING = {
             "level": "WARNING",
             "propagate": False,
         },
-        "boto3": {"level": "WARNING"},
-        "botocore": {"level": "WARNING"},
-        "s3transfer": {"level": "WARNING"},
-        "urllib3": {"level": "WARNING"},
     },
 }
