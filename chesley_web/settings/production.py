@@ -64,3 +64,49 @@ EMAIL_USE_TLS = env("EMAIL_USE_TLS")
 EMAIL_HOST_USER = env("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
+
+# Override base logging configuration for production
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {message}",
+            "style": "{",
+        },
+    },
+    "handlers": {
+        "console": {
+            "level": "WARNING",  # Changed from INFO to WARNING
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
+        "file": {
+            "level": "WARNING",  # Changed from DEBUG to WARNING
+            "class": "logging.FileHandler",
+            "filename": "/var/log/chesley_web/django/django.log",
+            "formatter": "verbose",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "file"],
+            "level": "WARNING",
+            "propagate": True,
+        },
+        "environ": {  # Add specific handler for environ
+            "handlers": ["console", "file"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+        "chesley_web": {
+            "handlers": ["console", "file"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+        "boto3": {"level": "WARNING"},
+        "botocore": {"level": "WARNING"},
+        "s3transfer": {"level": "WARNING"},
+        "urllib3": {"level": "WARNING"},
+    },
+}
