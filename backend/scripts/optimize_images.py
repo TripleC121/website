@@ -2,8 +2,6 @@ import logging
 import os
 import shutil
 import sys
-
-# Suppress specific PIL import warnings
 import warnings
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
@@ -28,7 +26,7 @@ environ.Env.read_env(env_file)
 # Set up Django environment
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "chesley_web.settings.development")
 
-# set log directory
+# Set log directory
 LOG_DIR = settings.LOG_DIR
 print(f"LOG_DIR: {LOG_DIR}")
 
@@ -44,7 +42,6 @@ INPUT_DIR = Path(env("INPUT_DIR"))
 OUTPUT_DIR = Path(env("OUTPUT_DIR"))
 ORIGINAL_DIR = Path(env("ORIGINAL_DIR"))
 
-
 print(f"INPUT_DIR: {INPUT_DIR}")
 print(f"OUTPUT_DIR: {OUTPUT_DIR}")
 print(f"ORIGINAL_DIR: {ORIGINAL_DIR}")
@@ -56,21 +53,22 @@ print(f"Attempted to create LOG_DIR: {LOG_DIR}")
 print(f"LOG_DIR exists: {os.path.exists(LOG_DIR)}")
 print(f"LOG_DIR is writable: {os.access(LOG_DIR, os.W_OK)}")
 
-# Set up logging using the same configuration as logging_test.py
+# Set up logging configuration
 log_filename = f'image_optimization_{datetime.now().strftime("%Y%m%d_%H%M%S")}.log'
 log_file_path = LOG_DIR / log_filename
 
 try:
     logging.basicConfig(
         filename=str(log_file_path),
-        level=logging.DEBUG,  # Adjust log level as needed
+        level=logging.DEBUG,
         format="%(asctime)s - %(levelname)s - %(message)s",
     )
     # Add StreamHandler to also log to console
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setLevel(logging.DEBUG)
+    formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+    console_handler.setFormatter(formatter)
     logging.getLogger().addHandler(console_handler)
-
     print("Logging configuration completed.")
 except Exception as e:
     print(f"Failed to set up logging: {str(e)}")
@@ -82,10 +80,16 @@ logger = logging.getLogger(__name__)
 # Guaranteed logging
 logger.critical("Script started")
 
-MAX_FILE_SIZE = 500 * 1024  # 500 KB
+# Size limits by image type
+MAX_FILE_SIZES = {
+    "thumbnail": 100 * 1024,  # 100KB for thumbnails like odin_small, pgp-aiml-small
+    "standard": 300 * 1024,  # 300KB for regular images
+    "large": 500 * 1024,  # 500KB for high-detail images like your tree photos
+}
 
 
 def is_image_file(file_path):
+    """Check if a file is a valid image file."""
     try:
         with Image.open(file_path) as img:
             img.verify()
@@ -106,8 +110,17 @@ def optimize_image(
     initial_jpeg_quality=85,
     initial_webp_quality=80,
 ):
+    """Optimize an image file by resizing and converting to JPEG and WebP formats."""
     logger.info(f"Processing file: {input_path}")
     try:
+        # Determine file size limit based on filename
+        if any(x in input_path.stem.lower() for x in ["small", "thumb"]):
+            size_limit = MAX_FILE_SIZES["thumbnail"]
+        elif any(x in str(input_path).lower() for x in ["tree", "fig", "pomegranite"]):
+            size_limit = MAX_FILE_SIZES["large"]
+        else:
+            size_limit = MAX_FILE_SIZES["standard"]
+
         with Image.open(input_path) as img:
             if img.mode == "RGBA":
                 img = img.convert("RGB")
@@ -122,14 +135,16 @@ def optimize_image(
                 output_path = output_dir / f"{input_path.stem}.{extension}"
                 while True:
                     img.save(output_path, format, quality=quality, optimize=True)
-                    if output_path.stat().st_size <= MAX_FILE_SIZE or quality <= 20:
+                    if output_path.stat().st_size <= size_limit or quality <= 20:
                         break
                     quality -= 5
 
             original_path = original_dir / input_path.name
             shutil.move(str(input_path), str(original_path))
 
-        logger.info(f"Successfully optimized: {input_path}")
+        logger.info(
+            f"Successfully optimized: {input_path} (limit: {size_limit / 1024: .0f}KB)"
+        )
         return True
     except Exception as e:
         logger.error(f"Error optimizing {input_path}: {str(e)}")
@@ -137,6 +152,7 @@ def optimize_image(
 
 
 def process_images(input_dir, output_dir, original_dir):
+    """Process all images in the input directory."""
     input_dir, output_dir, original_dir = map(
         Path, [input_dir, output_dir, original_dir]
     )
@@ -171,6 +187,7 @@ def process_images(input_dir, output_dir, original_dir):
 
 
 def main():
+    """Main function to run the image optimization process."""
     for dir_path in [INPUT_DIR, OUTPUT_DIR, ORIGINAL_DIR]:
         dir_path.mkdir(parents=True, exist_ok=True)
 

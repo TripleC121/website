@@ -18,12 +18,23 @@ jobs:
           aws-region: us-east-1
       - name: Sync images to S3
         run: |
-          # Only sync image directories
-          aws s3 sync ./static/images s3://${{ secrets.AWS_S3_BUCKET_NAME }}/static/images --delete \
+          # Sync with cache control headers
+          aws s3 sync ./static/images s3://${{ secrets.AWS_S3_BUCKET_NAME }}/static/images \
+            --delete \
             --exclude "*" \
             --include "*.jpg" \
             --include "*.jpeg" \
             --include "*.png" \
             --include "*.gif" \
             --include "*.webp" \
-            --include "*.svg"
+            --include "*.svg" \
+            --cache-control "public,max-age=31536000,immutable" \
+            --metadata-directive REPLACE
+
+          # Verify sync and cache settings
+          echo "Verifying sync and cache settings..."
+          aws s3api list-objects-v2 \
+            --bucket ${{ secrets.AWS_S3_BUCKET_NAME }} \
+            --prefix static/images \
+            --query 'Contents[].{Key: Key, CacheControl: CacheControl}' \
+            --output table
