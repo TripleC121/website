@@ -5,17 +5,18 @@ services:
     read_only: true
     tmpfs:
       - /tmp
-      - /var/run
     build:
       context: .
       dockerfile: Dockerfile.prod
     volumes:
-      - .:/opt/website
+      # Specific directories first, then the catch-all
+      - /opt/website/run:/opt/website/run
       - /opt/website/staticfiles:/opt/website/staticfiles
       - /var/log/chesley_web/django:/var/log/chesley_web/django
       - /var/log/chesley_web/gunicorn:/var/log/chesley_web/gunicorn
       - /etc/ssl/certs/rds:/etc/ssl/certs/rds:ro
-      - /opt/website/run:/opt/website/run
+      # Source code mount last
+      - .:/opt/website:ro  # Make this read-only
     env_file:
       - .env.prod
     environment:
@@ -29,5 +30,6 @@ services:
         python manage.py collectstatic --noinput &&
         mkdir -p /opt/website/run &&
         chmod 775 /opt/website/run &&
+        chown webapps:www-data /opt/website/run &&
         gunicorn --bind unix:/opt/website/run/chesley_web.sock chesley_web.wsgi:application --log-level warning
       "

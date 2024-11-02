@@ -41,8 +41,9 @@ AWS_STORAGE_BUCKET_NAME = os.environ.get("AWS_STORAGE_BUCKET_NAME")
 AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
 AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}  # noqa: E231
 AWS_LOCATION = "static"
-STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/"  # noqa: E231
-STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+STATIC_URL = "/static/"
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
+DEFAULT_FILE_STORAGE = "main.storage.S3ImageStorage"
 
 # Security settings
 SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True)

@@ -18,4 +18,12 @@ jobs:
           aws-region: us-east-1
       - name: Sync images to S3
         run: |
-          aws s3 sync ./static/images s3://${{ secrets.AWS_S3_BUCKET_NAME }}/static/images --delete
+          # Only sync image directories
+          aws s3 sync ./static/images s3://${{ secrets.AWS_S3_BUCKET_NAME }}/static/images --delete \
+            --exclude "*" \
+            --include "*.jpg" \
+            --include "*.jpeg" \
+            --include "*.png" \
+            --include "*.gif" \
+            --include "*.webp" \
+            --include "*.svg"
