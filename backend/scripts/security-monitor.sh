@@ -1,6 +1,6 @@
 #!/bin/bash
 # Enhanced security-monitor.sh with test suite
-# Version 1.1
+# Version 1.4
 
 # Configuration
 BASE_LOG_DIR="/var/log/chesley_web"
@@ -70,19 +70,37 @@ log_message() {
     echo "[$timestamp] [$level] $message" >> "$ALERT_LOG"
 }
 
+# Function to send email alerts
+send_alert() {
+    local subject="$1"
+    local message="$2"
+    log_message "ALERT" "$subject: $message"
+    echo "$message" | mail -s "Security Alert: $subject" "$ALERT_EMAIL"
+}
+
 # Function to detect Django admin access attempts
 check_admin_attempts() {
+    if [[ ! -f "$BLOCKED_LOG" ]]; then
+        log_message "ERROR" "Blocked log file not found: $BLOCKED_LOG"
+        return 1
+    fi
+
     local admin_attempts=$(grep -c "/admin/" "$BLOCKED_LOG")
-    if [ "$admin_attempts" -gt "$THRESHOLD_ADMIN_ATTEMPTS" ]; then
+    if (( admin_attempts > THRESHOLD_ADMIN_ATTEMPTS )); then
         send_alert "High Admin Access Attempts" "Detected $admin_attempts admin access attempts"
-    }
+    fi
 }
 
 # Function to monitor sensitive file access
 check_sensitive_paths() {
+    if [[ ! -f "$BLOCKED_LOG" ]]; then
+        log_message "ERROR" "Blocked log file not found: $BLOCKED_LOG"
+        return 1
+    fi
+
     for path in "${SENSITIVE_PATHS[@]}"; do
         local attempts=$(grep -c "$path" "$BLOCKED_LOG")
-        if [ "$attempts" -gt "$THRESHOLD_SENSITIVE_PATHS" ]; then
+        if (( attempts > THRESHOLD_SENSITIVE_PATHS )); then
             send_alert "Sensitive Path Access" "High access attempts to $path: $attempts times"
         fi
     done
@@ -90,31 +108,40 @@ check_sensitive_paths() {
 
 # Enhanced daily report with Django-specific sections
 generate_daily_report() {
+    if [[ ! -f "$BLOCKED_LOG" ]]; then
+        log_message "ERROR" "Blocked log file not found: $BLOCKED_LOG"
+        return 1
+    fi
+
     {
         echo "Security Report - $(date '+%Y-%m-%d')"
         echo "=================================="
 
         echo -e "\n1. Django Admin Access Attempts:"
-        grep "/admin/" "$BLOCKED_LOG" | awk '{print $2}' | sort | uniq -c | sort -nr
+        grep "/admin/" "$BLOCKED_LOG" 2>/dev/null | awk '{print $2}' | sort | uniq -c | sort -nr
 
         echo -e "\n2. Static/Media File Access Attempts:"
-        egrep "/(static|media)/" "$BLOCKED_LOG" | awk '{print $2}' | sort | uniq -c
+        egrep "/(static|media)/" "$BLOCKED_LOG" 2>/dev/null | awk '{print $2}' | sort | uniq -c
 
         echo -e "\n3. Sensitive File Access Attempts:"
         for path in "${SENSITIVE_PATHS[@]}"; do
             echo "Path: $path"
-            grep "$path" "$BLOCKED_LOG" | awk '{print $2}' | sort | uniq -c
+            grep "$path" "$BLOCKED_LOG" 2>/dev/null | awk '{print $2}' | sort | uniq -c
         done
 
         echo -e "\n4. Known Bad User Agents:"
         for agent in "${BLOCKED_USER_AGENTS[@]}"; do
             echo "Agent: $agent"
-            grep "$agent" "$BLOCKED_LOG" | wc -l
+            grep "$agent" "$BLOCKED_LOG" 2>/dev/null | wc -l
         done
-
     } > "$REPORT_FILE"
 
-    mail -s "Daily Security Report - $(date '+%Y-%m-%d')" "$ALERT_EMAIL" < "$REPORT_FILE"
+    if [[ -f "$REPORT_FILE" ]]; then
+        mail -s "Daily Security Report - $(date '+%Y-%m-%d')" "$ALERT_EMAIL" < "$REPORT_FILE"
+    else
+        log_message "ERROR" "Failed to generate report file"
+        return 1
+    fi
 }
 
 # Test Suite
@@ -124,6 +151,7 @@ run_tests() {
 
     # Setup test environment
     mkdir -p "$TEST_LOG_DIR"
+    log_message "INFO" "Created test directory: $TEST_LOG_DIR"
 
     # Test 1: Check admin access detection
     echo "[Test 1] Testing admin access detection"
@@ -147,10 +175,15 @@ run_tests() {
     done
 
     # Run tests with test log
+    local orig_blocked_log="$BLOCKED_LOG"
     BLOCKED_LOG="$TEST_BLOCKED_LOG"
+
     check_admin_attempts
     check_sensitive_paths
 
+    BLOCKED_LOG="$orig_blocked_log"
+
+    log_message "INFO" "Tests completed. Check ${ALERT_LOG} for results."
     echo "Tests completed. Check ${ALERT_LOG} for results."
 }
 
