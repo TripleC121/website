@@ -10,7 +10,11 @@
     <div class="grid">
         <div class="card">
             <a href="{% url 'ai_foundations' %}" class="card-link">
-                <img src="{% static 'images/ai_foundations.jpg' %}" alt="AI Foundations" width="250" height="150">
+                <picture>
+                    <source srcset="{% static 'images/general/ai_foundations.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/general/ai_foundations.jpg' %}" type="image/jpeg">
+                    <img src="{% static 'images/general/ai_foundations.jpg' %}" alt="AI Foundations" width="250" height="150">
+                </picture>
                 <h3>AI Foundations</h3>
                 <p>Core concepts and principles of artificial intelligence</p>
             </a>
@@ -18,7 +22,11 @@
 
         <div class="card">
             <a href="{% url 'machine_learning' %}" class="card-link">
-                <img src="{% static 'images/machine_learning.jpg' %}" alt="Machine Learning" width="250" height="150">
+                <picture>
+                    <source srcset="{% static 'images/general/machine_learning.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/general/machine_learning.jpg' %}" type="image/jpeg">
+                    <img src="{% static 'images/general/machine_learning.jpg' %}" alt="Machine Learning" width="250" height="150">
+                </picture>
                 <h3>Machine Learning</h3>
                 <p>Algorithms, techniques, and applications of ML</p>
             </a>
@@ -26,7 +34,11 @@
 
         <div class="card">
             <a href="{% url 'deep_learning' %}" class="card-link">
-                <img src="{% static 'images/deep_learning.jpg' %}" alt="Deep Learning" width="250" height="150">
+                <picture>
+                    <source srcset="{% static 'images/general/deep_learning.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/general/deep_learning.jpg' %}" type="image/jpeg">
+                    <img src="{% static 'images/general/deep_learning.jpg' %}" alt="Deep Learning" width="250" height="150">
+                </picture>
                 <h3>Deep Learning</h3>
                 <p>Neural networks and advanced AI architectures</p>
             </a>
@@ -34,7 +46,11 @@
 
         <div class="card">
             <a href="{% url 'course_projects' %}" class="card-link">
-                <img src="{% static 'images/projects.jpg' %}" alt="Course Projects" width="250" height="150">
+                <picture>
+                    <source srcset="{% static 'images/general/projects.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/general/projects.jpg' %}" type="image/jpeg">
+                    <img src="{% static 'images/general/projects.jpg' %}" alt="Course Projects" width="250" height="150">
+                </picture>
                 <h3>Course Projects</h3>
                 <p>Showcase of key projects completed during the program</p>
             </a>
