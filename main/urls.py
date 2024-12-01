@@ -43,6 +43,7 @@ urlpatterns = [
     path("learning/pgp_aiml/project3", views.project3, name="project3"),
     path("learning/pgp_aiml/project4", views.project4, name="project4"),
     path("learning/pgp_aiml/project5", views.project5, name="project5"),
+    path("learning/pgp_aiml/project6", views.project6, name="project6"),
     path("technology/", views.technology_view, name="technology"),
     path("technology/cloud/", views.cloud_technologies_view, name="cloud_technologies"),
     path("technology/devops-cicd/", views.devops_cicd_view, name="devops_cicd"),

@@ -64,6 +64,8 @@ p {
 
 .course-grid.grid-2 {
     grid-template-columns: repeat(2, 1fr);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
 .grid-4 {

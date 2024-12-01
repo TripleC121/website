@@ -11,18 +11,6 @@
     <div class="grid">
         <div class="card">
             <picture>
-                <a href="{% url 'full_stack' %}" class="card-link" rel="noopener noreferrer">
-                    <source srcset="{% static 'images/general/AI.webp' %}" type="image/webp">
-                    <source srcset="{% static 'images/general/AI.jpeg' %}" type="image/jpeg">
-                    <img src="{% static 'images/general/AI.jpeg' %}" alt="Artificial Intelligence" width="350" height="250">
-                </a>
-            </picture>
-            <h3>Full Stack Development</h3>
-            <p>Exploring web development including HTML, CSS, JavaScript, and Django.</p>
-        </div>
-
-        <div class="card">
-            <picture>
                 <a href="{% url 'pgp_aiml' %}" class="card-link" rel="noopener noreferrer">
                     <source srcset="{% static 'images/general/pgp-aiml-small.webp' %}" type="image/webp">
                     <source srcset="{% static 'images/general/pgp-aiml-small.png' %}" type="image/png">
@@ -31,6 +19,18 @@
             </picture>
             <h3>Post Graduate AI/ML</h3>
             <p>A post-graduate course at UT Austin on AI and machine learning for business applications.</p>
+        </div>
+
+        <div class="card">
+            <picture>
+                <a href="{% url 'full_stack' %}" class="card-link" rel="noopener noreferrer">
+                    <source srcset="{% static 'images/general/AI.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/general/AI.jpeg' %}" type="image/jpeg">
+                    <img src="{% static 'images/general/AI.jpeg' %}" alt="Artificial Intelligence" width="350" height="250">
+                </a>
+            </picture>
+            <h3>Full Stack Development</h3>
+            <p>Exploring web development including HTML, CSS, JavaScript, and Django.</p>
         </div>
     </div>
 </main>

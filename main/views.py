@@ -93,6 +93,10 @@ def project5(request):
     return render(request, "learning/pgp_aiml/project5.html")
 
 
+def project6(request):
+    return render(request, "learning/pgp_aiml/project6.html")
+
+
 def technology_view(request):
     return render(request, "technology/index.html")
 

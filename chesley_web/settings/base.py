@@ -89,7 +89,7 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
-CONTACT_EMAIL = env("CONTACT_EMAIL", default="chrischesley@gmail.com")
+CONTACT_EMAIL = env("CONTACT_EMAIL", default="chris@cchesley.com")
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
