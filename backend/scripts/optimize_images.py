@@ -107,8 +107,8 @@ def optimize_image(
     output_dir,
     original_dir,
     max_size=(1200, 1200),
-    initial_jpeg_quality=85,
-    initial_webp_quality=80,
+    initial_jpeg_quality=95,
+    initial_webp_quality=90,
 ):
     """Optimize an image file by resizing and converting to JPEG and WebP formats."""
     logger.info(f"Processing file: {input_path}")

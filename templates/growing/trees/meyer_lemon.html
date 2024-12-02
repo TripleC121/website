@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Introductory Section -->
+    <h2>{{ title }}</h2>
+    <p>{{ description }}</p>
+    <p>I did not go crazy on purpose with these.  I wanted to grow Meyer lemons in pots. I bought the smallest
+        number of them I could (a bag of 4). I took the seeds from them and started sprouting them, thinking
+        that out of the 25 seeds, two or three would sprout. Well, almost all of them sprouted.  I am just
+        learning how to keep these trees alive in pots, so I expect some attrition.</p>
+
+    <!-- Gallery of Periodic Updates -->
+    <div class="gallery">
+        <!-- Add pictures here -->
+        <div class="gallery-item">
+            <picture>
+                <source srcset="{% static 'images/trees/lemon-start-24-4-15.webp' %}" type="image/webp">
+                <source srcset="{% static 'images/trees/lemon-start-24-4-15.jpg' %}" type="image/jpg">
+                <img src="{% static 'images/trees/lemon-start-24-4-15.jpg' %}" alt="Meyer Lemon Tree - December 2024" loading="lazy">
+            </picture>
+            <p>I started these around April. This is how I sprouted them.</p>
+        </div>
+
+        <div class="gallery-item">
+            <picture>
+                <source srcset="{% static 'images/trees/lemon-24-5-24.webp' %}" type="image/webp">
+                <source srcset="{% static 'images/trees/lemon-24-5-24.jpg' %}" type="image/jpg">
+                <img src="{% static 'images/trees/lemon-24-5-24.jpg' %}" alt="Meyer Lemon Tree - January 2025" loading="lazy">
+            </picture>
+            <p>This is after a month or so of growth</p>
+        </div>
+
+        <!-- Add more images as needed -->
+    </div>
+</div>
+{% endblock %}

@@ -2,42 +2,63 @@
 {% load static %}
 
 {% block title %}
-    Trees
+    {{ title }}
 {% endblock %}
 
 {% block content %}
 <div class="container">
-    <h2>Meyer Lemon Trees</h2>
+    <!-- Introductory Text -->
+    <h2>{{ title }}</h2>
+    <p>{{ description }}</p>
+    <p>I like the idea of functional as well as aesthetic trees and plants.</p>
+
     <div class="grid grid-3">
-        <!-- Repeat this card structure for each plant -->
+        <!-- Meyer Lemon Tree -->
         <div class="card">
             <picture>
-                <source srcset="{% static 'images/trees/meyer-lemon.webp' %}" type="image/webp">
-                <source srcset="{% static 'images/general/meyer-lemon.jpg' %}" type="image/jpg">
-                <img src="{% static 'images/general/meyer-lemon.webp' %}" alt="Meyer Lemon Tree" width="350" height="250">
-            </picture>
-            <picture>
-                <source srcset="{% static 'images/trees/meyer-lemon-7-28-24.webp' %}" type="image/webp">
-                <source srcset="{% static 'images/general/meyer-lemon-7-28-24.jpg' %}" type="image/jpg">
-                <img src="{% static 'images/general/meyer-lemon-7-28-24.webp' %}" alt="Meyer Lemon Tree" width="350" height="250">
+                <a href="{% url 'growing_trees_meyer_lemon' %}" class="card-link" rel="noopener noreferrer">
+                    <source srcset="{% static 'images/trees/meyer-lemon.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/trees/meyer-lemon.jpg' %}" type="image/jpg">
+                    <img src="{% static 'images/trees/meyer-lemon.jpg' %}" alt="Meyer Lemon Tree" width="350" height="250">
+                </a>
             </picture>
             <h3>Meyer Lemon Tree</h3>
-            <p>Started from seeds June 2024</p>
         </div>
-    </div>
-</div>
 
-<div class="container">
-    <h2>Avacado Tree</h2>
-    <div class="grid grid-3">
+        <!-- Avocado Tree -->
         <div class="card">
             <picture>
-                <source srcset="{% static 'images/trees/avocado.webp' %}" type="image/webp">
-                <source srcset="{% static 'images/general/avocado.jpg' %}" type="image/jpg">
-                <img src="{% static 'images/general/avocado.webp' %}" alt="Meyer Lemon Tree" width="350" height="250">
+                <a href="{% url 'growing_trees_avocado' %}" class="card-link" rel="noopener noreferrer">
+                    <source srcset="{% static 'images/trees/avocado.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/trees/avocado.jpg' %}" type="image/jpg">
+                    <img src="{% static 'images/trees/avocado.jpg' %}" alt="Avocado Tree" width="350" height="250">
+                </a>
             </picture>
-            <h3>started from seed</h3>
-            <p>These took forever to sprout and start growing</p>
+            <h3>Avocado Tree</h3>
+        </div>
+
+        <!-- Fig Tree -->
+        <div class="card">
+            <picture>
+                <a href="{% url 'growing_trees_fig' %}" class="card-link" rel="noopener noreferrer">
+                    <source srcset="{% static 'images/trees/fig.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/trees/fig.jpg' %}" type="image/jpg">
+                    <img src="{% static 'images/trees/fig.jpg' %}" alt="Fig Tree" width="350" height="250">
+                </a>
+            </picture>
+            <h3>Fig Tree</h3>
+        </div>
+
+        <!-- Pomegranate Tree -->
+        <div class="card">
+            <picture>
+                <a href="{% url 'growing_trees_pomegranate' %}" class="card-link" rel="noopener noreferrer">
+                    <source srcset="{% static 'images/trees/pomegranate.webp' %}" type="image/webp">
+                    <source srcset="{% static 'images/trees/pomegranate.jpg' %}" type="image/jpg">
+                    <img src="{% static 'images/trees/pomegranate.jpg' %}" alt="Pomegranate Tree" width="350" height="250">
+                </a>
+            </picture>
+            <h3>Pomegranate Tree</h3>
         </div>
     </div>
 </div>

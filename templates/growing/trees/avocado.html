@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Introductory Section -->
+    <h2>{{ title }}</h2>
+    <p>{{ description }}</p>
+    <p>I wanted to grow some other trees in pots and Avocados are always a popular choice. I started
+        these in paper towels and let them spout before I planted them.
+    </p>
+
+    <!-- Gallery of Periodic Updates -->
+    <div class="gallery">
+        <!-- Add pictures here -->
+        <div class="gallery-item">
+            <picture>
+                <source srcset="{% static 'images/trees/avocado-24-6-28.webp' %}" type="image/webp">
+                <source srcset="{% static 'images/trees/avocado-24-6-28.jpg' %}" type="image/jpg">
+                <img src="{% static 'images/trees/avocado-24-6-28.jpg' %}" alt="Meyer Lemon Tree - December 2024" loading="lazy">
+            </picture>
+            <p>This is the second one just as it started to sprout. It took longer to grow than the other one.</p>
+        </div>
+
+        <div class="gallery-item">
+            <picture>
+                <source srcset="{% static 'images/trees/avocado-24-8-22.webp' %}" type="image/webp">
+                <source srcset="{% static 'images/avocado-24-8-22.jpg' %}" type="image/jpg">
+                <img src="{% static 'images/trees/avocado-24-8-22' %}" alt="Meyer Lemon Tree - January 2025" loading="lazy">
+            </picture>
+            <p>Proud of this one!  It is doing well.</p>
+        </div>
+
+        <!-- Add more images as needed -->
+    </div>
+</div>
+{% endblock %}

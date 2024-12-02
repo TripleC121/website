@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Introductory Section -->
+    <h2>{{ title }}</h2>
+    <p>{{ description }}</p>
+    <p>I found this at Home Depot at the same time I found the fig.  Why not, let's see how well this does here.</p>
+
+    <!-- Gallery of Periodic Updates -->
+    <div class="gallery">
+        <!-- Add pictures here -->
+        <div class="gallery-item">
+            <picture>
+                <source srcset="{% static 'images/trees/pomegranate-24-3-22.webp' %}" type="image/webp">
+                <source srcset="{% static 'images/trees/pomegranate-24-3-22.jpg' %}" type="image/jpg">
+                <img src="{% static 'images/trees/pomegranate-24-3-22' %}" alt="Meyer Lemon Tree - December 2024" loading="lazy">
+            </picture>
+            <p>I am not sure how this will do here. Let's give it a try.</p>
+        </div>
+
+        <div class="gallery-item">
+            <picture>
+                <source srcset="{% static 'images/trees/pom-2024-7.webp' %}" type="image/webp">
+                <source srcset="{% static 'images/trees/pom-2024-7.jpg' %}" type="image/jpg">
+                <img src="{% static 'images/trees/pom-2024-7.jpg' %}" alt="Meyer Lemon Tree - January 2025" loading="lazy">
+            </picture>
+            <p>Slow start on this while it is growing roots.</p>
+        </div>
+
+        <!-- Add more images as needed -->
+    </div>
+</div>
+{% endblock %}

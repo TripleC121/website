@@ -125,8 +125,38 @@ def succulents(request):
     return render(request, "growing/succulents/index.html")
 
 
-def trees(request):
-    return render(request, "growing/trees/index.html")
+def tree_page(request, title, template_name):
+    description = f"This page documents the growth of the {title} with periodic updates and photos."
+    return render(
+        request,
+        template_name,
+        {
+            "title": title,
+            "description": description,
+        },
+    )
+
+
+def trees_index(request):
+    return tree_page(request, "All my trees", "growing/trees/index.html")
+
+
+def meyer_lemon_tree(request):
+    return tree_page(request, "Meyer Lemon Tree", "growing/trees/meyer_lemon.html")
+
+
+def avocado_tree(request):
+    return tree_page(request, "Avocado Tree", "growing/trees/avocado.html")
+
+
+def fig_tree(request):
+    return tree_page(request, "Fig Tree", "growing/trees/fig.html")
+
+
+def pomegranate_tree(request):
+    return tree_page(
+        request, "Pomegranate Shrub (Tree)", "growing/trees/pomegranate.html"
+    )
 
 
 def signup(request):

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Introductory Section -->
+    <h2>{{ title }}</h2>
+    <p>{{ description }}</p>
+    <p>I love fresh figs and found out they can grow well in Texas. We will see how it does after this winter.</p>
+
+    <!-- Gallery of Periodic Updates -->
+    <div class="gallery">
+        <!-- Add pictures here -->
+        <div class="gallery-item">
+            <picture>
+                <source srcset="{% static 'images/trees/fig-24-3-22.webp' %}" type="image/webp">
+                <source srcset="{% static 'images/trees/fig-24-3-22.jpg' %}" type="image/jpg">
+                <img src="{% static 'images/trees/fig-24-3-22' %}" alt="Meyer Lemon Tree - December 2024" loading="lazy">
+            </picture>
+            <p>Brand new!  Ju called this one stick.</p>
+        </div>
+
+        <div class="gallery-item">
+            <picture>
+                <source srcset="{% static 'images/trees/fig -pom-24-3-29.webp' %}" type="image/webp">
+                <source srcset="{% static 'images/trees/fig -pom-24-3-29.jpg' %}" type="image/jpg">
+                <img src="{% static 'images/trees/fig -pom-24-3-29' %}" alt="Meyer Lemon Tree - January 2025" loading="lazy">
+            </picture>
+            <p>Fig and Pomegranate together.</p>
+        </div>
+
+        <div class="gallery-item">
+            <picture>
+                <source srcset="{% static 'images/trees/fig-24-7-28.webp' %}" type="image/webp">
+                <source srcset="{% static 'images/trees/fig-24-7-28.jpg' %}" type="image/jpg">
+                <img src="{% static 'images/trees/fig-24-7-28' %}" alt="Meyer Lemon Tree - January 2025" loading="lazy">
+            </picture>
+            <p>Not a stick any more.</p>
+        </div>
+
+        <div class="gallery-item">
+            <picture>
+                <source srcset="{% static 'images/trees/fig-24-8-22.webp' %}" type="image/webp">
+                <source srcset="{% static 'images/trees/fig-24-8-22.jpg' %}" type="image/jpg">
+                <img src="{% static 'images/trees/fig-24-8-22' %}" alt="Meyer Lemon Tree - January 2025" loading="lazy">
+            </picture>
+            <p>Growing well!!</p>
+        </div>
+
+        <!-- Add more images as needed -->
+    </div>
+</div>
+{% endblock %}
