@@ -5,7 +5,7 @@ WORKDIR /opt/website
 
 # Install dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements-prod.txt
 
 # Install additional tools like boto3 for backups
 RUN pip install --no-cache-dir boto3
