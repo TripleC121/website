@@ -1,23 +1,17 @@
 services:
   web:
-    security_opt:
-      - no-new-privileges:true
-    read_only: true
-    tmpfs:
-      - /tmp
     build:
       context: .
       dockerfile: Dockerfile.prod
     volumes:
-      - /opt/website/run:/opt/website/run
-      - /var/log/chesley_web/django:/var/log/chesley_web/django
-      - /var/log/chesley_web/gunicorn:/var/log/chesley_web/gunicorn
-      - /etc/ssl/certs/rds:/etc/ssl/certs/rds:ro
-    env_file:
-      - .env.prod
+      - /var/log/chesley_web:/var/log/chesley_web
     environment:
       - DJANGO_SETTINGS_MODULE=chesley_web.settings.production
       - DJANGO_ENVIRONMENT=production
+      - DJANGO_LOG_FILE=/var/log/chesley_web/django/django.log
     user: "1002:33"
     restart: always
-    command: []  # Use the CMD from Dockerfile.prod
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
