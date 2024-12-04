@@ -10,7 +10,7 @@ from .base import *
 logging.getLogger("environ.environ").setLevel(logging.WARNING)
 logging.getLogger("django.environ").setLevel(logging.WARNING)
 
-# Override base logging configuration for production
+# Updated logging configuration
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": True,  # Changed from False to True
@@ -29,7 +29,9 @@ LOGGING = {
         "file": {
             "level": "WARNING",
             "class": "logging.FileHandler",
-            "filename": "/var/log/chesley_web/django/django.log",
+            "filename": env(
+                "DJANGO_LOG_FILE", default="/var/log/chesley_web/django/django.log"
+            ),
             "formatter": "verbose",
         },
     },
@@ -60,6 +62,7 @@ LOGGING = {
         },
     },
 }
+
 # Core Django Settings
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, ".env.prod"))
