@@ -2,6 +2,12 @@ FROM python:3.11-slim AS base
 
 WORKDIR /opt/website
 
+# Add the 'www-data' group with GID 33 if it doesn't already exist
+RUN groupadd -g 33 www-data || true
+
+# Add the 'webapps' user with UID 1002 and assign it to the 'www-data' group
+RUN useradd -u 1002 -g 33 -m webapps
+
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     gcc \
@@ -11,6 +17,9 @@ RUN apt-get update && apt-get install -y \
 # Pre-create a temporary log file for the build process
 ENV DJANGO_LOG_FILE=/tmp/django.log
 RUN mkdir -p /tmp && touch /tmp/django.log && chmod 777 /tmp/django.log
+
+# Switch to 'webapps' user
+USER webapps
 
 # Install dependencies
 COPY requirements-prod.txt .
