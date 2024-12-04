@@ -9,27 +9,15 @@ services:
       context: .
       dockerfile: Dockerfile.prod
     volumes:
-      # Specific directories first, then the catch-all
       - /opt/website/run:/opt/website/run
-      - /opt/website/staticfiles:/opt/website/staticfiles
       - /var/log/chesley_web/django:/var/log/chesley_web/django
       - /var/log/chesley_web/gunicorn:/var/log/chesley_web/gunicorn
       - /etc/ssl/certs/rds:/etc/ssl/certs/rds:ro
-      # Source code mount last
-      - .:/opt/website:ro  # Make this read-only
     env_file:
       - .env.prod
     environment:
       - DJANGO_SETTINGS_MODULE=chesley_web.settings.production
       - DJANGO_ENVIRONMENT=production
-    user: "1002:33"  # UID of webapps and GID of www-data
+    user: "1002:33"
     restart: always
-    command: >
-      sh -c "
-        python manage.py migrate &&
-        python manage.py collectstatic --noinput &&
-        mkdir -p /opt/website/run &&
-        chmod 775 /opt/website/run &&
-        chown webapps:www-data /opt/website/run &&
-        gunicorn --bind unix:/opt/website/run/chesley_web.sock chesley_web.wsgi:application --log-level warning
-      "
+    command: []  # Use the CMD from Dockerfile.prod
