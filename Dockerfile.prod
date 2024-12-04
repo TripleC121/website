@@ -23,6 +23,9 @@ RUN mkdir -p /opt/website/run /opt/website/staticfiles /opt/website/media && \
     chown -R webapps:www-data /opt/website && \
     chmod -R 755 /opt/website
 
+# collect staticfiles
+RUN python manage.py collectstatic --noinput
+
 # for backup scripts
 RUN pip install --no-cache-dir django-environ boto3 cryptography
 
