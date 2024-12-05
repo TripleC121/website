@@ -1,44 +1,36 @@
-FROM python:3.11-slim AS base
+# Use an official Python runtime as a parent image
+FROM python:3.11-slim
 
-WORKDIR /opt/website
-
-# Add the 'www-data' group with GID 33 if it doesn't already exist
-RUN groupadd -g 33 www-data || true
-
-# Add the 'webapps' user with UID 1002 and assign it to the 'www-data' group
-RUN useradd -u 1002 -g 33 -m webapps
-
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    gcc \
-    libpq-dev \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Pre-create a temporary log file for the build process
-ENV DJANGO_LOG_FILE=/tmp/django.log
-RUN mkdir -p /tmp && touch /tmp/django.log && chmod 777 /tmp/django.log
-
-# Switch to 'webapps' user
-USER webapps
-
-#Change ownership to the webapps user
-RUN chown -R 1002:33 /opt/website
+# Set environment variables
+ENV PYTHONUNBUFFERED 1
 
 # Install dependencies
-COPY requirements-prod.txt .
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Add the 'webapps' user and 'www-data' group
+RUN groupadd -g 33 www-data || true && useradd -u 1002 -g 33 -m webapps
+
+# Create necessary directories and set permissions
+RUN mkdir -p /opt/website/staticfiles && chmod 755 /opt/website/staticfiles
+RUN mkdir -p /opt/website && chown -R 1002:33 /opt/website
+
+# Set the working directory
+WORKDIR /opt/website
+
+# Copy application files
+COPY . /opt/website/
+
+# Change ownership of application files to the webapps user
+RUN chown -R 1002:33 /opt/website
+
+# Switch to the webapps user
+USER 1002:33
+
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements-prod.txt
 
-RUN pip install --no-cache-dir boto3
-
-COPY . .
-
-ENV DJANGO_SETTINGS_MODULE=chesley_web.settings.production
-ENV DEBUG=False
-
-RUN mkdir -p /opt/website/staticfiles && \
-    chmod 755 /opt/website/staticfiles
-
-# Collect static files during the build process
-RUN python manage.py collectstatic --noinput
-
-CMD ["gunicorn", "--bind", "unix:/opt/website/run/chesley_web.sock", "chesley_web.wsgi:application", "--log-level", "warning"]
+# Run the application
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "chesley_web.wsgi:application"]
