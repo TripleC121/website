@@ -17,7 +17,8 @@ RUN groupadd -g 33 www-data || true && useradd -u 1002 -g 33 -m webapps
 # Create necessary directories and set permissions
 RUN mkdir -p /opt/website/staticfiles && chmod 755 /opt/website/staticfiles
 RUN mkdir -p /opt/website && chown -R 1002:33 /opt/website
-RUN mkdir -p /opt/website/run && chmod -R 755 /opt/website/run
+RUN mkdir -p /opt/website/run && chmod 777 /opt/website/run
+
 
 # Set the working directory
 WORKDIR /opt/website
