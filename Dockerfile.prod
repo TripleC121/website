@@ -15,10 +15,11 @@ RUN apt-get update && apt-get install -y \
 RUN groupadd -g 33 www-data || true && useradd -u 1002 -g 33 -m webapps
 
 # Create necessary directories and set permissions
-RUN mkdir -p /opt/website/staticfiles && chmod 755 /opt/website/staticfiles
-RUN mkdir -p /opt/website && chown -R 1002:33 /opt/website
-RUN mkdir -p /opt/website/run && chmod 777 /opt/website/run
-
+RUN mkdir -p /opt/website/staticfiles \
+    /opt/website/run \
+    /var/log/chesley_web/django \
+    && chown -R webapps:www-data /opt/website /var/log/chesley_web \
+    && chmod -R 755 /opt/website /var/log/chesley_web
 
 # Set the working directory
 WORKDIR /opt/website
@@ -27,7 +28,7 @@ WORKDIR /opt/website
 COPY . /opt/website/
 
 # Change ownership of application files to the webapps user
-RUN chown -R 1002:33 /opt/website
+RUN chown -R webapps:www-data /opt/website
 
 # Switch to the webapps user
 USER 1002:33
