@@ -5,6 +5,7 @@ services:
       dockerfile: Dockerfile.prod
     volumes:
       - /var/log/chesley_web:/var/log/chesley_web
+      - /opt/website/run:/opt/website/run
     environment:
       - DJANGO_SETTINGS_MODULE=chesley_web.settings.production
       - DJANGO_ENVIRONMENT=production
