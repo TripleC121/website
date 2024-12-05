@@ -8,6 +8,7 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=chesley_web.settings.production
       - DJANGO_ENVIRONMENT=production
+      - DATABASE_URL=${DATABASE_URL}
       - DJANGO_LOG_FILE=/var/log/chesley_web/django/django.log
     user: "1002:33"
     restart: always
