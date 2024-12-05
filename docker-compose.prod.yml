@@ -7,6 +7,7 @@ services:
       - /var/log/chesley_web:/var/log/chesley_web
       - /opt/website/run:/opt/website/run
     environment:
+      - DEBUG=0
       - DJANGO_SETTINGS_MODULE=chesley_web.settings.production
       - DJANGO_ENVIRONMENT=production
       - DATABASE_URL=${DATABASE_URL}

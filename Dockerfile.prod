@@ -37,5 +37,8 @@ USER 1002:33
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements-prod.txt
 
+# collect static files
+RUN python manage.py collectstatic --noinput
+
 # Run the application
 CMD ["gunicorn", "-b", "unix:/opt/website/run/chesley_web.sock", "chesley_web.wsgi:application"]

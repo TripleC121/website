@@ -14,7 +14,6 @@ sites-enabled/*
 /var/log/nginx/*
 
 # Gunicorn
-gunicorn.conf.py
 gunicorn.log
 gunicorn.error.log
 
