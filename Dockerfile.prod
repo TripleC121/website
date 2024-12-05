@@ -21,6 +21,9 @@ RUN mkdir -p /tmp && touch /tmp/django.log && chmod 777 /tmp/django.log
 # Switch to 'webapps' user
 USER webapps
 
+#Change ownership to the webapps user
+RUN chown -R 1002:33 /opt/website
+
 # Install dependencies
 COPY requirements-prod.txt .
 RUN pip install --no-cache-dir -r requirements-prod.txt
