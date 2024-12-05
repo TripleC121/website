@@ -37,4 +37,4 @@ USER 1002:33
 RUN pip install --no-cache-dir -r requirements-prod.txt
 
 # Run the application
-CMD ["gunicorn", "-b", "unix:/opt/website/run/chesley_web.sock", "chesley_web.wsgi:application"]
+CMD ["bash"]
