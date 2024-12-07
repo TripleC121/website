@@ -10,10 +10,9 @@ from .base import *
 logging.getLogger("environ.environ").setLevel(logging.WARNING)
 logging.getLogger("django.environ").setLevel(logging.WARNING)
 
-# Updated logging configuration
 LOGGING = {
     "version": 1,
-    "disable_existing_loggers": True,  # Changed from False to True
+    "disable_existing_loggers": True,
     "formatters": {
         "verbose": {
             "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
@@ -45,8 +44,8 @@ LOGGING = {
             "level": "WARNING",
             "propagate": False,
         },
-        "environ": {
-            "handlers": ["console"],
+        "environ.environ": {  # Updated from 'environ' to catch all environ messages
+            "handlers": ["console", "file"],
             "level": "WARNING",
             "propagate": False,
         },

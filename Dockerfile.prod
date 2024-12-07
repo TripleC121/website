@@ -37,8 +37,11 @@ USER 1002:33
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements-prod.txt
 
+# Load environmental settings
+ENV DJANGO_SETTINGS_MODULE=chesley_web.settings.production
+
 # collect static files
-RUN python manage.py collectstatic --noinput
+RUN DJANGO_SETTINGS_MODULE=chesley_web.settings.production python manage.py collectstatic --noinput
 
 # Run the application
 CMD ["gunicorn", "-b", "unix:/opt/website/run/chesley_web.sock", "chesley_web.wsgi:application"]
