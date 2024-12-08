@@ -1,47 +1,49 @@
-# Use an official Python runtime as a parent image
-FROM python:3.11-slim
+FROM python:3.11
 
 # Set environment variables
 ENV PYTHONUNBUFFERED 1
 ENV PATH="/home/webapps/.local/bin:${PATH}"
+ENV DJANGO_SETTINGS_MODULE=chesley_web.settings.production
 
-# Install dependencies
+# Install essential system dependencies
 RUN apt-get update && apt-get install -y \
+    # build-essential: Provides compiler and basic build tools
+    # needed for compiling some Python packages
     build-essential \
+    # libpq-dev: PostgreSQL client library, required for psycopg
     libpq-dev \
+    # procps: For process monitoring tools like ps
+    procps \
+    # Clean up apt cache to reduce image size
     && rm -rf /var/lib/apt/lists/*
 
-# Add the 'webapps' user and 'www-data' group
+# Add webapps user and set up directories
 RUN groupadd -g 33 www-data || true && useradd -u 1002 -g 33 -m webapps
 
-# Create necessary directories and set permissions
+# Create and set permissions for directories
 RUN mkdir -p /opt/website/staticfiles \
     /opt/website/run \
     /var/log/chesley_web/django \
     && chown -R webapps:www-data /opt/website /var/log/chesley_web \
-    && chmod 2775 /opt/website/run /var/log/chesley_web/django \
-    && chmod g+s /opt/website/run /var/log/chesley_web/django
+    # 2775 means: owner full access, group full access, others read/execute
+    # Plus new files inherit group ownership
+    && chmod 2775 /opt/website/run /var/log/chesley_web/django
 
-# Set the working directory
+# Set working directory
 WORKDIR /opt/website
 
 # Copy application files
 COPY . /opt/website/
-
-# Change ownership of application files to the webapps user
 RUN chown -R webapps:www-data /opt/website
 
-# Switch to the webapps user
-USER 1002:33
+# Switch to webapps user
+USER webapps
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements-prod.txt
 
-# Load environmental settings
-ENV DJANGO_SETTINGS_MODULE=chesley_web.settings.production
+# Run collectstatic for Django
+RUN python manage.py collectstatic --noinput
 
-# collect static files
-RUN DJANGO_SETTINGS_MODULE=chesley_web.settings.production python manage.py collectstatic --noinput
-
-# Run the application
-CMD ["gunicorn", "-b", "unix:/opt/website/run/chesley_web.sock", "chesley_web.wsgi:application"]
+# Start Gunicorn
+CMD ["gunicorn", "chesley_web.wsgi:application", "-c", "gunicorn.conf.py"]
