@@ -7,6 +7,7 @@ services:
         - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
         - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
         - AWS_STORAGE_BUCKET_NAME=${AWS_S3_BUCKET_NAME}
+    env_file: .env.prod
     volumes:
       - /var/log/chesley_web:/var/log/chesley_web
     environment:
