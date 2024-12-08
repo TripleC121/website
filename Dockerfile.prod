@@ -1,34 +1,50 @@
-FROM python:3.9
+# Use Python 3.11 as the base image
+FROM python:3.11-slim
+
+# Install system dependencies required for Python packages
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt/website
 
 # Copy requirements first for better caching
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the project code
 COPY . .
 
-# Create directory for static files
-RUN mkdir -p staticfiles
+# Create necessary directories with appropriate permissions
+RUN mkdir -p staticfiles run && \
+    chmod 755 /opt/website/run
 
-# Set build-time arguments for AWS (these will be passed securely during build)
+# Set build-time arguments for AWS
 ARG AWS_ACCESS_KEY_ID
 ARG AWS_SECRET_ACCESS_KEY
 ARG AWS_STORAGE_BUCKET_NAME
 
 # Set environment variables needed for collectstatic
-ENV DJANGO_SETTINGS_MODULE=chesley_web.settings.production
-ENV STATIC_ROOT=/opt/website/staticfiles
-ENV PROD_DEBUG=False
-ENV PROD_ALLOWED_HOSTS=localhost
-# Pass AWS credentials from build args to environment
-ENV AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-ENV AWS_STORAGE_BUCKET_NAME=$AWS_STORAGE_BUCKET_NAME
+ENV DJANGO_SETTINGS_MODULE=chesley_web.settings.production \
+    STATIC_ROOT=/opt/website/staticfiles \
+    PROD_DEBUG=False \
+    PROD_ALLOWED_HOSTS=localhost \
+    AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
+    AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
+    AWS_STORAGE_BUCKET_NAME=$AWS_STORAGE_BUCKET_NAME \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
 
 # Run collectstatic during build
 RUN python manage.py collectstatic --noinput
 
-# Runtime command
-CMD ["gunicorn", "chesley_web.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Use a more optimized configuration for gunicorn
+CMD ["gunicorn", "chesley_web.wsgi:application", \
+     "--bind", "unix:/opt/website/run/chesley_web.sock", \
+     "--workers", "3", \
+     "--threads", "2", \
+     "--worker-class", "gthread", \
+     "--worker-tmp-dir", "/dev/shm", \
+     "--timeout", "120", \
+     "--keepalive", "5"]
