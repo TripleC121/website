@@ -16,6 +16,12 @@ SECRET_KEY = env("PROD_SECRET_KEY")
 DEBUG = env.bool("PROD_DEBUG", default=False)
 ALLOWED_HOSTS = env.list("PROD_ALLOWED_HOSTS")
 
+# logging for allowed hosts.
+logger = logging.getLogger(__name__)
+logger.error(
+    f"ALLOWED_HOSTS: {ALLOWED_HOSTS}"
+)  # Using error level to make sure we see it
+
 # Static Files Configuration
 STATIC_URL = "/static/"
 STATIC_ROOT = env("STATIC_ROOT", default=os.path.join(BASE_DIR, "staticfiles"))
