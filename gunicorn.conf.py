@@ -1,7 +1,5 @@
 bind = "0.0.0.0:8000"  #
 workers = 3
-user = "webapps"
-group = "www-data"
 
 limit_request_line = 4094
 limit_request_fields = 100
