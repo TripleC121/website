@@ -3,6 +3,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.prod
+      args:
+        - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+        - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+        - AWS_STORAGE_BUCKET_NAME=${AWS_S3_BUCKET_NAME}
     volumes:
       - /var/log/chesley_web:/var/log/chesley_web
       - /opt/website/run:/opt/website/run
@@ -10,7 +14,13 @@ services:
       - DEBUG=0
       - DJANGO_SETTINGS_MODULE=chesley_web.settings.production
       - DJANGO_ENVIRONMENT=production
-      - DATABASE_URL=${DATABASE_URL}
+      - PROD_DB_NAME=${PROD_DB_NAME}
+      - PROD_DB_USER=${PROD_DB_USER}
+      - PROD_DB_PASSWORD=${PROD_DB_PASSWORD}
+      - PROD_DB_HOST=${PROD_DB_HOST}
+      - PROD_DB_PORT=${PROD_DB_PORT}
+      - PROD_SECRET_KEY=${PROD_SECRET_KEY}
+      - PROD_ALLOWED_HOSTS=${PROD_ALLOWED_HOSTS}
       - DJANGO_LOG_FILE=/var/log/chesley_web/django/django.log
     user: "1002:33"
     restart: always
