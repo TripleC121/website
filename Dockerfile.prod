@@ -20,6 +20,9 @@ COPY . .
 RUN mkdir -p staticfiles run && \
     chmod 755 /opt/website/run
 
+RUN mkdir -p /var/log/chesley_web/django && \
+chmod -R 755 /var/log/chesley_web
+
 # Set build-time arguments for AWS
 ARG AWS_ACCESS_KEY_ID
 ARG AWS_SECRET_ACCESS_KEY
