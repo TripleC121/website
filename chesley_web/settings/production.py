@@ -1,5 +1,6 @@
 import logging
 import logging.config
+import os
 import sys
 
 from .base import *
@@ -17,10 +18,9 @@ DEBUG = env.bool("PROD_DEBUG", default=False)
 ALLOWED_HOSTS = env.list("PROD_ALLOWED_HOSTS")
 
 # logging for allowed hosts.
-logger = logging.getLogger(__name__)
-logger.error(
-    f"ALLOWED_HOSTS: {ALLOWED_HOSTS}"
-)  # Using error level to make sure we see it
+with open("/var/log/chesley_web/django/debug.log", "a") as f:
+    f.write(f"\nRaw env var: {os.getenv('PROD_ALLOWED_HOSTS')}\n")
+    f.write(f"Parsed ALLOWED_HOSTS: {env.list('PROD_ALLOWED_HOSTS')}\n")
 
 # Static Files Configuration
 STATIC_URL = "/static/"
