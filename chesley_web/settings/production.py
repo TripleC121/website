@@ -15,12 +15,14 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env.prod"))
 # Core Django Settings
 SECRET_KEY = env("PROD_SECRET_KEY")
 DEBUG = env.bool("PROD_DEBUG", default=False)
-ALLOWED_HOSTS = env.list("PROD_ALLOWED_HOSTS")
 
-# logging for allowed hosts.
-with open("/var/log/chesley_web/django/debug.log", "a") as f:
-    f.write(f"\nRaw env var: {os.getenv('PROD_ALLOWED_HOSTS')}\n")
-    f.write(f"Parsed ALLOWED_HOSTS: {env.list('PROD_ALLOWED_HOSTS')}\n")
+# setting allowed hosts
+ALLOWED_HOSTS = [
+    "cchesley.com",
+    "www.cchesley.com",
+    "34.229.112.90",
+    "ec2-34-229-112-90.compute-1.amazonaws.com",
+]
 
 # Static Files Configuration
 STATIC_URL = "/static/"
