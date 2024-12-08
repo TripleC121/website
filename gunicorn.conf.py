@@ -1,4 +1,4 @@
-bind = "unix:/opt/website/run/chesley_web.sock"
+bind = "0.0.0.0:8000"  #
 workers = 3
 user = "webapps"
 group = "www-data"

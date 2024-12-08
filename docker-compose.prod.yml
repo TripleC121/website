@@ -9,7 +9,6 @@ services:
         - AWS_STORAGE_BUCKET_NAME=${AWS_S3_BUCKET_NAME}
     volumes:
       - /var/log/chesley_web:/var/log/chesley_web
-      - /opt/website/run:/opt/website/run
     environment:
       - DEBUG=0
       - DJANGO_SETTINGS_MODULE=chesley_web.settings.production

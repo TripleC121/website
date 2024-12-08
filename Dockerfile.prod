@@ -41,7 +41,7 @@ RUN python manage.py collectstatic --noinput
 
 # Use a more optimized configuration for gunicorn
 CMD ["gunicorn", "chesley_web.wsgi:application", \
-     "--bind", "unix:/opt/website/run/chesley_web.sock", \
+     "--bind", "0.0.0.0:8000", \
      "--workers", "3", \
      "--threads", "2", \
      "--worker-class", "gthread", \
