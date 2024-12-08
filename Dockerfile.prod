@@ -1,49 +1,34 @@
-FROM python:3.11
+FROM python:3.9
 
-# Set environment variables
-ENV PYTHONUNBUFFERED 1
-ENV PATH="/home/webapps/.local/bin:${PATH}"
-ENV DJANGO_SETTINGS_MODULE=chesley_web.settings.production
-
-# Install essential system dependencies
-RUN apt-get update && apt-get install -y \
-    # build-essential: Provides compiler and basic build tools
-    # needed for compiling some Python packages
-    build-essential \
-    # libpq-dev: PostgreSQL client library, required for psycopg
-    libpq-dev \
-    # procps: For process monitoring tools like ps
-    procps \
-    # Clean up apt cache to reduce image size
-    && rm -rf /var/lib/apt/lists/*
-
-# Add webapps user and set up directories
-RUN groupadd -g 33 www-data || true && useradd -u 1002 -g 33 -m webapps
-
-# Create and set permissions for directories
-RUN mkdir -p /opt/website/staticfiles \
-    /opt/website/run \
-    /var/log/chesley_web/django \
-    && chown -R webapps:www-data /opt/website /var/log/chesley_web \
-    # 2775 means: owner full access, group full access, others read/execute
-    # Plus new files inherit group ownership
-    && chmod 2775 /opt/website/run /var/log/chesley_web/django
-
-# Set working directory
 WORKDIR /opt/website
 
-# Copy application files
-COPY . /opt/website/
-RUN chown -R webapps:www-data /opt/website
+# Copy requirements first for better caching
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
-# Switch to webapps user
-USER webapps
+# Copy the project code
+COPY . .
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements-prod.txt
+# Create directory for static files
+RUN mkdir -p staticfiles
 
-# Run collectstatic for Django
+# Set build-time arguments for AWS (these will be passed securely during build)
+ARG AWS_ACCESS_KEY_ID
+ARG AWS_SECRET_ACCESS_KEY
+ARG AWS_STORAGE_BUCKET_NAME
+
+# Set environment variables needed for collectstatic
+ENV DJANGO_SETTINGS_MODULE=chesley_web.settings.production
+ENV STATIC_ROOT=/opt/website/staticfiles
+ENV PROD_DEBUG=False
+ENV PROD_ALLOWED_HOSTS=localhost
+# Pass AWS credentials from build args to environment
+ENV AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+ENV AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+ENV AWS_STORAGE_BUCKET_NAME=$AWS_STORAGE_BUCKET_NAME
+
+# Run collectstatic during build
 RUN python manage.py collectstatic --noinput
 
-# Start Gunicorn
-CMD ["gunicorn", "chesley_web.wsgi:application", "-c", "gunicorn.conf.py"]
+# Runtime command
+CMD ["gunicorn", "chesley_web.wsgi:application", "--bind", "0.0.0.0:8000"]
