@@ -129,6 +129,7 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
     "SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True
 )
 SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", default=True)
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Cloudflare Settings
 CSRF_TRUSTED_ORIGINS = ["https://cchesley.com", "https://www.cchesley.com"]
