@@ -21,7 +21,7 @@ RUN mkdir -p staticfiles run && \
     chmod 755 /opt/website/run
 
 RUN mkdir -p /var/log/chesley_web/django && \
-chmod -R 755 /var/log/chesley_web
+    chmod -R 755 /var/log/chesley_web
 
 # Set build-time arguments for AWS
 ARG AWS_ACCESS_KEY_ID
@@ -42,9 +42,9 @@ ENV DJANGO_SETTINGS_MODULE=chesley_web.settings.production \
 # Run collectstatic during build
 RUN python manage.py collectstatic --noinput
 
-# Use a more optimized configuration for gunicorn
+# Change to Unix socket configuration
 CMD ["gunicorn", "chesley_web.wsgi:application", \
-     "--bind", "0.0.0.0:8000", \
+     "--bind", "unix:/opt/website/run/gunicorn.sock", \
      "--workers", "3", \
      "--threads", "2", \
      "--worker-class", "gthread", \

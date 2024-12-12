@@ -7,20 +7,19 @@ services:
         - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
         - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
         - AWS_STORAGE_BUCKET_NAME=${AWS_S3_BUCKET_NAME}
-    ports:
-      - "8000:8000"
-    networks:
-      - website_network
-    env_file:
-      - .env.prod
     volumes:
       - /var/log/chesley_web:/var/log/chesley_web
+      - /opt/website/run:/opt/website/run
+    env_file:
+      - .env.prod
     user: "1002:33"
     restart: always
     tmpfs:
       - /tmp
     security_opt:
       - no-new-privileges:true
+    networks:
+      - website_network
 
 networks:
   website_network:
