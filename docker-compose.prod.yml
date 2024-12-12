@@ -12,7 +12,7 @@ services:
       - /opt/website/run:/opt/website/run
     env_file:
       - .env.prod
-    user: "webapps:www-data"
+    user: "1002:33"
     restart: always
     tmpfs:
       - /tmp
