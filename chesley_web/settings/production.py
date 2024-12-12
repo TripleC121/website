@@ -20,8 +20,8 @@ DEBUG = env.bool("PROD_DEBUG", default=False)
 ALLOWED_HOSTS = [
     "cchesley.com",
     "www.cchesley.com",
-    "34.229.112.90",
-    "ec2-34-229-112-90.compute-1.amazonaws.com",
+    "35.153.202.209",
+    "ec2-35-153-202-209.compute-1.amazonaws.com",
 ]
 
 # Static Files Configuration
