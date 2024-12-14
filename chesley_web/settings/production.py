@@ -44,13 +44,13 @@ AWS_S3_ENDPOINT_URL = R2_ENDPOINT_URL
 AWS_S3_REGION_NAME = "auto"
 AWS_DEFAULT_ACL = "public-read"
 AWS_QUERYSTRING_AUTH = False
-AWS_S3_FILE_OVERWRITE = False
+AWS_S3_FILE_OVERWRITE = True
 AWS_IS_GZIPPED = True
-AWS_S3_CUSTOM_DOMAIN = f"{R2_STORAGE_BUCKET_NAME}.r2.cloudflarestorage.com"
+AWS_S3_CUSTOM_DOMAIN = f"{CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com"
 
 # Static files configuration
 STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"
-STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"  # noqa: E231
+STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"  # noqa: E231
 
 # Staticfiles finders
 STATICFILES_FINDERS = [
