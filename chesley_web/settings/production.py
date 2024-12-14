@@ -24,9 +24,6 @@ ALLOWED_HOSTS = [
     "ec2-35-153-202-209.compute-1.amazonaws.com",
 ]
 
-# Base static files configuration
-STATIC_ROOT = env("STATIC_ROOT", default=os.path.join(BASE_DIR, "staticfiles"))
-
 # R2 settings
 R2_ACCESS_KEY_ID = env("R2_ACCESS_KEY_ID")
 R2_SECRET_ACCESS_KEY = env("R2_SECRET_ACCESS_KEY")
@@ -46,17 +43,21 @@ AWS_DEFAULT_ACL = "public-read"
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_FILE_OVERWRITE = True
 AWS_IS_GZIPPED = True
-AWS_S3_CUSTOM_DOMAIN = f"{CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com"
+
+# Custom domain configuration
+AWS_S3_CUSTOM_DOMAIN = "static.cchesley.com"
+AWS_S3_URL_PROTOCOL = "https:"
 
 # Static files configuration
-STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"  # noqa: E231
+STATIC_ROOT = env("STATIC_ROOT", default=os.path.join(BASE_DIR, "staticfiles"))
 
-# Staticfiles finders
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
+
 # Database Configuration
 DATABASES = {
     "default": {
