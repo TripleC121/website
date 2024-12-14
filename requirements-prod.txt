@@ -6,7 +6,7 @@ packaging==24.1
 psycopg==3.2.1
 psycopg-binary==3.2.1
 sqlparse==0.5.1
-django-storages
+django-storages>=4.1.0
 cryptography==42.0.0
-boto3==1.34.0
+boto3>=1.34.7
 psycopg>=3.2,<4.0

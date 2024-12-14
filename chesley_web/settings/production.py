@@ -6,7 +6,7 @@ import sys
 from .base import *
 
 # Version tracking
-VERSION = "0.2.3"
+VERSION = "0.2.4"
 
 # Environment setup
 env = environ.Env()
@@ -24,30 +24,39 @@ ALLOWED_HOSTS = [
     "ec2-35-153-202-209.compute-1.amazonaws.com",
 ]
 
-# Static Files Configuration
-STATIC_URL = "/static/"
+# Base static files configuration
 STATIC_ROOT = env("STATIC_ROOT", default=os.path.join(BASE_DIR, "staticfiles"))
 
-# AWS S3 Configuration
-AWS_ACCESS_KEY_ID = env("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = env("AWS_SECRET_ACCESS_KEY")
-AWS_STORAGE_BUCKET_NAME = env("AWS_STORAGE_BUCKET_NAME")
-AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
-AWS_LOCATION = "static"
+# R2 settings
+R2_ACCESS_KEY_ID = env("R2_ACCESS_KEY_ID")
+R2_SECRET_ACCESS_KEY = env("R2_SECRET_ACCESS_KEY")
+R2_STORAGE_BUCKET_NAME = env("R2_STORAGE_BUCKET_NAME")
+CLOUDFLARE_ACCOUNT_ID = env("CLOUDFLARE_ACCOUNT_ID")
+R2_ENDPOINT_URL = (
+    f"https://{CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com"  # noqa: E231
+)
 
-# Storage Configuration
-# For static files, use ManifestStaticFilesStorage for production
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
-# For user-uploaded content, use S3
-DEFAULT_FILE_STORAGE = "main.storage.S3ImageStorage"
+# AWS/R2 settings
+AWS_S3_ACCESS_KEY_ID = R2_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY = R2_SECRET_ACCESS_KEY
+AWS_STORAGE_BUCKET_NAME = R2_STORAGE_BUCKET_NAME
+AWS_S3_ENDPOINT_URL = R2_ENDPOINT_URL
+AWS_S3_REGION_NAME = "auto"
+AWS_DEFAULT_ACL = "public-read"
+AWS_QUERYSTRING_AUTH = False
+AWS_S3_FILE_OVERWRITE = False
+AWS_IS_GZIPPED = True
+AWS_S3_CUSTOM_DOMAIN = f"{R2_STORAGE_BUCKET_NAME}.r2.cloudflarestorage.com"
 
-# Optional: Configure staticfiles finders (if not defined in base.py)
+# Static files configuration
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"
+STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"  # noqa: E231
+
+# Staticfiles finders
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
 ]
-
 # Database Configuration
 DATABASES = {
     "default": {
