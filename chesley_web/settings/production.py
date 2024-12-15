@@ -16,7 +16,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, ".env.prod"))
 SECRET_KEY = env("PROD_SECRET_KEY")
 DEBUG = env.bool("PROD_DEBUG", default=False)
 
-# setting allowed hosts
+# Setting allowed hosts
 ALLOWED_HOSTS = [
     "cchesley.com",
     "www.cchesley.com",
@@ -44,16 +44,14 @@ AWS_DEFAULT_ACL = "public-read"
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_FILE_OVERWRITE = True
 AWS_IS_GZIPPED = True
+
+# Enhanced caching configuration for static files
 AWS_S3_OBJECT_PARAMETERS = {
-    "CacheControl": "max-age=86400",
+    "CacheControl": "max-age=31536000",  # Cache for 1 year
 }
 
-# Custom domain configuration
-AWS_S3_CUSTOM_DOMAIN = "static.cchesley.com"
-AWS_S3_URL_PROTOCOL = "https:"
-
-# Static files configuration
-STATICFILES_STORAGE = "storages.backends.s3boto3.S3StaticStorage"
+# Static files configuration with manifest storage for cache busting
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3ManifestStaticStorage"
 STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"  # noqa: E231
 STATIC_ROOT = env("STATIC_ROOT", default=os.path.join(BASE_DIR, "staticfiles"))
 
