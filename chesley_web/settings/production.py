@@ -52,6 +52,7 @@ AWS_S3_OBJECT_PARAMETERS = {
 
 # Static files configuration with manifest storage for cache busting
 STATICFILES_STORAGE = "storages.backends.s3boto3.S3ManifestStaticStorage"
+STATICFILES_MANIFEST_EXCLUDE = ["admin/*"]
 STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"  # noqa: E231
 STATIC_ROOT = env("STATIC_ROOT", default=os.path.join(BASE_DIR, "staticfiles"))
 
