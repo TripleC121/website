@@ -43,13 +43,16 @@ AWS_DEFAULT_ACL = "public-read"
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_FILE_OVERWRITE = True
 AWS_IS_GZIPPED = True
+AWS_S3_OBJECT_PARAMETERS = {
+    "CacheControl": "max-age=86400",
+}
 
 # Custom domain configuration
 AWS_S3_CUSTOM_DOMAIN = "static.cchesley.com"
 AWS_S3_URL_PROTOCOL = "https:"
 
 # Static files configuration
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3ManifestStaticStorage"
 STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"  # noqa: E231
 STATIC_ROOT = env("STATIC_ROOT", default=os.path.join(BASE_DIR, "staticfiles"))
 
@@ -74,13 +77,39 @@ DATABASES = {
     }
 }
 
+# Security Settings
+SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True)
+SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", default=True)
+CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", default=True)
+SECURE_BROWSER_XSS_FILTER = env.bool("SECURE_BROWSER_XSS_FILTER", default=True)
+SECURE_CONTENT_TYPE_NOSNIFF = env.bool("SECURE_CONTENT_TYPE_NOSNIFF", default=True)
+X_FRAME_OPTIONS = env("X_FRAME_OPTIONS", default="DENY")
+SECURE_HSTS_SECONDS = env.int("SECURE_HSTS_SECONDS", default=31536000)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
+    "SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True
+)
+SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", default=True)
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# Cloudflare Settings
+CSRF_TRUSTED_ORIGINS = ["https://cchesley.com", "https://www.cchesley.com"]
+
+# Email Configuration
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = env("EMAIL_HOST")
+EMAIL_PORT = env("EMAIL_PORT")
+EMAIL_USE_TLS = env("EMAIL_USE_TLS")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
+
 # Logging Configuration
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": True,
     "formatters": {
         "verbose": {
-            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "format": "{levelname} {asctime} {module} {message}",
             "style": "{",
         },
     },
@@ -126,29 +155,3 @@ LOGGING = {
         },
     },
 }
-
-# Security Settings
-SECURE_SSL_REDIRECT = env.bool("SECURE_SSL_REDIRECT", default=True)
-SESSION_COOKIE_SECURE = env.bool("SESSION_COOKIE_SECURE", default=True)
-CSRF_COOKIE_SECURE = env.bool("CSRF_COOKIE_SECURE", default=True)
-SECURE_BROWSER_XSS_FILTER = env.bool("SECURE_BROWSER_XSS_FILTER", default=True)
-SECURE_CONTENT_TYPE_NOSNIFF = env.bool("SECURE_CONTENT_TYPE_NOSNIFF", default=True)
-X_FRAME_OPTIONS = env("X_FRAME_OPTIONS", default="DENY")
-SECURE_HSTS_SECONDS = env.int("SECURE_HSTS_SECONDS", default=31536000)
-SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
-    "SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True
-)
-SECURE_HSTS_PRELOAD = env.bool("SECURE_HSTS_PRELOAD", default=True)
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
-# Cloudflare Settings
-CSRF_TRUSTED_ORIGINS = ["https://cchesley.com", "https://www.cchesley.com"]
-
-# Email Configuration
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = env("EMAIL_HOST")
-EMAIL_PORT = env("EMAIL_PORT")
-EMAIL_USE_TLS = env("EMAIL_USE_TLS")
-EMAIL_HOST_USER = env("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
-DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
