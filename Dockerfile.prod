@@ -11,6 +11,7 @@ WORKDIR /opt/website
 
 # Copy requirements first for better caching
 COPY requirements-prod.txt .
+run pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements-prod.txt
 
 # Copy the project code
