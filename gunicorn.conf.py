@@ -1,4 +1,4 @@
-bind = "0.0.0.0:8000"  #
+bind = "unix:/opt/website/run/gunicorn.sock"
 workers = 3
 
 limit_request_line = 4094
