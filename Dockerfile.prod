@@ -39,18 +39,17 @@ ENV DJANGO_SETTINGS_MODULE=chesley_web.settings.production \
     PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
 
-    # output diagnostic info to file during container build
-RUN python manage.py collectstatic --noinput -v2 > /tmp/collectstatic.log 2>&1 || (cat /tmp/collectstatic.log && exit 1)
-
-# Run collectstatic during build
-RUN python manage.py collectstatic --noinput
-
-# Change to Unix socket configuration
-CMD ["gunicorn", "chesley_web.wsgi:application", \
-     "--bind", "unix:/opt/website/run/gunicorn.sock", \
-     "--workers", "3", \
-     "--threads", "2", \
-     "--worker-class", "gthread", \
-     "--worker-tmp-dir", "/dev/shm", \
-     "--timeout", "120", \
-     "--keep-alive", "5"]
+# Run collectstatic during CMD
+# Unix socket configuration
+CMD ["sh", "-c", "\
+    python manage.py collectstatic --noinput -i admin/* && \
+    python manage.py collectstatic --noinput && \
+    gunicorn chesley_web.wsgi:application \
+    --bind unix:/opt/website/run/gunicorn.sock \
+    --workers 3 \
+    --threads 2 \
+    --worker-class gthread \
+    --worker-tmp-dir /dev/shm \
+    --timeout 120 \
+    --keep-alive 5 \
+"]
