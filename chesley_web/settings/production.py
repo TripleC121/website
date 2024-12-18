@@ -50,12 +50,23 @@ AWS_S3_OBJECT_PARAMETERS = {
     "CacheControl": "max-age=31536000",  # Cache for 1 year
 }
 
-# Static files configuration with manifest storage for cache busting
-STATICFILES_STORAGE = "storages.backends.s3boto3.S3ManifestStaticStorage"
-STATICFILES_EXCLUDED_APPS = ["admin"]  # Exclude admin files from R2
-STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"  # noqa: E231
-STATIC_ROOT = env("STATIC_ROOT", default=os.path.join(BASE_DIR, "staticfiles"))
+# adding static root
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
+# Static files served from Cloudflare R2 with cache busting
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3ManifestStaticStorage"
+
+# exclude admin files from cache busting
+STATICFILES_EXCLUDED_APPS = ["admin"]
+
+# Static files URL for Cloudflare R2
+STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"  # noqa: E231
+
+# Cache busting via manifest storage
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "staticfiles")]
+
+
+# Finder settings to manage both local and R2 static files
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",

@@ -1,55 +1,43 @@
-# Use Python 3.11 as the base image
+# Base Image
 FROM python:3.11-slim
 
-# Install system dependencies required for Python packages
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
+# Set environment variables
+ENV PYTHONUNBUFFERED 1
+ENV DJANGO_SETTINGS_MODULE=chesley_web.settings.production
 
+# Set work directory
 WORKDIR /opt/website
 
-# Copy requirements first for better caching
-COPY requirements-prod.txt .
-RUN pip install --no-cache-dir -r requirements-prod.txt
+# Install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the project code
+# Copy project files
 COPY . .
 
-# Create necessary directories with appropriate permissions
-RUN mkdir -p staticfiles run && \
-    chmod 755 /opt/website/run
+# Create necessary directories
+RUN mkdir -p /opt/website/run /opt/website/staticfiles/admin
 
-RUN mkdir -p /var/log/chesley_web/django && \
-    chmod -R 755 /var/log/chesley_web
+# Collect static files in two steps
+RUN python manage.py collectstatic --noinput --ignore "admin/*" && \
+    python manage.py collectstatic --noinput --ignore "[!admin]*"
 
-# Set build-time arguments for AWS
-ARG AWS_ACCESS_KEY_ID
-ARG AWS_SECRET_ACCESS_KEY
-ARG AWS_STORAGE_BUCKET_NAME
+# Adjust permissions
+RUN chown -R webapps:www-data /opt/website && \
+    chmod -R 755 /opt/website
 
-# Set environment variables needed for collectstatic
-ENV DJANGO_SETTINGS_MODULE=chesley_web.settings.production \
-    STATIC_ROOT=/opt/website/staticfiles \
-    PROD_DEBUG=False \
-    PROD_ALLOWED_HOSTS=localhost \
-    AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
-    AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \
-    AWS_STORAGE_BUCKET_NAME=$AWS_STORAGE_BUCKET_NAME \
-    PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1
+# Use the webapps user
+USER webapps
 
-# Run collectstatic during CMD
-# Unix socket configuration
-CMD ["sh", "-c", "\
-    python manage.py collectstatic --noinput -i admin/* && \
-    python manage.py collectstatic --noinput && \
-    gunicorn chesley_web.wsgi:application \
-    --bind unix:/opt/website/run/gunicorn.sock \
-    --workers 3 \
-    --threads 2 \
-    --worker-class gthread \
-    --worker-tmp-dir /dev/shm \
-    --timeout 120 \
-    --keep-alive 5 \
-"]
+# Command to run Gunicorn with security settings
+CMD ["gunicorn", "--bind", "unix:/opt/website/run/chesley_web.sock", \
+     "--workers", "3", \
+     "--threads", "2", \
+     "--worker-class", "gthread", \
+     "--worker-tmp-dir", "/dev/shm", \
+     "--timeout", "120", \
+     "--keep-alive", "5", \
+     "chesley_web.wsgi:application"]
+
+HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
+CMD curl --fail http://localhost/-/health/ || exit 1
