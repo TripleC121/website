@@ -9,8 +9,8 @@ ENV DJANGO_SETTINGS_MODULE=chesley_web.settings.production
 WORKDIR /opt/website
 
 # Install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements-prod.txt .
+RUN pip install --no-cache-dir -r requirements-prod.txt
 
 # Copy project files
 COPY . .
