@@ -46,6 +46,3 @@ CMD python manage.py collectstatic --noinput && \
     --timeout 120 \
     --keep-alive 5 \
     chesley_web.wsgi:application
-
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-CMD curl --fail http://localhost/-/health/ || exit 1
