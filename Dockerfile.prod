@@ -28,7 +28,7 @@ chown -R webapps:www-data /var/log/chesley_web
 #    python manage.py collectstatic --noinput --ignore "[!admin]*
 
 # Basic static file collection
-RUN python manage.py collectstatic --noinput
+# this is done when the container is built
 
 # Adjust permissions
 RUN chown -R webapps:www-data /opt/website && \
@@ -37,15 +37,15 @@ RUN chown -R webapps:www-data /opt/website && \
 # Use the webapps user
 USER webapps
 
-# Command to run Gunicorn with security settings
-CMD ["gunicorn", "--bind", "unix:/opt/website/run/chesley_web.sock", \
-     "--workers", "3", \
-     "--threads", "2", \
-     "--worker-class", "gthread", \
-     "--worker-tmp-dir", "/dev/shm", \
-     "--timeout", "120", \
-     "--keep-alive", "5", \
-     "chesley_web.wsgi:application"]
+CMD python manage.py collectstatic --noinput && \
+    gunicorn --bind unix:/opt/website/run/chesley_web.sock \
+    --workers 3 \
+    --threads 2 \
+    --worker-class gthread \
+    --worker-tmp-dir /dev/shm \
+    --timeout 120 \
+    --keep-alive 5 \
+    chesley_web.wsgi:application
 
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
 CMD curl --fail http://localhost/-/health/ || exit 1
