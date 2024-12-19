@@ -15,6 +15,9 @@ RUN pip install --no-cache-dir -r requirements-prod.txt
 # Copy project files
 COPY . .
 
+# Create webapps user
+RUN useradd -r -u 1002 -g www-data webapps
+
 # Create necessary directories
 RUN mkdir -p /opt/website/run /opt/website/staticfiles/admin /var/log/chesley_web/django && \
 touch /var/log/chesley_web/django/django.log && \
