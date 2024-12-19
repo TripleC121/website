@@ -16,11 +16,16 @@ RUN pip install --no-cache-dir -r requirements-prod.txt
 COPY . .
 
 # Create necessary directories
-RUN mkdir -p /opt/website/run /opt/website/staticfiles/admin
+RUN mkdir -p /opt/website/run /opt/website/staticfiles/admin /var/log/chesley_web/django && \
+touch /var/log/chesley_web/django/django.log && \
+chown -R webapps:www-data /var/log/chesley_web
 
 # Collect static files in two steps
-RUN python manage.py collectstatic --noinput --ignore "admin/*" && \
-    python manage.py collectstatic --noinput --ignore "[!admin]*"
+#RUN python manage.py collectstatic --noinput --ignore "admin/*" && \
+#    python manage.py collectstatic --noinput --ignore "[!admin]*
+
+# Basic static file collection
+RUN python manage.py collectstatic --noinput
 
 # Adjust permissions
 RUN chown -R webapps:www-data /opt/website && \

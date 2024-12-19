@@ -54,16 +54,19 @@ AWS_S3_OBJECT_PARAMETERS = {
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Static files served from Cloudflare R2 with cache busting
-STATICFILES_STORAGE = "storages.backends.s3boto3.S3ManifestStaticStorage"
+# STATICFILES_STORAGE = "storages.backends.s3boto3.S3ManifestStaticStorage"
+
+# basic collect static files
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 # exclude admin files from cache busting
-STATICFILES_EXCLUDED_APPS = ["admin"]
+# STATICFILES_EXCLUDED_APPS = ["admin"]
 
 # Static files URL for Cloudflare R2
 STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"  # noqa: E231
 
 # Cache busting via manifest storage
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "staticfiles")]
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, "staticfiles")]
 
 
 # Finder settings to manage both local and R2 static files
