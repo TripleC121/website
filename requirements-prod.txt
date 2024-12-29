@@ -1,12 +1,8 @@
-asgiref==3.8.1
 Django==5.0.7
 django-environ==0.11.2
+django-storages==1.14.4
 gunicorn==22.0.0
-packaging==24.1
 psycopg==3.2.1
 psycopg-binary==3.2.1
-sqlparse==0.5.1
-django-storages==1.14.4
+boto3==1.35.87
 cryptography==42.0.0
-boto3>=1.34.7
-psycopg>=3.2,<4.0

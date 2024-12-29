@@ -1,78 +1,91 @@
-# Contributing to Chris Chesley's Personal Website
+# Contributing Guide
 
-We welcome contributions to Chris Chesley's personal website! This document outlines the process for contributing to this project.
+## Development Workflow
 
-## Getting Started
+### 1. Setting Up Development Environment
+- Follow Docker setup instructions in README.md
+- Install pre-commit hooks locally for code quality checks
+- Development environment uses chesley_web.settings.development
 
-1. Fork the repository on GitHub
-2. Clone your fork locally
-3. Create a new branch for your feature or bug fix
-4. Make your changes, committing them with clear, descriptive commit messages
-5. Push your changes to your fork on GitHub
-6. Submit a pull request to the main repository
+### 2. Code Quality Standards
+This project follows these standards:
+- PEP 8 style guide
+- Black code formatting
+- Sorted imports using isort
+- Maximum line length of 88 characters (Black default)
 
-## Development Environment
-
-1. Install Python 3.11 or later
-2. Install dependencies: `pip install -r requirements-dev.txt`
-3. Copy `.env.example` to `.env` and fill in the required values
-4. Run migrations: `python manage.py migrate`
-5. Start the development server: `python manage.py runserver`
-
-## Adding New Images
-
-When adding new images to the project:
-
-1. Place the images in the appropriate subdirectory of `static/images/`:
-   - `general/` for website pictures
-   - `trees/` for tree images
-   - `succulents/` for succulent images
-2. Run the image optimization script:
-   ```
-   docker compose run --rm web python scripts/optimize_images.py
-   ```
-3. Use the `<picture>` element in templates to provide WebP images with fallbacks:
-   ```html
-   <picture>
-     <source srcset="path/to/image.webp" type="image/webp">
-     <img src="path/to/image.jpg" alt="Description">
-   </picture>
-   ```
-4. Commit your changes and push to GitHub
-5. The CI/CD pipeline will automatically sync the new images to S3
-
-## Image Optimization Script
-
-The optimize_images.py script is located in the backend/scripts/ directory. If you need to modify this script:
-
-1. Ensure any changes maintain the 500 KB file size limit for processed images
-2. Update the error handling if adding new functionality
-3. Add appropriate logging for any new features or error conditions
-4. Run the script with a variety of test images to ensure it handles different formats and sizes correctly
-5. Update the documentation in this file if the usage instructions change
-
-## Code Style
-
-We follow the PEP 8 style guide for Python code. Please ensure your code adheres to this standard.
-
-## Running Tests
-
-Before submitting a pull request, please run the test suite:
-
-```
-python manage.py test
+### 3. Pre-commit Hooks
+The following checks run automatically before commits:
+```yaml
+- trailing-whitespace
+- end-of-file-fixer
+- check-yaml
+- check-added-large-files
+- black
+- flake8
+- isort
 ```
 
-Also, run the linter:
-
+### 4. Git Workflow
+1. Create a feature branch:
+```bash
+git checkout -b feature/your-feature-name
 ```
-flake8 .
+
+2. Make your changes
+
+3. Run tests in Docker:
+```bash
+docker compose exec web python manage.py test
 ```
 
-## Submitting Changes
+4. Commit your changes:
+```bash
+git add .
+git commit -m "feat: your descriptive commit message"
+```
 
-1. Push your changes to a topic branch in your fork of the repository
-2. Submit a pull request to the main repository
-3. The maintainers will aim to respond to pull requests within a week
+5. Push to your branch:
+```bash
+git push origin feature/your-feature-name
+```
 
-Thank you for contributing to Chris Chesley's personal website!
+### 5. Development Best Practices
+- Use Docker for all development work
+- Keep containers ephemeral
+- Use docker compose for service orchestration
+- Regularly rebuild images to test Dockerfile changes
+
+### 6. Image Guidelines
+- Place new images in static/images/
+- Images must be under 500KB
+- Use WebP format when possible
+- Original images are preserved in a separate directory
+
+### 7. Template Guidelines
+- Extend base.html for new templates
+- Use Django template inheritance
+- Include meta descriptions for SEO
+- Follow the established directory structure
+
+### 8. Security Considerations
+- Never commit sensitive information
+- Use environment variables for secrets
+- Follow the principle of least privilege
+- Keep dependencies updated
+
+### 9. Documentation
+- Update documentation for significant changes
+- Document new environment variables
+- Update deployment notes if necessary
+- Add comments for complex logic
+
+## Testing
+```bash
+docker compose exec web python manage.py test
+```
+
+## Versioning
+This project uses semantic versioning:
+- MAJOR.MINOR.PATCH
+- Current version: 0.2.4

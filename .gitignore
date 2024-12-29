@@ -53,3 +53,6 @@ backend/logs/
 
 # school files
 pgpaiml/
+
+# requirements update testing.
+*_latest*
